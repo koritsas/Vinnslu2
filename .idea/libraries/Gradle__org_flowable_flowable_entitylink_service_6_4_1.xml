@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.flowable:flowable-entitylink-service:6.4.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-entitylink-service/6.4.1/f13df555932f2c073cec92560500f424da5e4598/flowable-entitylink-service-6.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-entitylink-service/6.4.1/67cac8f0723da4be5a9823cb38039a05c5116cd2/flowable-entitylink-service-6.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

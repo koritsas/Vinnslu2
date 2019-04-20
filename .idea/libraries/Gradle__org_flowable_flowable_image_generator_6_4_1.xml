@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.flowable:flowable-image-generator:6.4.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-image-generator/6.4.1/34daec9ad470f9816f1dc826166129b4a37ee1f5/flowable-image-generator-6.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-image-generator/6.4.1/16744a372cb0c94793ced59eafe8e452defd554/flowable-image-generator-6.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
