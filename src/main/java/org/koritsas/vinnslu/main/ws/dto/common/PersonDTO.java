@@ -1,7 +1,8 @@
-package org.koritsas.vinnslu.main.dto;
+package org.koritsas.vinnslu.main.ws.dto.common;
 
-public class AuthorityDTO {
+import java.util.Date;
 
+public class PersonDTO {
     private Long id;
 
     private Long afm;
@@ -11,6 +12,12 @@ public class AuthorityDTO {
     private String address;
 
     private Long phone;
+
+    private String surname;
+
+    private String fathername;
+
+    private Date birthDate;
 
     public Long getId() {
         return id;
@@ -50,5 +57,29 @@ public class AuthorityDTO {
 
     public void setPhone(Long phone) {
         this.phone = phone;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getFathername() {
+        return fathername;
+    }
+
+    public void setFathername(String fathername) {
+        this.fathername = fathername;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 }

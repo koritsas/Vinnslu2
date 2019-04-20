@@ -1,4 +1,4 @@
-package org.koritsas.vinnslu.main.dto;
+package org.koritsas.vinnslu.main.ws.dto.topo;
 
 import com.vividsolutions.jts.geom.Polygon;
 import org.koritsas.vinnslu.main.models.common.Company;

@@ -1,4 +1,4 @@
-package org.koritsas.vinnslu.main.dto;
+package org.koritsas.vinnslu.main.ws.dto.common;
 
 import org.koritsas.vinnslu.main.models.common.Document;
 

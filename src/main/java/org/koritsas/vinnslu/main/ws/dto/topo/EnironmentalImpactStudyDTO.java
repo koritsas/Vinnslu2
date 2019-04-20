@@ -1,4 +1,4 @@
-package org.koritsas.vinnslu.main.dto;
+package org.koritsas.vinnslu.main.ws.dto.topo;
 
 import org.koritsas.vinnslu.main.models.common.Document;
 import org.koritsas.vinnslu.main.models.topo.Topo;
