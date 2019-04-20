@@ -6,7 +6,6 @@ import org.koritsas.vinnslu.main.models.topo.StandardEnvironmentalCommitments;
 import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.ws.dto.AbstractDto;
 
-
 public class StandardEnvironmentalCommitmentsDTO implements AbstractDto<Long> {
 
     private Long id;
