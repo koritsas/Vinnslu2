@@ -1,9 +1,14 @@
 package org.koritsas.vinnslu.main.models.topo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Polygon;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
 import org.koritsas.vinnslu.main.models.common.Company;
+import org.koritsas.vinnslu.main.utils.TopoDeserializer;
+import org.koritsas.vinnslu.main.utils.TopoSerializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -12,6 +17,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@JsonSerialize(using = TopoSerializer.class)
 public class Topo implements Serializable {
 
     @Id
@@ -33,7 +39,7 @@ public class Topo implements Serializable {
     @Max(value = 300000)
     private double area;
 
-    @NotNull
+   // @NotNull
     private Polygon polygon;
 
     private String community;
@@ -47,18 +53,19 @@ public class Topo implements Serializable {
     @NotNull
     private boolean forest;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "topo_owner_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "TOPO_OWNER_FK"))
+
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id",foreignKey = @ForeignKey(name = "TOPO_OWNER_FK"))
     private Company topoOwner;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "OWNER_FK"))
-    private Company owner;
+    @JoinColumn(referencedColumnName = "id",foreignKey = @ForeignKey(name = "AREA_OWNER_FK"))
+    private Company areaOwner;
 
     public Topo() {
     }
 
-    public Topo(Long abl, @Max(value = 300000) double area, @NotNull Polygon polygon, String community, String location, String municipality, String prefecture, Company topoOwner, Company owner) {
+    public Topo(Long abl, @Max(value = 300000) double area, @NotNull Polygon polygon, String community, String location, String municipality, String prefecture, @NotNull boolean forest, Company topoOwner, Company areaOwner) {
         this.abl = abl;
         this.area = area;
         this.polygon = polygon;
@@ -66,8 +73,9 @@ public class Topo implements Serializable {
         this.location = location;
         this.municipality = municipality;
         this.prefecture = prefecture;
+        this.forest = forest;
         this.topoOwner = topoOwner;
-        this.owner = owner;
+        this.areaOwner = areaOwner;
     }
 
     public Long getId() {
@@ -130,6 +138,14 @@ public class Topo implements Serializable {
         this.prefecture = prefecture;
     }
 
+    public boolean isForest() {
+        return forest;
+    }
+
+    public void setForest(boolean forest) {
+        this.forest = forest;
+    }
+
     public Company getTopoOwner() {
         return topoOwner;
     }
@@ -138,12 +154,12 @@ public class Topo implements Serializable {
         this.topoOwner = topoOwner;
     }
 
-    public Company getOwner() {
-        return owner;
+    public Company getAreaOwner() {
+        return areaOwner;
     }
 
-    public void setOwner(Company owner) {
-        this.owner = owner;
+    public void setAreaOwner(Company areaOwner) {
+        this.areaOwner = areaOwner;
     }
 
     @Override
@@ -152,6 +168,7 @@ public class Topo implements Serializable {
         if (!(o instanceof Topo)) return false;
         Topo topo = (Topo) o;
         return Double.compare(topo.area, area) == 0 &&
+                forest == topo.forest &&
                 Objects.equals(abl, topo.abl) &&
                 Objects.equals(polygon, topo.polygon) &&
                 Objects.equals(community, topo.community) &&
@@ -159,12 +176,12 @@ public class Topo implements Serializable {
                 Objects.equals(municipality, topo.municipality) &&
                 Objects.equals(prefecture, topo.prefecture) &&
                 Objects.equals(topoOwner, topo.topoOwner) &&
-                Objects.equals(owner, topo.owner);
+                Objects.equals(areaOwner, topo.areaOwner);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(abl, area, polygon, community, location, municipality, prefecture, topoOwner, owner);
+        return Objects.hash(abl, area, polygon, community, location, municipality, prefecture, forest, topoOwner, areaOwner);
     }
 
     @Override
@@ -178,8 +195,9 @@ public class Topo implements Serializable {
                 ", location='" + location + '\'' +
                 ", municipality='" + municipality + '\'' +
                 ", prefecture='" + prefecture + '\'' +
+                ", forest=" + forest +
                 ", topoOwner=" + topoOwner +
-                ", owner=" + owner +
+                ", areaOwner=" + areaOwner +
                 '}';
     }
 }

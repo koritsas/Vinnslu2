@@ -26,7 +26,8 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.hibernate:hibernate-spatial'
 
@@ -37,7 +38,11 @@ dependencies {
     
     
     
-    compile group: 'org.flowable', name: 'flowable-spring-boot-starter-process', version: '6.4.1'
+   // compile group: 'org.flowable', name: 'flowable-spring-boot-starter-process', version: '6.4.1'
+    compile 'com.bedatadriven:jackson-datatype-jts:+'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.9.8'
+
+    
     
 
     compile group: 'org.modelmapper.extensions', name: 'modelmapper-spring', version: '2.3.0'

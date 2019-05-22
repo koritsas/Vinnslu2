@@ -25,7 +25,7 @@ public interface TopoRepository extends JpaRepository<Topo, Long> {
 
     List<Topo> findByPrefecture(String prefecture);
 
-    List<Topo> findByOwner(Company areaOwner);
+    List<Topo> findByAreaOwner(Company areaOwner);
 
     List<Topo> findByTopoOwner(Company topoOwner);
 

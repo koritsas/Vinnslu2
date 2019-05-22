@@ -53,6 +53,7 @@ public class Vehicle implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date securityEnd;
 
+
     @ManyToOne
     @JoinColumn(name = "owner_company", referencedColumnName = "id", foreignKey = @ForeignKey(name = "COMPANY_ID_FK"))
     private Company ownerCompany;
