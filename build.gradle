@@ -42,7 +42,7 @@ dependencies {
     compile 'com.bedatadriven:jackson-datatype-jts:+'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.9.8'
 
-    
+    compile group: 'org.flowable', name: 'flowable-spring-boot-starter', version: '6.4.1'
     
 
     compile group: 'org.modelmapper.extensions', name: 'modelmapper-spring', version: '2.3.0'

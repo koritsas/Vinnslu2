@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.flowable:flowable-dmn-engine-configurator:6.4.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-dmn-engine-configurator/6.4.1/b2ea274b3d719833fc92e1a3f2cf48f5df1954e2/flowable-dmn-engine-configurator-6.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-dmn-engine-configurator/6.4.1/bd5d0bab2c79242ef56fc2a0ce8edaf40ead4598/flowable-dmn-engine-configurator-6.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

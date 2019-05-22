@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.flowable:flowable-engine-configurator:6.4.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-engine-configurator/6.4.1/d538f929b3237f17c191e18d02a222b08afe768d/flowable-engine-configurator-6.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-engine-configurator/6.4.1/ef3627b87f7cd281aedaef131c954ad2c5fc4957/flowable-engine-configurator-6.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.flowable:flowable-form-json-converter:6.4.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-form-json-converter/6.4.1/4cf1a26ac3d7aa728c75d5a8e2a1f65a35652b7a/flowable-form-json-converter-6.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-form-json-converter/6.4.1/c3b07c69108e9fb2c380d0f4c7feceec88d68df3/flowable-form-json-converter-6.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

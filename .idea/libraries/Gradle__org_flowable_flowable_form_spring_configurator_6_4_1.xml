@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.flowable:flowable-form-spring-configurator:6.4.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-form-spring-configurator/6.4.1/280800b2ca79b0f6a87a74559489ad7bfd1ae48f/flowable-form-spring-configurator-6.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-form-spring-configurator/6.4.1/72ab674bc5e1dadd128b3442476469fbe3dc4ff6/flowable-form-spring-configurator-6.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.flowable:flowable-dmn-xml-converter:6.4.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-dmn-xml-converter/6.4.1/9b894e0c845d93c363d712235682ef4a50c65301/flowable-dmn-xml-converter-6.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-dmn-xml-converter/6.4.1/b36e1052c8da6d5199bedf0da806c4133f004677/flowable-dmn-xml-converter-6.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

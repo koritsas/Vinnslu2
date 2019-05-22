@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.flowable:flowable-idm-api:6.4.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-idm-api/6.4.1/570a59fccb43da4257469ca145f377767fb22fd/flowable-idm-api-6.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-idm-api/6.4.1/d98005430cbcd6450e82450312b0573a97933c55/flowable-idm-api-6.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

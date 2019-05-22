@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.flowable:flowable-spring-boot-starter-dmn:6.4.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-spring-boot-starter-dmn/6.4.1/bb0e0235d5f623c6cde00e900a738a6e15d40957/flowable-spring-boot-starter-dmn-6.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.flowable/flowable-spring-boot-starter-dmn/6.4.1/eef5dec3d82a285846ca7b8930ee7010c5f1af05/flowable-spring-boot-starter-dmn-6.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
