@@ -10,6 +10,7 @@ import org.koritsas.vinnslu.main.models.topo.Topo;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 @MappedSuperclass
@@ -44,18 +45,30 @@ public class Application implements Serializable {
     @JoinColumn(columnDefinition = "topo_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "APP_TOPO_FK"))
     private Topo topo;
 
+    @Temporal(TemporalType.DATE)
+    private Date applicationDate;
+
     @OneToOne(targetEntity = Document.class, fetch = FetchType.LAZY)
     private Document document;
 
     public Application() {
     }
 
-    public Application(String protocol, Company sender, Authority receiver, @NotNull Topo topo, Document document) {
+    public Application(String protocol, Company sender, Authority receiver, @NotNull Topo topo, Date applicationDate, Document document) {
         this.protocol = protocol;
         this.sender = sender;
         this.receiver = receiver;
         this.topo = topo;
+        this.applicationDate = applicationDate;
         this.document = document;
+    }
+
+    public Date getApplicationDate() {
+        return applicationDate;
+    }
+
+    public void setApplicationDate(Date applicationDate) {
+        this.applicationDate = applicationDate;
     }
 
     public Long getId() {
