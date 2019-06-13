@@ -2,7 +2,6 @@ package org.koritsas.vinnslu.main.ws.services.workflow;
 
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
-import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.ws.services.crud.topo.TopoService;
@@ -53,7 +52,8 @@ public class ProcessService {
 
        System.out.println("------------Completed-----------------");
 
-      taskService.complete(id);
+
+       taskService.complete(id);
    }
 
 

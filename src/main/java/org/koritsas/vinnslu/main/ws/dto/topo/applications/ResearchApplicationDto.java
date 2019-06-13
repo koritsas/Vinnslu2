@@ -3,6 +3,7 @@ package org.koritsas.vinnslu.main.ws.dto.topo.applications;
 import org.koritsas.vinnslu.main.models.common.Authority;
 import org.koritsas.vinnslu.main.models.common.Company;
 import org.koritsas.vinnslu.main.models.common.Document;
+import org.koritsas.vinnslu.main.models.common.Opinion;
 import org.koritsas.vinnslu.main.models.topo.ResearchLicense;
 import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
@@ -23,8 +24,38 @@ public class ResearchApplicationDto implements AbstractDto<Long> {
 
     private ResearchLicense researchLicense;
 
+    private Opinion topographicalAuthorityOpinion;
+
+    private Opinion geologicalInstituteOpinion;
+
+    private Opinion armyOpinion;
 
     private Document document;
+
+
+    public Opinion getTopographicalAuthorityOpinion() {
+        return topographicalAuthorityOpinion;
+    }
+
+    public void setTopographicalAuthorityOpinion(Opinion topographicalAuthorityOpinion) {
+        this.topographicalAuthorityOpinion = topographicalAuthorityOpinion;
+    }
+
+    public Opinion getGeologicalInstituteOpinion() {
+        return geologicalInstituteOpinion;
+    }
+
+    public void setGeologicalInstituteOpinion(Opinion geologicalInstituteOpinion) {
+        this.geologicalInstituteOpinion = geologicalInstituteOpinion;
+    }
+
+    public Opinion getArmyOpinion() {
+        return armyOpinion;
+    }
+
+    public void setArmyOpinion(Opinion armyOpinion) {
+        this.armyOpinion = armyOpinion;
+    }
 
     public String getProtocol() {
         return protocol;
