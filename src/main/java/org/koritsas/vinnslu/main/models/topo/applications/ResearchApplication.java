@@ -40,6 +40,30 @@ public class ResearchApplication extends Application {
         this.armyOpinion = armyOpinion;
     }
 
+    public Opinion getTopographicalAuthorityOpinion() {
+        return topographicalAuthorityOpinion;
+    }
+
+    public void setTopographicalAuthorityOpinion(Opinion topographicalAuthorityOpinion) {
+        this.topographicalAuthorityOpinion = topographicalAuthorityOpinion;
+    }
+
+    public Opinion getGeologicalInstituteOpinion() {
+        return geologicalInstituteOpinion;
+    }
+
+    public void setGeologicalInstituteOpinion(Opinion geologicalInstituteOpinion) {
+        this.geologicalInstituteOpinion = geologicalInstituteOpinion;
+    }
+
+    public Opinion getArmyOpinion() {
+        return armyOpinion;
+    }
+
+    public void setArmyOpinion(Opinion armyOpinion) {
+        this.armyOpinion = armyOpinion;
+    }
+
     public ResearchLicense getResearchLicense() {
         return researchLicense;
     }

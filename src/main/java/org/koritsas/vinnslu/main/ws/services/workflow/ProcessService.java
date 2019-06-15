@@ -42,18 +42,30 @@ public class ProcessService {
 
    }
 
+    @Transactional
+    public Task getTaskById(String id) {
+        return taskService.createTaskQuery().taskId(id).singleResult();
+    }
+
    @Transactional
-    public List<Task> getTasks(){
-        return taskService.createTaskQuery().list();
+   public List<Task> getTasks(String name) {
+
+       if (name == null) {
+           return taskService.createTaskQuery().list();
+       } else {
+           return taskService.createTaskQuery().taskName(name).list();
+       }
+
+
    }
 
    @Transactional
-    public void completeTask(String id){
+   public void completeTask(String id, Object variable) {
 
-       System.out.println("------------Completed-----------------");
+       Map<String, Object> variables = new HashMap<>();
+       variables.put(variable.getClass().getName(), variable);
 
-
-       taskService.complete(id);
+       taskService.complete(id, variables);
    }
 
 

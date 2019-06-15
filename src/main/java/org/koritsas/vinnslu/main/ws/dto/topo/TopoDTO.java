@@ -1,15 +1,16 @@
 package org.koritsas.vinnslu.main.ws.dto.topo;
 
+import com.bedatadriven.jackson.datatype.jts.serialization.GeometryDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Polygon;
 import org.koritsas.vinnslu.main.models.common.Company;
 import org.koritsas.vinnslu.main.models.topo.Topo;
-import org.koritsas.vinnslu.main.utils.TopoDeserializer;
 import org.koritsas.vinnslu.main.ws.dto.AbstractDto;
 
 
-@JsonDeserialize(using = TopoDeserializer.class)
+//@JsonDeserialize(using = TopoDeserializer.class)
+@JsonDeserialize(using = GeometryDeserializer.class)
 public class TopoDTO implements AbstractDto<Long> {
 
     private Long id;

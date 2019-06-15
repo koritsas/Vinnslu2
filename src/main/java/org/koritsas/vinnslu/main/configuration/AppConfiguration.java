@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
@@ -23,12 +23,17 @@ public class AppConfiguration {
     }
 
 
-
-  /*  @Bean
+    @Bean
     public JtsModule jtsModule()
     {
         return new JtsModule();
     }
-*/
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(jtsModule());
+        return objectMapper;
+    }
 
 }

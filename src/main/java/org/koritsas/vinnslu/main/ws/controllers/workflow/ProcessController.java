@@ -1,8 +1,8 @@
 package org.koritsas.vinnslu.main.ws.controllers.workflow;
 
-import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.koritsas.vinnslu.main.models.topo.Topo;
+import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
 import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
 import org.koritsas.vinnslu.main.utils.TaskRepresentation;
 import org.koritsas.vinnslu.main.ws.dto.topo.TopoDTO;
@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/workflow")
@@ -28,9 +30,10 @@ public class ProcessController {
         this.mapper=mapper;
     }
 
-    @GetMapping("/process/tasks")
-    public List<TaskRepresentation> getTasks(){
-        List<Task> tasks = processService.getTasks();
+    @GetMapping("/process/tasks/{name}")
+    public List<TaskRepresentation> getTasks(@RequestParam(required = false) String name) {
+        List<Task> tasks = processService.getTasks(name);
+
 
         List<TaskRepresentation> taskRepresentations = new ArrayList<>();
 
@@ -46,17 +49,33 @@ public class ProcessController {
     public void createProcess(@RequestBody TopoDTO dto){
 
        processService.startProcess(mapper.map(dto, Topo.class));
+
     }
-
+/*
     @PostMapping("/process/tasks/{id}")
-    public ResponseEntity<String> completeTask(@PathVariable String id){
+    public ResponseEntity<String> completeTask(@PathVariable String id,@RequestBody String dto){
 
-        processService.completeTask(id);
+       Topo t= mapper.map(dto,Topo.class);
 
+        System.out.println(t.toString());
+
+       // processService.completeTask(id);
 
        return ResponseEntity.ok("Task with id "+ id +" successfully completed");
     }
+*/
 
 
+    @PostMapping("/process/tasks/researchApplication/{id}")
+    public ResponseEntity<String> completeResearchApplicationTask(@PathVariable String id, @RequestBody String dto) {
 
+        ResearchApplication application = mapper.map(dto, ResearchApplication.class);
+
+        Map<String, Object> variables = new HashMap<>();
+
+        return null;
+
+    }
 }
+
+

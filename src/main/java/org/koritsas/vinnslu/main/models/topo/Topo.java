@@ -1,13 +1,10 @@
 package org.koritsas.vinnslu.main.models.topo;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Polygon;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
 import org.koritsas.vinnslu.main.models.common.Company;
-import org.koritsas.vinnslu.main.utils.TopoDeserializer;
 import org.koritsas.vinnslu.main.utils.TopoSerializer;
 
 import javax.persistence.*;
@@ -39,7 +36,7 @@ public class Topo implements Serializable {
     @Max(value = 300000)
     private double area;
 
-   // @NotNull
+    @NotNull
     private Polygon polygon;
 
     private String community;
@@ -54,11 +51,11 @@ public class Topo implements Serializable {
     private boolean forest;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id",foreignKey = @ForeignKey(name = "TOPO_OWNER_FK"))
     private Company topoOwner;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id",foreignKey = @ForeignKey(name = "AREA_OWNER_FK"))
     private Company areaOwner;
 

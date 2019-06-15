@@ -41,7 +41,7 @@ public class Application implements Serializable {
     private Authority receiver;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(columnDefinition = "topo_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "APP_TOPO_FK"))
     private Topo topo;
 
