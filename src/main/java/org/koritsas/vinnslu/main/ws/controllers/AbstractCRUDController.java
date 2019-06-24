@@ -35,6 +35,9 @@ public class AbstractCRUDController<S extends AbstractCRUDService, E extends Ser
     @PostMapping()
     public ResponseEntity<E> create(@RequestBody DTO dto) {
 
+        System.out.println("---------------Here's the DTO-----------");
+        System.out.println(dto.toString());
+
 	return ResponseEntity.status(201).body((E) service.create(mapper.map(dto, (Class<E>) dto.getClaZZ())));
     }
 
