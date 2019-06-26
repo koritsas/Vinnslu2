@@ -51,7 +51,7 @@ public class TopoSerializer extends StdSerializer<Topo> {
         gen.writeStringField("prefecture", value.getPrefecture());
         gen.writeBooleanField("forest", value.isForest());
         gen.writeObjectField("topoOwner", value.getTopoOwner());
-        gen.writeObjectField("owner", value.getAreaOwner());
+        gen.writeObjectField("areaOwner", value.getAreaOwner());
         gen.writeEndObject();
 
 

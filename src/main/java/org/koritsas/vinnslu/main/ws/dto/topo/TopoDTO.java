@@ -2,31 +2,37 @@ package org.koritsas.vinnslu.main.ws.dto.topo;
 
 import com.bedatadriven.jackson.datatype.jts.serialization.GeometryDeserializer;
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Polygon;
 import org.koritsas.vinnslu.main.models.common.Company;
 import org.koritsas.vinnslu.main.models.topo.Topo;
+import org.koritsas.vinnslu.main.utils.TopoDeserializer;
 import org.koritsas.vinnslu.main.ws.dto.AbstractDto;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 
 //@JsonDeserialize(using = TopoDeserializer.class)
 //@JsonDeserialize(using = GeometryDeserializer.class)
 
+@JsonDeserialize(using = TopoDeserializer.class)
 @JsonIgnoreProperties({"type"})
 public class TopoDTO implements AbstractDto<Long> {
 
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long id;
 
 
     private Long abl;
 
-    @JsonProperty("geometry")
-    @JsonDeserialize(contentAs = GeometryDeserializer.class)
+    private double area;
+
+   @JsonProperty("geometry")
+   @JsonDeserialize(contentAs = GeometryDeserializer.class)
     private Polygon polygon;
 
 
@@ -45,12 +51,11 @@ public class TopoDTO implements AbstractDto<Long> {
     private boolean forest;
 
 
-    @JsonUnwrapped
     private Company topoOwner;
 
 
-    @JsonUnwrapped
     private Company areaOwner;
+
 
 
     @SuppressWarnings("unchecked")
@@ -58,7 +63,6 @@ public class TopoDTO implements AbstractDto<Long> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonUnwrapped
     private void unpackProperties(Map<String, Object> properties) {
-
 
 /*
         System.out.println("LEEEEEEEEEEEEEEELELELELELELELELELELELLELELELEL");
@@ -73,37 +77,76 @@ public class TopoDTO implements AbstractDto<Long> {
 
 
 
-       if (properties.get("id")!=null){
-            this.id= Long.valueOf((Long) properties.get("id")).longValue();
+        if (properties.get("id")!=null){
+            this.id= Long.valueOf(properties.get("id").toString());
         }
 
 
-        this.abl= Long.valueOf((Integer) properties.get("abl")).longValue();
-        this.community= (String) properties.get("community");
-        this.municipality= (String) properties.get("municipality");
-        this.location= (String) properties.get("location");
-        this.prefecture= (String) properties.get("prefecture");
-        this.forest= (boolean) properties.get("forest");
+        if (properties.get("abl")!=null){
+            this.abl= Long.valueOf(properties.get("abl").toString());
+        }
 
-       // Map<String,Object>  topoOwner= (Map<String, Object>) properties.get("topoOwner");
+        if (properties.get("community")!=null){
+            this.community= (String) properties.get("community");
+        }
 
+        if (properties.get("municipality")!=null){
+            this.municipality= (String) properties.get("municipality");
+        }
+
+        if (properties.get("location")!=null){
+            this.location= (String) properties.get("location");
+        }
+
+        if(properties.get("prefecture")!=null){
+            this.prefecture= (String) properties.get("prefecture");
+        }
+
+        if (properties.get("forest")!=null){
+            this.forest= (boolean) properties.get("forest");
+        }
+
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+
+            System.out.println("---------------------ENTERED TRY CLAUSE____________________");
+            this.topoOwner = mapper.readValue(properties.get("topoOwner").toString(),Company.class);
+
+            System.out.println(topoOwner.toString());
+
+            this.areaOwner = mapper.readValue(properties.get("areaOwner").toString(),Company.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+/*
+        Map<String,String> topoOwnerMap = (Map<String, String>) properties.get("topoOwner");
+
+
+        this.topoOwner.setAddress(topoOwnerMap.get("address"));
+        this.topoOwner.setAfm(Long.valueOf(topoOwnerMap.get("afm")));
+        this.topoOwner.setName(topoOwnerMap.get("name"));
+        this.topoOwner.setPhone(Long.valueOf(topoOwnerMap.get("phone")));
+
+
+
+        Map<String,String> areaOwnerMap = (Map<String, String>) properties.get("areaOwner");
+
+
+        this.areaOwner.setAddress(topoOwnerMap.get("address"));
+        this.areaOwner.setAfm(Long.valueOf(topoOwnerMap.get("afm")));
+        this.areaOwner.setName(topoOwnerMap.get("name"));
+        this.areaOwner.setPhone(Long.valueOf(topoOwnerMap.get("phone")));
 */
 
-        // this.areaOwner = (Company) properties.get("areaOwner");
-    }
-
-    @JsonUnwrapped
-    private Object getIfNotNull(String key, Map<String, Object> properties) {
-
-
-        if (properties.get(key) != null) {
-            return properties.get(key);
-        } else {
-            return "";
-        }
 
 
     }
+
+
+
 
     public Coordinate[] getCoordinates() {
         return this.polygon.getCoordinates();
@@ -118,7 +161,8 @@ public class TopoDTO implements AbstractDto<Long> {
         return Topo.class;
     }
 
-    @JsonSetter("id")
+
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -127,9 +171,17 @@ public class TopoDTO implements AbstractDto<Long> {
         return forest;
     }
 
+    public double getArea() {
+        return area;
+    }
+
+    public void setArea(double area) {
+        this.area = area;
+    }
+
     public Long getAbl() { return abl; }
 
-    @JsonSetter("abl")
+
     public void setAbl(Long abl) { this.abl = abl; }
 
     public Polygon getPolygon() { return polygon; }
@@ -138,42 +190,38 @@ public class TopoDTO implements AbstractDto<Long> {
 
     public String getCommunity() { return community; }
 
-    @JsonSetter("community")
     public void setCommunity(String community) { this.community = community; }
 
     public String getLocation() { return location; }
 
-    @JsonSetter("location")
     public void setLocation(String location) { this.location = location; }
 
     public String getPrefecture() { return prefecture; }
 
-    @JsonSetter("prefecture")
     public void setPrefecture(String prefecture) { this.prefecture = prefecture; }
 
     public boolean getForest() { return forest; }
 
-    @JsonSetter("forest")
     public void setForest(boolean forest) { this.forest = forest; }
 
     public Company getTopoOwner() { return topoOwner; }
 
-    @JsonSetter("topoOwner")
     public void setTopoOwner(Company topoOwner) { this.topoOwner = topoOwner; }
 
     public String getMunicipality() {
         return municipality;
     }
 
-    @JsonSetter("municipality")
     public void setMunicipality(String municipality) {
         this.municipality = municipality;
     }
 
     public Company getAreaOwner() { return areaOwner; }
 
-    @JsonSetter("areaOwner")
+
     public void setAreaOwner(Company areaOwner) { this.areaOwner = areaOwner; }
+
+
 
     @Override
     public String toString() {

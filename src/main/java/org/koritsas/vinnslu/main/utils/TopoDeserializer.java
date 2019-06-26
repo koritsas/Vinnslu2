@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -56,8 +57,52 @@ public class TopoDeserializer extends JsonDeserializer<TopoDTO> {
        dto.setLocation(location);
        dto.setPrefecture(prefecture);
        dto.setForest(forest);
+       dto.setMunicipality(municipality);
+       dto.setArea(area);
+
+
+        Long topoOwnerId=null;
+       if (node.get("properties").get("topoOwner").get("id")!=null) {
+           topoOwnerId = node.get("properties").get("topoOwner").get("id").asLong();
+       }
+        Long topoOwnerAfm = node.get("properties").get("topoOwner").get("afm").asLong();
+        Long topoOwnerPhone = node.get("properties").get("topoOwner").get("phone").asLong();
+        String topoOwnerName = node.get("properties").get("topoOwner").get("name").asText().toString();
+        String topoOwnerAddress = node.get("properties").get("topoOwner").get("address").asText().toString();
+
+        Company topoOwner = new Company();
+        topoOwner.setId(topoOwnerId);
+        topoOwner.setPhone(topoOwnerPhone);
+        topoOwner.setName(topoOwnerName);
+        topoOwner.setAfm(topoOwnerAfm);
+        topoOwner.setAddress(topoOwnerAddress);
+
+        dto.setTopoOwner(topoOwner);
+
+
+        Long areaOwnerId=null;
+        if (node.get("properties").get("areaOwner").get("id")!=null) {
+            areaOwnerId = node.get("properties").get("areaOwner").get("id").asLong();
+        }
+        Long areaOwnerAfm = node.get("properties").get("areaOwner").get("afm").asLong();
+        Long areaOwnerPhone = node.get("properties").get("areaOwner").get("phone").asLong();
+        String areaOwnerName = node.get("properties").get("areaOwner").get("name").asText();
+        String areaOwnerAddress = node.get("properties").get("areaOwner").get("address").asText();
+
+        Company areaOwner = new Company();
+        areaOwner.setId(areaOwnerId);
+        areaOwner.setPhone(areaOwnerPhone);
+        areaOwner.setName(areaOwnerName);
+        areaOwner.setAfm(areaOwnerAfm);
+        areaOwner.setAddress(areaOwnerAddress);
+
+        dto.setAreaOwner(areaOwner);
+
+
+
 
 
         return dto;
     }
+
 }

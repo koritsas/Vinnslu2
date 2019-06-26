@@ -45,6 +45,8 @@ public class VinnsluApplication {
                 "}\n" +
                 "    ";
 
+
+
 /*
         GeometryModelMapper mapper = new GeometryModelMapper();
 
