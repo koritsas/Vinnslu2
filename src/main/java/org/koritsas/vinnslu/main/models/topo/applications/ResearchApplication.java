@@ -20,13 +20,13 @@ public class ResearchApplication extends Application {
     private ResearchLicense researchLicense;
 
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
     private Opinion topographicalAuthorityOpinion;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
     private Opinion geologicalInstituteOpinion;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
     private Opinion armyOpinion;
 
     public ResearchApplication() {

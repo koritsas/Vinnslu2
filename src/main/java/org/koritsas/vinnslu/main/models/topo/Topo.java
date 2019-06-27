@@ -3,6 +3,7 @@ package org.koritsas.vinnslu.main.models.topo;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Polygon;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
 import org.koritsas.vinnslu.main.models.common.Company;
@@ -52,11 +53,13 @@ public class Topo implements Serializable {
     private boolean forest;
 
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
     @JoinColumn(referencedColumnName = "id",foreignKey = @ForeignKey(name = "TOPO_OWNER_FK"))
     private Company topoOwner;
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @ManyToOne
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
     @JoinColumn(referencedColumnName = "id",foreignKey = @ForeignKey(name = "AREA_OWNER_FK"))
     private Company areaOwner;
 

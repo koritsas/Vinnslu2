@@ -12,11 +12,16 @@ import com.vividsolutions.jts.geom.Polygon;
 import org.koritsas.vinnslu.main.models.common.Company;
 import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.ws.dto.topo.TopoDTO;
+import org.koritsas.vinnslu.main.ws.repos.common.CompanyRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.Access;
 import java.io.IOException;
 
 public class TopoDeserializer extends JsonDeserializer<TopoDTO> {
+
+
     @Override
     public TopoDTO deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 
@@ -44,10 +49,9 @@ public class TopoDeserializer extends JsonDeserializer<TopoDTO> {
 
 
 
-        GeometryFactory factory = new GeometryFactory();
+       GeometryFactory factory = new GeometryFactory();
 
-
-        Polygon polygon =factory.createPolygon(coordinates);
+       Polygon polygon =factory.createPolygon(coordinates);
 
        TopoDTO dto = new TopoDTO();
 
@@ -61,48 +65,70 @@ public class TopoDeserializer extends JsonDeserializer<TopoDTO> {
        dto.setArea(area);
 
 
-        Long topoOwnerId=null;
-       if (node.get("properties").get("topoOwner").get("id")!=null) {
-           topoOwnerId = node.get("properties").get("topoOwner").get("id").asLong();
-       }
-        Long topoOwnerAfm = node.get("properties").get("topoOwner").get("afm").asLong();
-        Long topoOwnerPhone = node.get("properties").get("topoOwner").get("phone").asLong();
-        String topoOwnerName = node.get("properties").get("topoOwner").get("name").asText().toString();
-        String topoOwnerAddress = node.get("properties").get("topoOwner").get("address").asText().toString();
-
-        Company topoOwner = new Company();
-        topoOwner.setId(topoOwnerId);
-        topoOwner.setPhone(topoOwnerPhone);
-        topoOwner.setName(topoOwnerName);
-        topoOwner.setAfm(topoOwnerAfm);
-        topoOwner.setAddress(topoOwnerAddress);
+        Company topoOwner = parseTopoOwner(node);
 
         dto.setTopoOwner(topoOwner);
 
+        Company areaOwner = parseAreaOwner(node);
+
+        dto.setAreaOwner(areaOwner);
+
+        return dto;
+    }
+
+    private Company parseAreaOwner(JsonNode node) {
 
         Long areaOwnerId=null;
         if (node.get("properties").get("areaOwner").get("id")!=null) {
             areaOwnerId = node.get("properties").get("areaOwner").get("id").asLong();
+
+            Company areaOwner = new Company();
+
+            areaOwner.setId(areaOwnerId);
+            return areaOwner;
+        }else{
+            Long areaOwnerAfm = node.get("properties").get("areaOwner").get("afm").asLong();
+            Long areaOwnerPhone = node.get("properties").get("areaOwner").get("phone").asLong();
+            String areaOwnerName = node.get("properties").get("areaOwner").get("name").asText();
+            String areaOwnerAddress = node.get("properties").get("areaOwner").get("address").asText();
+
+            Company areaOwner = new Company();
+            areaOwner.setId(areaOwnerId);
+            areaOwner.setPhone(areaOwnerPhone);
+            areaOwner.setName(areaOwnerName);
+            areaOwner.setAfm(areaOwnerAfm);
+            areaOwner.setAddress(areaOwnerAddress);
+
+            return areaOwner;
         }
-        Long areaOwnerAfm = node.get("properties").get("areaOwner").get("afm").asLong();
-        Long areaOwnerPhone = node.get("properties").get("areaOwner").get("phone").asLong();
-        String areaOwnerName = node.get("properties").get("areaOwner").get("name").asText();
-        String areaOwnerAddress = node.get("properties").get("areaOwner").get("address").asText();
 
-        Company areaOwner = new Company();
-        areaOwner.setId(areaOwnerId);
-        areaOwner.setPhone(areaOwnerPhone);
-        areaOwner.setName(areaOwnerName);
-        areaOwner.setAfm(areaOwnerAfm);
-        areaOwner.setAddress(areaOwnerAddress);
-
-        dto.setAreaOwner(areaOwner);
+    }
 
 
+    private Company parseTopoOwner(JsonNode node) {
+        Long topoOwnerId=null;
+        if (node.get("properties").get("topoOwner").get("id")!=null) {
+            topoOwnerId = node.get("properties").get("topoOwner").get("id").asLong();
+            Company topoOwner = new Company();
+            topoOwner.setId(topoOwnerId);
+            return topoOwner;
+        }else{
 
+            Long topoOwnerAfm = node.get("properties").get("topoOwner").get("afm").asLong();
+            Long topoOwnerPhone = node.get("properties").get("topoOwner").get("phone").asLong();
+            String topoOwnerName = node.get("properties").get("topoOwner").get("name").asText().toString();
+            String topoOwnerAddress = node.get("properties").get("topoOwner").get("address").asText().toString();
 
+            Company topoOwner = new Company();
+            topoOwner.setId(topoOwnerId);
+            topoOwner.setPhone(topoOwnerPhone);
+            topoOwner.setName(topoOwnerName);
+            topoOwner.setAfm(topoOwnerAfm);
+            topoOwner.setAddress(topoOwnerAddress);
 
-        return dto;
+           return topoOwner;
+        }
+
     }
 
 }

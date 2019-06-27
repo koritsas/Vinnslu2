@@ -1,5 +1,6 @@
 package org.koritsas.vinnslu.main.models.vehicles;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Parameter;
@@ -55,6 +56,7 @@ public class Vehicle implements Serializable {
 
 
     @ManyToOne
+	@Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST})
     @JoinColumn(name = "owner_company", referencedColumnName = "id", foreignKey = @ForeignKey(name = "COMPANY_ID_FK"))
     private Company ownerCompany;
 

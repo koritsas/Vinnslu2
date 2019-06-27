@@ -13,6 +13,8 @@ public class CompanyDto implements AbstractDto<Long> {
 
     private String address;
 
+    private Long phone;
+
     public Long getId() {
         return id;
     }
@@ -37,6 +39,14 @@ public class CompanyDto implements AbstractDto<Long> {
     public String getAddress() { return address; }
 
     public void setAddress(String address) { this.address = address; }
+
+    public Long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Long phone) {
+        this.phone = phone;
+    }
 
     @Override
     public String toString() {

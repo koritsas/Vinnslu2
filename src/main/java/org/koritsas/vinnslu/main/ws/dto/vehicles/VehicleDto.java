@@ -2,6 +2,7 @@ package org.koritsas.vinnslu.main.ws.dto.vehicles;
 
 import org.koritsas.vinnslu.main.models.common.Company;
 import org.koritsas.vinnslu.main.models.common.Person;
+import org.koritsas.vinnslu.main.models.types.Fuel;
 import org.koritsas.vinnslu.main.models.types.VehicleType;
 import org.koritsas.vinnslu.main.models.vehicles.Vehicle;
 import org.koritsas.vinnslu.main.ws.dto.AbstractDto;
@@ -33,6 +34,16 @@ public class VehicleDto implements AbstractDto<Long> {
     private String brand;
 
     private String model;
+
+    private Fuel fuel;
+
+    public Fuel getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(Fuel fuel) {
+        this.fuel = fuel;
+    }
 
     public Long getId() { return id; }
 

@@ -6,85 +6,29 @@ import org.koritsas.vinnslu.main.models.topo.EnvironmentalImpactStudy;
 import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.ws.dto.AbstractDto;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class OpinionDTO implements AbstractDto<Long> {
 
     private Long id;
 
-    private boolean active;
-
-    private String protocol;
-
-    private String ada;
-
-    private Date startDate;
-
-    private Topo topo;
-
-    private EnvironmentalImpactStudy environmentalImpactStudy;
+    @NotNull
+    private boolean positive;
 
     private Document document;
 
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public Class getClaZZ() {
-        return Opinion.class;
-    }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public boolean isActive() {
-        return active;
+    public boolean isPositive() {
+        return positive;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public String getProtocol() {
-        return protocol;
-    }
-
-    public void setProtocol(String protocol) {
-        this.protocol = protocol;
-    }
-
-    public String getAda() {
-        return ada;
-    }
-
-    public void setAda(String ada) {
-        this.ada = ada;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Topo getTopo() {
-        return topo;
-    }
-
-    public void setTopo(Topo topo) {
-        this.topo = topo;
-    }
-
-    public EnvironmentalImpactStudy getEnvironmentalImpactStudy() {
-        return environmentalImpactStudy;
-    }
-
-    public void setEnvironmentalImpactStudy(EnvironmentalImpactStudy environmentalImpactStudy) {
-        this.environmentalImpactStudy = environmentalImpactStudy;
+    public void setPositive(boolean positive) {
+        this.positive = positive;
     }
 
     public Document getDocument() {
@@ -94,4 +38,16 @@ public class OpinionDTO implements AbstractDto<Long> {
     public void setDocument(Document document) {
         this.document = document;
     }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public Class getClaZZ() {
+        return Opinion.class;
+    }
+
+
 }

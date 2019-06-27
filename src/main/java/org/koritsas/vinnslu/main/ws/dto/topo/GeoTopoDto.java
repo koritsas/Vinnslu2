@@ -1,22 +1,70 @@
 package org.koritsas.vinnslu.main.ws.dto.topo;
 
+import com.bedatadriven.jackson.datatype.jts.serialization.GeometryDeserializer;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.vividsolutions.jts.geom.Polygon;
+import org.koritsas.vinnslu.main.models.common.Company;
 import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.ws.dto.AbstractDto;
 
 import java.util.List;
 
-public abstract class GeoTopoDto implements AbstractDto {
+@JsonIgnoreProperties("type")
+public class GeoTopoDto implements AbstractDto<Long> {
+
+    public GeoTopoDto(){
+        this.abl=this.properties.getAbl();
+        this.area=this.properties.getArea();
+        this.location=this.properties.getLocation();
+        this.community=this.properties.getCommunity();
+        this.prefecture=this.properties.getPrefecture();
+        this.forest=this.properties.isForest();
+
+    }
+
+    private int lele;
+
+    private Long id;
+
+    private Long abl;
+
+    private double area;
+
+    @JsonProperty("geometry")
+    @JsonDeserialize(contentAs = GeometryDeserializer.class)
+    private Polygon polygon;
+
+
+    private String community;
+
+
+    private String municipality;
+
+
+    private String location;
+
+
+    private String prefecture;
+
+
+    private boolean forest;
+
+
+    private Company topoOwner;
+
+
+    private Company areaOwner;
+
 
 
     @JsonProperty("properties")
     private Properties properties;
-    @JsonProperty("geometry")
-    private Geometry geometry;
-    @JsonProperty("type")
-    private String type;
+
 
     public static class Properties {
+
         @JsonProperty("forest")
         private boolean forest;
         @JsonProperty("community")
@@ -30,19 +78,74 @@ public abstract class GeoTopoDto implements AbstractDto {
         @JsonProperty("location")
         private String location;
         @JsonProperty("abl")
-        private int abl;
+        private Long abl;
+
+        public boolean isForest() {
+            return forest;
+        }
+
+        public void setForest(boolean forest) {
+            this.forest = forest;
+
+        }
+
+        public String getCommunity() {
+            return community;
+        }
+
+        public void setCommunity(String community) {
+            this.community = community;
+        }
+
+        public double getArea() {
+            return area;
+        }
+
+        public void setArea(double area) {
+            this.area = area;
+        }
+
+        public String getMunicipality() {
+            return municipality;
+        }
+
+        public void setMunicipality(String municipality) {
+            this.municipality = municipality;
+        }
+
+        public String getPrefecture() {
+            return prefecture;
+        }
+
+        public void setPrefecture(String prefecture) {
+            this.prefecture = prefecture;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public void setLocation(String location) {
+            this.location = location;
+        }
+
+        public Long getAbl() {
+            return abl;
+        }
+
+        public void setAbl(Long abl) {
+            this.abl = abl;
+        }
     }
 
-    public static class Geometry {
-        @JsonProperty("coordinates")
-        private List<List<List<Integer>>> coordinates;
-        @JsonProperty("type")
-        private String type;
+    public Long getAbl(){
+        return this.abl;
     }
+
 
     @Override
-    public Object getId() {
-        return null;
+    public Long getId() {
+        return this.id;
     }
 
     @Override

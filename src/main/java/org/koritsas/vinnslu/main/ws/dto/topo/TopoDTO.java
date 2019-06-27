@@ -8,6 +8,7 @@ import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Polygon;
 import org.koritsas.vinnslu.main.models.common.Company;
 import org.koritsas.vinnslu.main.models.topo.Topo;
+import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
 import org.koritsas.vinnslu.main.utils.TopoDeserializer;
 import org.koritsas.vinnslu.main.ws.dto.AbstractDto;
 
@@ -19,9 +20,10 @@ import java.util.Map;
 //@JsonDeserialize(using = TopoDeserializer.class)
 //@JsonDeserialize(using = GeometryDeserializer.class)
 
-@JsonDeserialize(using = TopoDeserializer.class)
+//@JsonDeserialize(using = TopoDeserializer.class)
 @JsonIgnoreProperties({"type"})
 public class TopoDTO implements AbstractDto<Long> {
+
 
 
     private Long id;
@@ -63,6 +65,30 @@ public class TopoDTO implements AbstractDto<Long> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonUnwrapped
     private void unpackProperties(Map<String, Object> properties) {
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        GeometryModelMapper modelMapper = new GeometryModelMapper();
+        if (properties.getOrDefault("id",null)!=null){
+            this.id= Long.valueOf((Integer)properties.get("id"));
+        }
+        if (properties.getOrDefault("abl",null)!=null){
+            this.abl= Long.valueOf((Integer) properties.getOrDefault("abl",null));
+        }
+
+        this.area= (double) properties.get("area");
+        this.community = (String) properties.get("community");
+        this.location = (String) properties.get("location");
+        this.prefecture = (String) properties.get("prefecture");
+        this.municipality = (String) properties.get("municipality");
+        this.forest = (boolean) properties.get("forest");
+
+
+        this.topoOwner= modelMapper.map(properties.get("topoOwner"),Company.class);
+
+
+        this.areaOwner = modelMapper.map(properties.get("areaOwner"),Company.class);
+
 
 /*
         System.out.println("LEEEEEEEEEEEEEEELELELELELELELELELELELLELELELEL");
@@ -144,8 +170,6 @@ public class TopoDTO implements AbstractDto<Long> {
 
 
     }
-
-
 
 
     public Coordinate[] getCoordinates() {
