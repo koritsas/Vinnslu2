@@ -4,6 +4,8 @@ import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
 import org.koritsas.vinnslu.main.models.topo.Topo;
+import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
+import org.koritsas.vinnslu.main.ws.services.applications.ResearchApplicationService;
 import org.koritsas.vinnslu.main.ws.services.crud.topo.TopoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,21 +22,21 @@ public class ProcessService {
 
     private RuntimeService runtimeService;
 
-    private TopoService topoService;
+    private ResearchApplicationService researchApplicationService;
 
 
     @Autowired
-    public ProcessService(RuntimeService runtimeService, TaskService taskService,TopoService topoService){
+    public ProcessService(RuntimeService runtimeService, TaskService taskService,ResearchApplicationService researchApplicationService){
         this.runtimeService=runtimeService;
         this.taskService=taskService;
-        this.topoService=topoService;
+        this.researchApplicationService=researchApplicationService;
     }
 
    @Transactional
-    public void startProcess(Topo topo){
+    public void startProcess(ResearchApplication researchApplication){
 
         Map<String,Object> variables = new HashMap<>();
-        variables.put("topo",topoService.create(topo));
+        variables.put("ResearchApplication",researchApplicationService.create(researchApplication));
 
         runtimeService.startProcessInstanceByKey("vinnslu_workflow",variables);
 

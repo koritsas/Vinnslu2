@@ -1,5 +1,7 @@
 package org.koritsas.vinnslu.main.ws.dto.topo.applications;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.koritsas.vinnslu.main.models.common.Authority;
 import org.koritsas.vinnslu.main.models.common.Company;
 import org.koritsas.vinnslu.main.models.common.Document;
@@ -7,12 +9,12 @@ import org.koritsas.vinnslu.main.models.common.Opinion;
 import org.koritsas.vinnslu.main.models.topo.ResearchLicense;
 import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
+import org.koritsas.vinnslu.main.utils.TopoDeserializer;
 import org.koritsas.vinnslu.main.ws.dto.AbstractDto;
 
 public class ResearchApplicationDto implements AbstractDto<Long> {
 
     private Long id;
-
 
     private String protocol;
 
@@ -20,6 +22,7 @@ public class ResearchApplicationDto implements AbstractDto<Long> {
 
     private Authority receiver;
 
+    @JsonBackReference
     private Topo topo;
 
     private ResearchLicense researchLicense;

@@ -6,6 +6,7 @@ import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
 import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
 import org.koritsas.vinnslu.main.utils.TaskRepresentation;
 import org.koritsas.vinnslu.main.ws.dto.topo.TopoDTO;
+import org.koritsas.vinnslu.main.ws.dto.topo.applications.ResearchApplicationDto;
 import org.koritsas.vinnslu.main.ws.services.workflow.ProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,9 +47,9 @@ public class ProcessController {
 
 
     @PostMapping("/process")
-    public void createProcess(@RequestBody TopoDTO dto){
+    public void createProcess(@RequestBody ResearchApplicationDto dto){
 
-       processService.startProcess(mapper.map(dto, Topo.class));
+       processService.startProcess(mapper.map(dto, ResearchApplication.class));
 
     }
 /*
