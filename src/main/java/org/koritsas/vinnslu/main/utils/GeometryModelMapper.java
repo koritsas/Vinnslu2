@@ -1,22 +1,7 @@
 package org.koritsas.vinnslu.main.utils;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Polygon;
-import org.koritsas.vinnslu.main.models.topo.Topo;
-import org.koritsas.vinnslu.main.ws.dto.topo.GeoTopoDto;
-import org.koritsas.vinnslu.main.ws.dto.topo.TopoDTO;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
-import org.modelmapper.TypeMap;
-import org.modelmapper.spi.MappingContext;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class GeometryModelMapper extends ModelMapper {
 

@@ -9,7 +9,9 @@ import java.util.List;
 public interface ResearchLicenseRepository extends JpaRepository<ResearchLicense, Long> {
 
     ResearchLicense findByProtocol(String protocol);
+
     ResearchLicense findByAda(String ada);
+
     ResearchLicense findByStartDate(Date date);
 
 

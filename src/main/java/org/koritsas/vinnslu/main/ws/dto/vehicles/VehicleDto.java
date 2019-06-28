@@ -45,58 +45,106 @@ public class VehicleDto implements AbstractDto<Long> {
         this.fuel = fuel;
     }
 
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
     @Override
     public Class getClaZZ() {
         return Vehicle.class;
     }
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getFrameNumber() { return frameNumber; }
+    public String getFrameNumber() {
+        return frameNumber;
+    }
 
-    public void setFrameNumber(String frameNumber) { this.frameNumber = frameNumber; }
+    public void setFrameNumber(String frameNumber) {
+        this.frameNumber = frameNumber;
+    }
 
-    public String getLicensePlate() { return licensePlate; }
+    public String getLicensePlate() {
+        return licensePlate;
+    }
 
-    public void setLicensePlate(String licensePlate) { this.licensePlate = licensePlate; }
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
 
-    public String getColor() { return color; }
+    public String getColor() {
+        return color;
+    }
 
-    public void setColor(String color) { this.color = color; }
+    public void setColor(String color) {
+        this.color = color;
+    }
 
-    public VehicleType getVehicleType() { return vehicleType; }
+    public VehicleType getVehicleType() {
+        return vehicleType;
+    }
 
     public void setVehicleType(
-	VehicleType vehicleType) { this.vehicleType = vehicleType; }
+            VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
+    }
 
-    public Date getExhaustCardEnd() { return exhaustCardEnd; }
+    public Date getExhaustCardEnd() {
+        return exhaustCardEnd;
+    }
 
-    public void setExhaustCardEnd(Date exhaustCardEnd) { this.exhaustCardEnd = exhaustCardEnd; }
+    public void setExhaustCardEnd(Date exhaustCardEnd) {
+        this.exhaustCardEnd = exhaustCardEnd;
+    }
 
-    public Date getTollsEnd() { return tollsEnd; }
+    public Date getTollsEnd() {
+        return tollsEnd;
+    }
 
-    public void setTollsEnd(Date tollsEnd) { this.tollsEnd = tollsEnd; }
+    public void setTollsEnd(Date tollsEnd) {
+        this.tollsEnd = tollsEnd;
+    }
 
-    public Date getSecurityEnd() { return securityEnd; }
+    public Date getSecurityEnd() {
+        return securityEnd;
+    }
 
-    public void setSecurityEnd(Date securityEnd) { this.securityEnd = securityEnd; }
+    public void setSecurityEnd(Date securityEnd) {
+        this.securityEnd = securityEnd;
+    }
 
-    public Company getOwnerCompany() { return ownerCompany; }
+    public Company getOwnerCompany() {
+        return ownerCompany;
+    }
 
-    public void setOwnerCompany(Company ownerCompany) { this.ownerCompany = ownerCompany; }
+    public void setOwnerCompany(Company ownerCompany) {
+        this.ownerCompany = ownerCompany;
+    }
 
-    public Person getDriver() { return driver; }
+    public Person getDriver() {
+        return driver;
+    }
 
-    public void setDriver(Person driver) { this.driver = driver; }
+    public void setDriver(Person driver) {
+        this.driver = driver;
+    }
 
-    public String getBrand() { return brand; }
+    public String getBrand() {
+        return brand;
+    }
 
-    public void setBrand(String brand) { this.brand = brand; }
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
 
-    public String getModel() { return model; }
+    public String getModel() {
+        return model;
+    }
 
-    public void setModel(String model) { this.model = model; }
+    public void setModel(String model) {
+        this.model = model;
+    }
 
 }

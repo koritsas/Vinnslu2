@@ -21,8 +21,8 @@
     <orderEntry type="library" name="Gradle: org.hibernate:hibernate-spatial:5.3.9.Final" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.data:spring-data-rest-webmvc:3.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-json:2.1.4.RELEASE" level="project" />
-    <orderEntry type="library" name="Gradle: org.flowable:flowable-idm-spring-configurator:6.4.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.h2database:h2:1.4.199" level="project" />
+    <orderEntry type="library" name="Gradle: org.flowable:flowable-idm-spring-configurator:6.4.1" level="project" />
     <orderEntry type="library" name="Gradle: org.flowable:flowable-spring-boot-starter-app:6.4.1" level="project" />
     <orderEntry type="library" name="Gradle: org.flowable:flowable-app-engine-spring:6.4.1" level="project" />
     <orderEntry type="library" name="Gradle: org.flowable:flowable-app-engine:6.4.1" level="project" />
@@ -160,6 +160,7 @@
     <orderEntry type="library" name="Gradle: commons-codec:commons-codec:1.11" level="project" />
     <orderEntry type="library" name="Gradle: com.sun.mail:javax.mail:1.6.2" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-core:1.2.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.projectlombok:lombok:1.18.8" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-api:2.11.2" level="project" />
     <orderEntry type="library" name="Gradle: javax.activation:activation:1.1" level="project" />
   </component>

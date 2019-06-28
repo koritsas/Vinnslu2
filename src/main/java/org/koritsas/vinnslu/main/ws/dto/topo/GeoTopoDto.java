@@ -9,18 +9,16 @@ import org.koritsas.vinnslu.main.models.common.Company;
 import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.ws.dto.AbstractDto;
 
-import java.util.List;
-
 @JsonIgnoreProperties("type")
 public class GeoTopoDto implements AbstractDto<Long> {
 
-    public GeoTopoDto(){
-        this.abl=this.properties.getAbl();
-        this.area=this.properties.getArea();
-        this.location=this.properties.getLocation();
-        this.community=this.properties.getCommunity();
-        this.prefecture=this.properties.getPrefecture();
-        this.forest=this.properties.isForest();
+    public GeoTopoDto() {
+        this.abl = this.properties.getAbl();
+        this.area = this.properties.getArea();
+        this.location = this.properties.getLocation();
+        this.community = this.properties.getCommunity();
+        this.prefecture = this.properties.getPrefecture();
+        this.forest = this.properties.isForest();
 
     }
 
@@ -56,7 +54,6 @@ public class GeoTopoDto implements AbstractDto<Long> {
 
 
     private Company areaOwner;
-
 
 
     @JsonProperty("properties")
@@ -138,7 +135,7 @@ public class GeoTopoDto implements AbstractDto<Long> {
         }
     }
 
-    public Long getAbl(){
+    public Long getAbl() {
         return this.abl;
     }
 

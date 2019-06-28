@@ -15,8 +15,8 @@ import java.util.List;
 public interface TopoRepository extends JpaRepository<Topo, Long> {
 
 
-
     Topo findByAbl(Long abl);
+
     Topo findByArea(double area);
 
     List<Topo> findByLocation(String location);

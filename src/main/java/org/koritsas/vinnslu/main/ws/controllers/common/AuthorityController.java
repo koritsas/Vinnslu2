@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/common/authorities")
 public class AuthorityController
-    extends AbstractCRUDController<AuthorityService, Authority, Long, AuthorityDto> {
+        extends AbstractCRUDController<AuthorityService, Authority, Long, AuthorityDto> {
     public AuthorityController(AuthorityService service) {
-	super(service);
+        super(service);
     }
 }

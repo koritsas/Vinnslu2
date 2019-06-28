@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class DocumentService extends AbstractCRUDService<DocumentRepository, Document, Long> {
     public DocumentService(DocumentRepository repo) {
-	super(repo);
+        super(repo);
     }
 }

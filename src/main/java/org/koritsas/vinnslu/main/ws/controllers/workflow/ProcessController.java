@@ -1,11 +1,9 @@
 package org.koritsas.vinnslu.main.ws.controllers.workflow;
 
 import org.flowable.task.api.Task;
-import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
 import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
 import org.koritsas.vinnslu.main.utils.TaskRepresentation;
-import org.koritsas.vinnslu.main.ws.dto.topo.TopoDTO;
 import org.koritsas.vinnslu.main.ws.dto.topo.applications.ResearchApplicationDto;
 import org.koritsas.vinnslu.main.ws.services.workflow.ProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +24,9 @@ public class ProcessController {
     private ProcessService processService;
 
     @Autowired
-    public ProcessController(ProcessService processService, GeometryModelMapper mapper){
+    public ProcessController(ProcessService processService, GeometryModelMapper mapper) {
         this.processService = processService;
-        this.mapper=mapper;
+        this.mapper = mapper;
     }
 
     @GetMapping("/process/tasks/{name}")
@@ -38,8 +36,8 @@ public class ProcessController {
 
         List<TaskRepresentation> taskRepresentations = new ArrayList<>();
 
-        for (Task task:tasks){
-            TaskRepresentation taskRepresentation = new TaskRepresentation(task.getId(),task.getName(),task.getProcessInstanceId(),task.getScopeId(),task.getCategory(),task.getOwner(),task.getCreateTime());
+        for (Task task : tasks) {
+            TaskRepresentation taskRepresentation = new TaskRepresentation(task.getId(), task.getName(), task.getProcessInstanceId(), task.getScopeId(), task.getCategory(), task.getOwner(), task.getCreateTime());
             taskRepresentations.add(taskRepresentation);
         }
         return taskRepresentations;
@@ -47,9 +45,9 @@ public class ProcessController {
 
 
     @PostMapping("/process")
-    public void createProcess(@RequestBody ResearchApplicationDto dto){
+    public void createProcess(@RequestBody ResearchApplicationDto dto) {
 
-       processService.startProcess(mapper.map(dto, ResearchApplication.class));
+        processService.startProcess(mapper.map(dto, ResearchApplication.class));
 
     }
 /*

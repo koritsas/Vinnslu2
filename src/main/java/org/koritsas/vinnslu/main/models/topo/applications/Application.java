@@ -1,5 +1,9 @@
 package org.koritsas.vinnslu.main.models.topo.applications;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -15,6 +19,9 @@ import java.util.Date;
 import java.util.Objects;
 
 @MappedSuperclass
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Application implements Serializable {
 
     @Id
@@ -57,100 +64,4 @@ public class Application implements Serializable {
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.REFRESH, org.hibernate.annotations.CascadeType.REFRESH})
     private Document document;
 
-    public Application() {
-    }
-
-    public Application(String protocol, Company sender, Authority receiver, @NotNull Topo topo, Date applicationDate, Document document) {
-        this.protocol = protocol;
-        this.sender = sender;
-        this.receiver = receiver;
-        this.topo = topo;
-        this.applicationDate = applicationDate;
-        this.document = document;
-    }
-
-    public Date getApplicationDate() {
-        return applicationDate;
-    }
-
-    public void setApplicationDate(Date applicationDate) {
-        this.applicationDate = applicationDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getProtocol() {
-        return protocol;
-    }
-
-    public void setProtocol(String protocol) {
-        this.protocol = protocol;
-    }
-
-    public Company getSender() {
-        return sender;
-    }
-
-    public void setSender(Company sender) {
-        this.sender = sender;
-    }
-
-    public Authority getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(Authority receiver) {
-        this.receiver = receiver;
-    }
-
-    public Topo getTopo() {
-        return topo;
-    }
-
-    public void setTopo(Topo topo) {
-        this.topo = topo;
-    }
-
-    public Document getDocument() {
-        return document;
-    }
-
-    public void setDocument(Document document) {
-        this.document = document;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Application)) return false;
-        Application that = (Application) o;
-        return Objects.equals(protocol, that.protocol) &&
-                Objects.equals(sender, that.sender) &&
-                Objects.equals(receiver, that.receiver) &&
-                Objects.equals(topo, that.topo) &&
-                Objects.equals(document, that.document);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(protocol, sender, receiver, topo, document);
-    }
-
-    @Override
-    public String toString() {
-        return "Application{" +
-                "id=" + id +
-                ", protocol='" + protocol + '\'' +
-                ", sender=" + sender +
-                ", receiver=" + receiver +
-                ", topo=" + topo +
-                ", document=" + document +
-                '}';
-    }
 }

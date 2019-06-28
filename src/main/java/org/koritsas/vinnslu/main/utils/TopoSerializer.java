@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class TopoSerializer extends StdSerializer<Topo> {
 
-    public TopoSerializer(){
+    public TopoSerializer() {
         this(null);
     }
 
@@ -59,7 +59,6 @@ public class TopoSerializer extends StdSerializer<Topo> {
 
         //}
         gen.writeEndObject();
-
 
 
     }

@@ -9,8 +9,10 @@ import java.util.List;
 public interface StandardTechnicalCommitmentsRepository extends JpaRepository<StandardTechnicalCommitments, Long> {
 
     StandardEnvironmentalCommitments findByProtocol(String protocol);
+
     StandardEnvironmentalCommitments findByAda(String ada);
 
     List<StandardEnvironmentalCommitments> findByActive(boolean active);
+
     List<StandardEnvironmentalCommitments> findByTopoIdAndActive(Long topo_id, boolean active);
 }

@@ -27,6 +27,5 @@ public interface MiningLicenseRepository extends JpaRepository<MiningLicense, Lo
     List<MiningLicense> findByEndDateAfter(final Date endDate);
 
 
-
     List<MiningLicense> findByActive(final boolean active);
 }

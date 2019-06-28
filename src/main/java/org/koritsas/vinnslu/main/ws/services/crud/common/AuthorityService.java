@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 public class AuthorityService extends AbstractCRUDService<AuthorityRepository, Authority, Long> {
 
     public AuthorityService(AuthorityRepository repository) {
-	super(repository);
+        super(repository);
     }
 }

@@ -18,18 +18,18 @@ public class AbstractCRUDController<S extends AbstractCRUDService, E extends Ser
     private GeometryModelMapper mapper;
 
     public AbstractCRUDController(S service) {
-	this.service = service;
+        this.service = service;
     }
 
     @GetMapping()
     public ResponseEntity<List<E>> listAll() {
 
-	return ResponseEntity.ok(service.findAll());
+        return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<E> find(@PathVariable PK id) {
-	return ResponseEntity.ok((E) service.find(id));
+        return ResponseEntity.ok((E) service.find(id));
     }
 
     @PostMapping()
@@ -38,18 +38,18 @@ public class AbstractCRUDController<S extends AbstractCRUDService, E extends Ser
         System.out.println("---------------Here's the DTO-----------");
         System.out.println(dto.toString());
 
-	return ResponseEntity.status(201).body((E) service.create(mapper.map(dto, (Class<E>) dto.getClaZZ())));
+        return ResponseEntity.status(201).body((E) service.create(mapper.map(dto, (Class<E>) dto.getClaZZ())));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-	return ResponseEntity.ok("Deleted: " + service.delete(id));
+        return ResponseEntity.ok("Deleted: " + service.delete(id));
     }
 
     @PutMapping()
     public ResponseEntity<E> update(@RequestBody DTO dto) {
-	return ResponseEntity.status(204)
-	    .body((E) service.update(dto.getId(), mapper.map(dto, (Class<E>) dto.getClaZZ())));
+        return ResponseEntity.status(204)
+                .body((E) service.update(dto.getId(), mapper.map(dto, (Class<E>) dto.getClaZZ())));
     }
 
 }

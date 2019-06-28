@@ -1,5 +1,9 @@
 package org.koritsas.vinnslu.main.models.topo;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.koritsas.vinnslu.main.models.common.Authority;
@@ -11,6 +15,10 @@ import org.springframework.context.annotation.Lazy;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Guarantee implements Serializable {
 
@@ -41,7 +49,7 @@ public class Guarantee implements Serializable {
     private Company company;
 
     @ManyToOne
-    @JoinColumn(name = "topo_abl", referencedColumnName = "abl",foreignKey = @ForeignKey(foreignKeyDefinition = "TOPO_ABL_GUAR_FK"))
+    @JoinColumn(name = "topo_abl", referencedColumnName = "abl", foreignKey = @ForeignKey(foreignKeyDefinition = "TOPO_ABL_GUAR_FK"))
     private Topo topo;
 
     @Column(precision = 2)
@@ -51,7 +59,6 @@ public class Guarantee implements Serializable {
     @ManyToOne
     @JoinColumn(name = "document_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "GUARANTY_DOC_ID"))
     private Document document;
-
 
 
 }

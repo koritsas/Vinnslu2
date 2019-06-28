@@ -1,7 +1,7 @@
 package org.koritsas.vinnslu.main.ws.dto.topo;
 
 import com.bedatadriven.jackson.datatype.jts.serialization.GeometryDeserializer;
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Polygon;
@@ -21,9 +21,9 @@ public class TopoDTO implements AbstractDto<Long> {
 
     private double area;
 
-   @JsonProperty("geometry")
-   @JsonDeserialize(contentAs = GeometryDeserializer.class)
-   private Polygon polygon;
+    @JsonProperty("geometry")
+    @JsonDeserialize(contentAs = GeometryDeserializer.class)
+    private Polygon polygon;
 
 
     private String community;
@@ -77,34 +77,62 @@ public class TopoDTO implements AbstractDto<Long> {
         this.area = area;
     }
 
-    public Long getAbl() { return abl; }
+    public Long getAbl() {
+        return abl;
+    }
 
 
-    public void setAbl(Long abl) { this.abl = abl; }
+    public void setAbl(Long abl) {
+        this.abl = abl;
+    }
 
-    public Polygon getPolygon() { return polygon; }
+    public Polygon getPolygon() {
+        return polygon;
+    }
 
-    public void setPolygon(Polygon polygon) { this.polygon = polygon; }
+    public void setPolygon(Polygon polygon) {
+        this.polygon = polygon;
+    }
 
-    public String getCommunity() { return community; }
+    public String getCommunity() {
+        return community;
+    }
 
-    public void setCommunity(String community) { this.community = community; }
+    public void setCommunity(String community) {
+        this.community = community;
+    }
 
-    public String getLocation() { return location; }
+    public String getLocation() {
+        return location;
+    }
 
-    public void setLocation(String location) { this.location = location; }
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-    public String getPrefecture() { return prefecture; }
+    public String getPrefecture() {
+        return prefecture;
+    }
 
-    public void setPrefecture(String prefecture) { this.prefecture = prefecture; }
+    public void setPrefecture(String prefecture) {
+        this.prefecture = prefecture;
+    }
 
-    public boolean getForest() { return forest; }
+    public boolean getForest() {
+        return forest;
+    }
 
-    public void setForest(boolean forest) { this.forest = forest; }
+    public void setForest(boolean forest) {
+        this.forest = forest;
+    }
 
-    public Company getTopoOwner() { return topoOwner; }
+    public Company getTopoOwner() {
+        return topoOwner;
+    }
 
-    public void setTopoOwner(Company topoOwner) { this.topoOwner = topoOwner; }
+    public void setTopoOwner(Company topoOwner) {
+        this.topoOwner = topoOwner;
+    }
 
     public String getMunicipality() {
         return municipality;
@@ -114,11 +142,14 @@ public class TopoDTO implements AbstractDto<Long> {
         this.municipality = municipality;
     }
 
-    public Company getAreaOwner() { return areaOwner; }
+    public Company getAreaOwner() {
+        return areaOwner;
+    }
 
 
-    public void setAreaOwner(Company areaOwner) { this.areaOwner = areaOwner; }
-
+    public void setAreaOwner(Company areaOwner) {
+        this.areaOwner = areaOwner;
+    }
 
 
     @Override

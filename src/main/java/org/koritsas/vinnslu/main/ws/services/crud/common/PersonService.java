@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonService extends AbstractCRUDService<PersonRepository, Person, Long> {
     public PersonService(PersonRepository repo) {
-	super(repo);
+        super(repo);
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/guarantees")
-public class GuaranteeController  extends AbstractCRUDController<GuaranteeService, Guarantee, Long, GuaranteeDTO> {
+public class GuaranteeController extends AbstractCRUDController<GuaranteeService, Guarantee, Long, GuaranteeDTO> {
     public GuaranteeController(GuaranteeService service) {
         super(service);
     }

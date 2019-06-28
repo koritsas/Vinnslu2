@@ -1,5 +1,9 @@
 package org.koritsas.vinnslu.main.models.topo;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.koritsas.vinnslu.main.models.common.Authority;
@@ -10,6 +14,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class ExplosivesLicense implements Serializable {
 
@@ -57,31 +65,29 @@ public class ExplosivesLicense implements Serializable {
     private int retardants;
 
     @ManyToOne
-    @JoinColumn(name = "blaster_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "BLASTER_FK"))
+    @JoinColumn(name = "blaster_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "BLASTER_FK"))
     private Person blaster;
 
     @ManyToOne
-    @JoinColumn(name = "license_holder_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "LICENSE_HOLDER_FK"))
+    @JoinColumn(name = "license_holder_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "LICENSE_HOLDER_FK"))
     private Person licenseHolder;
 
     @ManyToOne
-    @JoinColumn(name = "police_station_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "POLICE_STATION_FK"))
+    @JoinColumn(name = "police_station_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "POLICE_STATION_FK"))
     private Authority policeStation;
 
     @ManyToOne
-    @JoinColumn(name = "topo_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "TOPO_FK"))
+    @JoinColumn(name = "topo_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "TOPO_FK"))
     private Topo topo;
 
     @ManyToOne
-    @JoinColumn(name = "explosives_memo_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "EXPL_MEMO_FK"))
+    @JoinColumn(name = "explosives_memo_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "EXPL_MEMO_FK"))
     private ExplosivesMemo explosivesMemo;
 
     @ManyToOne
-    @JoinColumn(name = "document_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "EXPLOSIVES_DOC_FK"))
+    @JoinColumn(name = "document_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "EXPLOSIVES_DOC_FK"))
     private Document document;
 
-    public ExplosivesLicense() {
-    }
 
 
 }

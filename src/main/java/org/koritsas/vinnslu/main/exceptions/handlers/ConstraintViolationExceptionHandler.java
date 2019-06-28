@@ -12,12 +12,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ConstraintViolationExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({ ConstraintViolationException.class })
+    @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<Object> handleConstraintViolation(
             ConstraintViolationException ex, WebRequest request) {
 
-        String bodyOfResponse = "Unable to commit transaction due to constraint violation "+ex.getConstraintName()+""+ex.getCause();
-
+        String bodyOfResponse = "Unable to commit transaction due to constraint violation " + ex.getConstraintName() + "" + ex.getCause();
 
 
         return handleExceptionInternal(ex, bodyOfResponse,

@@ -1,5 +1,9 @@
 package org.koritsas.vinnslu.main.models.topo;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.koritsas.vinnslu.main.models.common.Document;
@@ -9,6 +13,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class StandardTechnicalCommitments implements Serializable {
 
@@ -44,45 +52,4 @@ public class StandardTechnicalCommitments implements Serializable {
     @JoinColumn(name = "document", referencedColumnName = "id", foreignKey = @ForeignKey(name = "STC_DOCUMENT_ID"))
     private Document document;
 
-    public StandardTechnicalCommitments() {
-    }
-
-    public StandardTechnicalCommitments(boolean active, String protocol, String ada, Topo topo, Opinion miningInspectionOpinion, Document document) {
-        this.active = active;
-        this.protocol = protocol;
-        this.ada = ada;
-        this.topo = topo;
-        this.miningInspectionOpinion = miningInspectionOpinion;
-        this.document = document;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof StandardTechnicalCommitments)) return false;
-        StandardTechnicalCommitments that = (StandardTechnicalCommitments) o;
-        return active == that.active &&
-                Objects.equals(protocol, that.protocol) &&
-                Objects.equals(ada, that.ada) &&
-                Objects.equals(topo, that.topo) &&
-                Objects.equals(miningInspectionOpinion, that.miningInspectionOpinion) &&
-                Objects.equals(document, that.document);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(active, protocol, ada, topo, miningInspectionOpinion, document);
-    }
-
-    @Override
-    public String toString() {
-        return "StandardTechnicalCommitments{" +
-                "active=" + active +
-                ", protocol='" + protocol + '\'' +
-                ", ada='" + ada + '\'' +
-                ", topo=" + topo +
-                ", miningInspectionOpinion=" + miningInspectionOpinion +
-                ", document=" + document +
-                '}';
-    }
 }

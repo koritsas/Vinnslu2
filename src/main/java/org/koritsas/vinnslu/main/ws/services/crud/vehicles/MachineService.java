@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class MachineService extends AbstractCRUDService<MachineRepository, Machine, Long> {
     public MachineService(MachineRepository repo) {
-	super(repo);
+        super(repo);
     }
 }

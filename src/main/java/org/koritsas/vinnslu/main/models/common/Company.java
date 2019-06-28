@@ -1,5 +1,6 @@
 package org.koritsas.vinnslu.main.models.common;
 
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Data
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Company implements Serializable {
@@ -46,70 +48,5 @@ public class Company implements Serializable {
         this.phone = phone;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Long getAfm() {
-        return afm;
-    }
-
-    public void setAfm(Long afm) {
-        this.afm = afm;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Long getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Long phone) {
-        this.phone = phone;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Company company = (Company) o;
-        return afm.equals(company.afm) &&
-                name.equals(company.name) &&
-                address.equals(company.address) &&
-                phone.equals(company.phone);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(afm, name, address, phone);
-    }
-
-    @Override
-    public String toString() {
-        return "Company{" +
-                "id=" + id +
-                ", afm=" + afm +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", phone=" + phone +
-                '}';
-    }
 }

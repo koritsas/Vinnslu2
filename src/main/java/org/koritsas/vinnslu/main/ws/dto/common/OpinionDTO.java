@@ -2,12 +2,9 @@ package org.koritsas.vinnslu.main.ws.dto.common;
 
 import org.koritsas.vinnslu.main.models.common.Document;
 import org.koritsas.vinnslu.main.models.common.Opinion;
-import org.koritsas.vinnslu.main.models.topo.EnvironmentalImpactStudy;
-import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.ws.dto.AbstractDto;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 public class OpinionDTO implements AbstractDto<Long> {
 

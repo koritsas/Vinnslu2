@@ -37,7 +37,10 @@ dependencies {
 
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
-    
+
+
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
     
     
    // compile group: 'org.flowable', name: 'flowable-spring-boot-starter-process', version: '6.4.1'

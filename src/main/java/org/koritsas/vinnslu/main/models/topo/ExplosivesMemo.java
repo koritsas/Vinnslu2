@@ -1,5 +1,9 @@
 package org.koritsas.vinnslu.main.models.topo;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.koritsas.vinnslu.main.models.common.Document;
@@ -9,6 +13,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class ExplosivesMemo implements Serializable {
 
@@ -60,20 +68,20 @@ public class ExplosivesMemo implements Serializable {
     private int retardants;
 
     @ManyToOne
-    @JoinColumn(name = "blaster_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "BLASTER_FK"))
+    @JoinColumn(name = "blaster_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "BLASTER_FK"))
     private Person blaster;
 
     @ManyToOne
-    @JoinColumn(name = "topo_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "TOPO_ID_EXPL_MEMO_FK"))
+    @JoinColumn(name = "topo_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "TOPO_ID_EXPL_MEMO_FK"))
     private Topo topo;
 
     @ManyToOne
-    @JoinColumn(name = "topo_abl",referencedColumnName = "abl",foreignKey = @ForeignKey(name = "TOPO_ABL_EXPL_MEMO_FK"))
+    @JoinColumn(name = "topo_abl", referencedColumnName = "abl", foreignKey = @ForeignKey(name = "TOPO_ABL_EXPL_MEMO_FK"))
     private Topo topo_abl;
 
 
     @ManyToOne
-    @JoinColumn(name = "document_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "EXPLOSIVES_DOC_FK"))
+    @JoinColumn(name = "document_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "EXPLOSIVES_DOC_FK"))
     private Document document;
 
 }

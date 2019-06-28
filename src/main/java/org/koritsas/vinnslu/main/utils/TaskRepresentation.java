@@ -20,17 +20,17 @@ public class TaskRepresentation {
 
     private Date createTime;
 
-    public TaskRepresentation(String id, String name,String processInstanceId,String scopeId,String category,String owner,Date createTime) {
+    public TaskRepresentation(String id, String name, String processInstanceId, String scopeId, String category, String owner, Date createTime) {
         this.id = id;
         this.name = name;
-        this.processInstanceId=processInstanceId;
-        this.scopeId=scopeId;
-        this.category=category;
-        this.owner=owner;
-        this.createTime=createTime;
+        this.processInstanceId = processInstanceId;
+        this.scopeId = scopeId;
+        this.category = category;
+        this.owner = owner;
+        this.createTime = createTime;
     }
 
-    private void helper(Task task){
+    private void helper(Task task) {
 
 
     }

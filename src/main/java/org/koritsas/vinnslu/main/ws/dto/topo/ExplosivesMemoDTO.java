@@ -44,7 +44,7 @@ public class ExplosivesMemoDTO implements AbstractDto<Long> {
 
     private Document document;
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
 
@@ -175,7 +175,6 @@ public class ExplosivesMemoDTO implements AbstractDto<Long> {
     public void setDocument(Document document) {
         this.document = document;
     }
-
 
 
     @Override

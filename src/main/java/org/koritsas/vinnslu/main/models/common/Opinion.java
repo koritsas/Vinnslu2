@@ -1,5 +1,8 @@
 package org.koritsas.vinnslu.main.models.common;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -9,7 +12,9 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Opinion implements Serializable {
 
@@ -32,54 +37,4 @@ public class Opinion implements Serializable {
 
     private Document document;
 
-    public Opinion() {
-    }
-
-    public Opinion(boolean positive, Document document) {
-        this.positive = positive;
-        this.document = document;
-    }
-
-    public boolean isPositive() {
-        return positive;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setPositive(boolean positive) {
-        this.positive = positive;
-    }
-
-    public Document getDocument() {
-        return document;
-    }
-
-    public void setDocument(Document document) {
-        this.document = document;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Opinion)) return false;
-        Opinion opinion = (Opinion) o;
-        return positive == opinion.positive &&
-                Objects.equals(document, opinion.document);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(positive, document);
-    }
-
-    @Override
-    public String toString() {
-        return "Opinion{" +
-                "id=" + id +
-                ", positive=" + positive +
-                ", document=" + document +
-                '}';
-    }
 }

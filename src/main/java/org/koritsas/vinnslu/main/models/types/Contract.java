@@ -22,12 +22,13 @@ public class Contract implements Serializable {
     private Person notary;
 
     public Contract(Long contractId, Date contractDate, Person notary) {
-	this.contractId = contractId;
-	this.contractDate = contractDate;
-	this.notary = notary;
+        this.contractId = contractId;
+        this.contractDate = contractDate;
+        this.notary = notary;
     }
 
-    private Contract() {}
+    private Contract() {
+    }
 
     public Contract(Long contractId, String contractProtocol, Date contractDate, Person notary) {
         this.contractId = contractId;

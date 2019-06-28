@@ -9,15 +9,20 @@ public interface StandardEnvironmentalCommitmentsRepository extends JpaRepositor
 
 
     StandardEnvironmentalCommitments findByProtocol(String protocol);
+
     StandardEnvironmentalCommitments findByAda(String ada);
 
 
     List<StandardEnvironmentalCommitments> findByCityPlanningOpinion(boolean cityPlanningOpinion);
+
     List<StandardEnvironmentalCommitments> findByArcheologyOpinion(boolean archeologyOpinion);
+
     List<StandardEnvironmentalCommitments> findByForestryOpinion(boolean forestryOpinion);
+
     List<StandardEnvironmentalCommitments> findBySpeleologyOpinion(boolean speleologyOpinion);
 
     List<StandardEnvironmentalCommitments> findByActive(boolean active);
+
     List<StandardEnvironmentalCommitments> findByTopoIdAndActive(Long topo_id, boolean active);
 
 }

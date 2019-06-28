@@ -17,15 +17,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class AppConfiguration {
 
     @Bean
-    public GeometryModelMapper getGeometryModelMapper(){
+    public GeometryModelMapper getGeometryModelMapper() {
 
         return new GeometryModelMapper();
     }
 
 
     @Bean
-    public JtsModule jtsModule()
-    {
+    public JtsModule jtsModule() {
         return new JtsModule();
     }
 
