@@ -12,13 +12,17 @@ import com.vividsolutions.jts.geom.Polygon;
 import org.koritsas.vinnslu.main.models.common.Company;
 import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.ws.dto.topo.TopoDTO;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-public class TopoDeserializer extends JsonDeserializer<Topo> {
+@Component
+public class TopoDtoDeserializer extends JsonDeserializer<TopoDTO> {
+
 
     @Override
-    public Topo deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public TopoDTO deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+
         JsonNode node=p.getCodec().readTree(p);
 
         Long abl = node.get("properties").get("abl").asLong();
@@ -37,39 +41,42 @@ public class TopoDeserializer extends JsonDeserializer<Topo> {
 
         Coordinate[] coordinates = new Coordinate[geometryNode.size()];
 
-        for (int i=0;i<geometryNode.size();i++){
+       for (int i=0;i<geometryNode.size();i++){
 
-            coordinates[i] = new Coordinate(geometryNode.get(i).get(0).asDouble(),geometryNode.get(i).get(1).asDouble());
-        }
-
-
-
-        GeometryFactory factory = new GeometryFactory();
-
-        Polygon polygon =factory.createPolygon(coordinates);
-
-        Topo topo = new Topo();
+           coordinates[i] = new Coordinate(geometryNode.get(i).get(0).asDouble(),geometryNode.get(i).get(1).asDouble());
+       }
 
 
-        ObjectMapper mapper = new ObjectMapper();
-        Company topoOwner=  mapper.treeToValue(node.get("properties").get("topoOwner"),Company.class);
+
+       GeometryFactory factory = new GeometryFactory();
+
+       Polygon polygon =factory.createPolygon(coordinates);
+
+       TopoDTO dto = new TopoDTO();
 
 
-        Company areaOwner=  mapper.treeToValue(node.get("properties").get("areaOwner"),Company.class);
-
-        topo.setAbl(abl);
-        topo.setPolygon(polygon);
-        topo.setCommunity(community);
-        topo.setLocation(location);
-        topo.setPrefecture(prefecture);
-        topo.setForest(forest);
-        topo.setMunicipality(municipality);
-        topo.setArea(area);
-        topo.setTopoOwner(topoOwner);
-        topo.setAreaOwner(areaOwner);
+       ObjectMapper mapper = new ObjectMapper();
+       Company topoOwner=  mapper.treeToValue(node.get("properties").get("topoOwner"),Company.class);
 
 
-        return topo;
+       Company areaOwner=  mapper.treeToValue(node.get("properties").get("areaOwner"),Company.class);
+
+       dto.setAbl(abl);
+       dto.setPolygon(polygon);
+       dto.setCommunity(community);
+       dto.setLocation(location);
+       dto.setPrefecture(prefecture);
+       dto.setForest(forest);
+       dto.setMunicipality(municipality);
+       dto.setArea(area);
+       dto.setTopoOwner(topoOwner);
+       dto.setAreaOwner(areaOwner);
+
+
+       return dto;
+
 
     }
+
+
 }

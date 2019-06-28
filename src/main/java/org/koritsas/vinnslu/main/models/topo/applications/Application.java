@@ -43,7 +43,8 @@ public class Application implements Serializable {
     @JoinColumn(columnDefinition = "receiver_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "RECEIVER_FK"))
     private Authority receiver;
 
-    //@NotNull
+
+    @NotNull
     @ManyToOne
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.REFRESH, org.hibernate.annotations.CascadeType.REFRESH})
     @JoinColumn(columnDefinition = "topo_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "APP_TOPO_FK"))
