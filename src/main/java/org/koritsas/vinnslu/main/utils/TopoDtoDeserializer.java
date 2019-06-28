@@ -9,7 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
+import lombok.Getter;
 import org.koritsas.vinnslu.main.models.common.Company;
+import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.ws.dto.topo.TopoDTO;
 import org.springframework.stereotype.Component;
 
@@ -18,22 +20,58 @@ import java.io.IOException;
 @Component
 public class TopoDtoDeserializer extends JsonDeserializer<TopoDTO> {
 
+    Properties properties;
+
+    @Getter
+    private static class Properties{
+        private Long id;
+
+        private Long abl;
+
+
+        private double area;
+
+        private String community;
+
+
+        private String location;
+
+
+        private String municipality;
+
+
+        private String prefecture;
+
+
+        private boolean forest;
+
+        private Company topoOwner;
+
+        private Company areaOwner;
+
+
+    }
 
     @Override
     public TopoDTO deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 
         JsonNode node = p.getCodec().readTree(p);
 
-        Long abl = node.get("properties").get("abl").asLong();
-        String location = node.get("properties").get("location").asText();
-        String municipality = node.get("properties").get("municipality").asText();
-        String prefecture = node.get("properties").get("prefecture").asText();
-        String community = node.get("properties").get("community").asText();
-        boolean forest = node.get("properties").get("forest").asBoolean();
-        double area = node.get("properties").get("area").asDouble();
+        ObjectMapper mapper = new ObjectMapper();
 
+        this.properties=mapper.treeToValue(node.get("properties"), Properties.class);
 
-        String coords = node.get("geometry").get("coordinates").asText();
+        Long id = properties.getId();
+        Long abl = properties.getAbl();
+        String location = properties.getLocation();
+        String municipality = properties.getMunicipality();
+        String prefecture = properties.getPrefecture();
+        String community = properties.getCommunity();
+        boolean forest = properties.isForest();
+        double area = properties.getArea();
+        Company topoOwner = properties.getTopoOwner();
+        Company areaOwner = properties.getAreaOwner();
+
 
         JsonNode geometryNode = node.get("geometry").get("coordinates").get(0);
 
@@ -49,28 +87,24 @@ public class TopoDtoDeserializer extends JsonDeserializer<TopoDTO> {
 
         Polygon polygon = factory.createPolygon(coordinates);
 
-        TopoDTO dto = new TopoDTO();
+
+        TopoDTO topo = new TopoDTO();
 
 
-        ObjectMapper mapper = new ObjectMapper();
-        Company topoOwner = mapper.treeToValue(node.get("properties").get("topoOwner"), Company.class);
+        topo.setId(id);
+        topo.setAbl(abl);
+        topo.setPolygon(polygon);
+        topo.setCommunity(community);
+        topo.setLocation(location);
+        topo.setPrefecture(prefecture);
+        topo.setForest(forest);
+        topo.setMunicipality(municipality);
+        topo.setArea(area);
+        topo.setTopoOwner(topoOwner);
+        topo.setAreaOwner(areaOwner);
 
 
-        Company areaOwner = mapper.treeToValue(node.get("properties").get("areaOwner"), Company.class);
-
-        dto.setAbl(abl);
-        dto.setPolygon(polygon);
-        dto.setCommunity(community);
-        dto.setLocation(location);
-        dto.setPrefecture(prefecture);
-        dto.setForest(forest);
-        dto.setMunicipality(municipality);
-        dto.setArea(area);
-        dto.setTopoOwner(topoOwner);
-        dto.setAreaOwner(areaOwner);
-
-
-        return dto;
+        return topo;
 
 
     }
