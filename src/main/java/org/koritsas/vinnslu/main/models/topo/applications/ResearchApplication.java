@@ -1,21 +1,12 @@
 package org.koritsas.vinnslu.main.models.topo.applications;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.koritsas.vinnslu.main.models.common.Authority;
-import org.koritsas.vinnslu.main.models.common.Company;
-import org.koritsas.vinnslu.main.models.common.Document;
+import lombok.*;
 import org.koritsas.vinnslu.main.models.common.Opinion;
 import org.koritsas.vinnslu.main.models.topo.ResearchLicense;
-import org.koritsas.vinnslu.main.models.topo.Topo;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.Objects;
 @Data
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
