@@ -41,12 +41,12 @@ public class Application implements Serializable {
     private String protocol;
 
     @ManyToOne
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.REFRESH, org.hibernate.annotations.CascadeType.REFRESH})
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     @JoinColumn(columnDefinition = "sender_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "SENDER_FK"))
     private Company sender;
 
     @ManyToOne
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.REFRESH, org.hibernate.annotations.CascadeType.REFRESH})
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     @JoinColumn(columnDefinition = "receiver_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "RECEIVER_FK"))
     private Authority receiver;
 
@@ -54,7 +54,7 @@ public class Application implements Serializable {
 
     @NotNull
     @ManyToOne
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.REFRESH, org.hibernate.annotations.CascadeType.REFRESH})
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     @JoinColumn(columnDefinition = "topo_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "APP_TOPO_FK"))
     private Topo topo;
 
@@ -62,7 +62,7 @@ public class Application implements Serializable {
     private Date applicationDate;
 
     @OneToOne(targetEntity = Document.class, fetch = FetchType.LAZY)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.REFRESH, org.hibernate.annotations.CascadeType.REFRESH})
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private Document document;
 
 }

@@ -60,18 +60,15 @@ public class ProcessService {
 
 
     @Transactional
-    public void completeTask(String taskId,Opinion opinion){
+    public void completeTask(String taskId,ResearchApplication researchApplication){
 
 
-        ResearchApplication researchApplication= (ResearchApplication) taskService.createTaskQuery().includeProcessVariables().taskId(taskId).singleResult().getProcessVariables().get("researchApplication");
-
-        researchApplication.setArmyOpinion(opinion);
-
+        ResearchApplication application =researchApplicationService.update(researchApplication.getId(),researchApplication);
 
 
        Map<String,Object> variables= taskService.createTaskQuery().taskId(taskId).includeProcessVariables().singleResult().getProcessVariables();
 
-       variables.put("researchApplication",researchApplicationService.update(researchApplication.getId(),researchApplication));
+       variables.put("researchApplication",application);
 
 
        taskService.complete(taskId,variables);

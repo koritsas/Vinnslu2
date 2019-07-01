@@ -29,7 +29,7 @@
       <sequenceFlow id="SequenceFlow_1s2e7qi" name="Αποστολή απο Τμ.Φυσικών Πόρων" sourceRef="startResearchSubprocess" targetRef="opinions"></sequenceFlow>
       <sequenceFlow id="SequenceFlow_1ufzvu0" sourceRef="ExclusiveGateway_0pytqyh" targetRef="standardTechnicalCommitmentsTask"></sequenceFlow>
       <sequenceFlow id="SequenceFlow_0it658o" name="Opinions positive" sourceRef="opinions" targetRef="ExclusiveGateway_0pytqyh">
-        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${researchApplication.armyOpinion.positive == true && researchApplication.geologicalInstituteOpinion.positive == true && topographicalAuthorityOpinion.positive == true}]]></conditionExpression>
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${researchApplication.armyOpinion.positive == true && researchApplication.geologicalInstituteOpinion.positive == true && researchApplication.topographicalAuthorityOpinion.positive == true}]]></conditionExpression>
       </sequenceFlow>
       <textAnnotation id="TextAnnotation_01o7ilg">
         <text>Αποστολή σε Τμ. Φυσικών Πόρων στην Καβάλα</text>

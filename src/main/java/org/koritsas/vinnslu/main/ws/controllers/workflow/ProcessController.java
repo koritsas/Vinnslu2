@@ -62,10 +62,10 @@ public class ProcessController {
        return taskRepresentations;
     }
 
-    @PostMapping("/process/tasks/{taskId}")
-    public ResponseEntity<String> completeTask(@PathVariable String taskId,@RequestBody Opinion dto){
+    @PutMapping("/process/tasks/{taskId}")
+    public ResponseEntity<String> completeTask(@PathVariable String taskId,@RequestBody ResearchApplicationDto dto){
 
-        processService.completeTask(taskId,mapper.map(dto,Opinion.class));
+        processService.completeTask(taskId,mapper.map(dto,ResearchApplication.class));
 
         return ResponseEntity.ok("asfdasfdsafa");
     }

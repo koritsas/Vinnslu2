@@ -48,7 +48,7 @@ public class AbstractCRUDController<S extends AbstractCRUDService, E extends Ser
 
     @PutMapping()
     public ResponseEntity<E> update(@RequestBody DTO dto) {
-        return ResponseEntity.status(204)
+        return ResponseEntity.status(200)
                 .body((E) service.update(dto.getId(), mapper.map(dto, (Class<E>) dto.getClaZZ())));
     }
 
