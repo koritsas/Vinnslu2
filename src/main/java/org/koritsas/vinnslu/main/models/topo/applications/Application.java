@@ -51,6 +51,7 @@ public class Application implements Serializable {
     private Authority receiver;
 
 
+
     @NotNull
     @ManyToOne
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.REFRESH, org.hibernate.annotations.CascadeType.REFRESH})

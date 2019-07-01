@@ -1,5 +1,6 @@
 package org.koritsas.vinnslu.main.ws.controllers.workflow;
 
+import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.koritsas.vinnslu.main.models.common.Opinion;
 import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
@@ -29,90 +30,45 @@ public class ProcessController {
         this.mapper = mapper;
     }
 
-    @GetMapping("/process/{processId}/tasks")
-    public List<TaskRepresentation> getProcessInstanceTasks(@RequestParam String processId) {
+    @PostMapping("/process")
+    public ResponseEntity<String> startProcess(@RequestBody ResearchApplicationDto dto){
 
-        List<Task> tasks = processService.getProcessInstanceTasks(processId);
+        processService.startProcessWithResearchApplication(mapper.map(dto,ResearchApplication.class));
 
-        List<TaskRepresentation> taskRepresentations = new ArrayList<>();
-
-        for (Task task : tasks) {
-            TaskRepresentation taskRepresentation = new TaskRepresentation(task.getId(), task.getName(), task.getProcessInstanceId(), task.getScopeId(), task.getCategory(), task.getOwner(), task.getCreateTime());
-            taskRepresentations.add(taskRepresentation);
-        }
-        return taskRepresentations;
-
+        return ResponseEntity.status(201).body("Started new process instance");
     }
 
-    @GetMapping("/process/{processId}/tasks/{taskId}")
-    public TaskRepresentation getTaskById(@RequestParam String processId, @RequestParam String taskId) {
-
-        Task task = processService.getTaskByIdAndProcessInstance(processId, taskId);
-        return new TaskRepresentation(task.getId(), task.getName(), task.getProcessInstanceId(), task.getScopeId(), task.getCategory(), task.getOwner(), task.getCreateTime());
-    }
-
-
-
-
-    @GetMapping("/process/tasks/{name}")
-    public List<TaskRepresentation> getTasksByName(@RequestParam(required = false) String name) {
-        List<Task> tasks = processService.getTasksByName(name);
-
-
-        List<TaskRepresentation> taskRepresentations = new ArrayList<>();
-
-        for (Task task : tasks) {
-            TaskRepresentation taskRepresentation = new TaskRepresentation(task.getId(), task.getName(), task.getProcessInstanceId(), task.getScopeId(), task.getCategory(), task.getOwner(), task.getCreateTime());
-            taskRepresentations.add(taskRepresentation);
-        }
-        return taskRepresentations;
-    }
 
     @GetMapping("/process/tasks")
-    public List<TaskRepresentation> getAllTasks() {
-        List<Task> tasks = processService.getAllTasks();
+    public List<TaskRepresentation> getAllTasks(@RequestParam(required = false) String processId,@RequestParam(required = false) String taskId){
 
+       List<Task> tasks = processService.getAllTasks(processId,taskId);
 
-        List<TaskRepresentation> taskRepresentations = new ArrayList<>();
+       List<TaskRepresentation> taskRepresentations = new ArrayList<>();
 
-        for (Task task : tasks) {
-            TaskRepresentation taskRepresentation = new TaskRepresentation(task.getId(), task.getName(), task.getProcessInstanceId(), task.getScopeId(), task.getCategory(), task.getOwner(), task.getCreateTime());
-            taskRepresentations.add(taskRepresentation);
-        }
-        return taskRepresentations;
+       tasks.forEach(task -> {
+           TaskRepresentation taskRepresentation = new TaskRepresentation();
+           taskRepresentation.setId(task.getId());
+           taskRepresentation.setCreateTime(task.getCreateTime());
+           taskRepresentation.setCategory(task.getCategory());
+           taskRepresentation.setName(task.getName());
+           taskRepresentation.setProcessInstanceId(task.getProcessInstanceId());
+           taskRepresentation.setScopeId(task.getScopeId());
+           taskRepresentation.setProcessVariables(task.getProcessVariables());
 
+           taskRepresentations.add(taskRepresentation);
+       });
+
+       return taskRepresentations;
     }
 
+    @PostMapping("/process/tasks/{taskId}")
+    public ResponseEntity<String> completeTask(@PathVariable String taskId,@RequestBody Opinion dto){
 
-    @PostMapping("/process")
-    public void createProcess(@RequestBody ResearchApplicationDto dto) {
+        processService.completeTask(taskId,mapper.map(dto,Opinion.class));
 
-        processService.startProcess(mapper.map(dto, ResearchApplication.class));
-
-
+        return ResponseEntity.ok("asfdasfdsafa");
     }
-
-
-    @PostMapping("/process/{processId}/tasks/{taskId}")
-    public ResponseEntity<String> completeOpinionsTask(@PathVariable String processId, @PathVariable String taskId, @RequestBody List<OpinionDTO> opinionsDto) {
-
-        List<Opinion> opinions = mapper.map(opinionsDto, List.class);
-
-        processService.updateResearcLicenseWithOpinions(processId, taskId, opinions);
-
-
-        return ResponseEntity.ok("Task with id " + taskId + " completed");
-
-    }
-
-    @PostMapping("/process/{processId}")
-    public ResponseEntity<String> cancelProcessWithId(@PathVariable String id, @RequestBody String reason) {
-
-        processService.cancelProcess(id, reason);
-
-        return ResponseEntity.status(204).body("Process instance with id " + id + "deleted with reason: " + reason);
-    }
-
 
 }
 

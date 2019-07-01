@@ -2,6 +2,7 @@ package org.koritsas.vinnslu.main.ws.services.workflow;
 
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
+import org.flowable.engine.impl.persistence.entity.ExecutionEntity;
 import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
@@ -33,81 +34,48 @@ public class ProcessService {
         this.researchApplicationService = researchApplicationService;
     }
 
-    @Transactional
-    public void startProcess(ResearchApplication researchApplication) {
-
-        Map<String, Object> variables = new HashMap<>();
-
-        variables.put("researchApplication", researchApplicationService.create(researchApplication));
-
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("vinnslu_workflow", variables);
-
-        Map<String, Object> instVars = processInstance.getProcessVariables();
-
-        System.out.println(instVars.get("researchApplication").toString());
-
-    }
 
     @Transactional
-    public List<Task> getProcessInstanceTasks(String processId) {
+    public void startProcessWithResearchApplication(ResearchApplication researchApplication){
 
-        return taskService.createTaskQuery().processInstanceId(processId).list();
+        Map<String,Object> variables = new HashMap<>();
 
-    }
+        variables.put("researchApplication",researchApplicationService.create(researchApplication));
 
-    @Transactional
-    public Task getTaskByIdAndProcessInstance(String processId, String taskId) {
-
-        return taskService.createTaskQuery().processInstanceId(processId).taskId(taskId).singleResult();
-    }
-
-    @Transactional
-    public Task getTaskById(String id) {
-        return taskService.createTaskQuery().taskId(id).singleResult();
-    }
-
-    @Transactional
-    public List<Task> getTasksByName(String name) {
-
-            return taskService.createTaskQuery().taskName(name).list();
-    }
-
-    @Transactional
-    public List<Task> getAllTasks() {
-        return taskService.createTaskQuery().list();
-    }
-
-    @Transactional
-    public void completeTask(String processId, String taskId, Object variable) {
-
-        Map<String, Object> variables = new HashMap<>();
-        variables.put(variable.getClass().getName(), variable);
-
-        taskService.complete(taskId, variables);
-    }
-
-    @Transactional
-    public ResearchApplication updateResearcLicenseWithOpinions(String processId, String taskId, List<Opinion> opinions) {
-
-        Execution ed = runtimeService.createExecutionQuery().processInstanceId(processId).singleResult();
-
-
-        ResearchApplication researchApplication = (ResearchApplication) runtimeService.getVariable(processId, "researchApplication");
-
-        researchApplication.setArmyOpinion(opinions.get(0));
-        researchApplication.setTopographicalAuthorityOpinion(opinions.get(1));
-        researchApplication.setGeologicalInstituteOpinion(opinions.get(2));
-
-        return researchApplicationService.update(researchApplication.getId(), researchApplication);
+        runtimeService.startProcessInstanceByKey("vinnslu_workflow",variables);
 
     }
 
 
     @Transactional
-    public void cancelProcess(String id, String reason) {
-        runtimeService.deleteProcessInstance(id, reason);
+    public List<Task> getAllTasks(String processId,String taskId){
+
+        if (taskId==null){
+            return taskService.createTaskQuery().includeProcessVariables().processInstanceId(processId).list();
+        }else{
+            return taskService.createTaskQuery().includeProcessVariables().processInstanceId(processId).taskId(taskId).list();
+        }
+
     }
 
 
+    @Transactional
+    public void completeTask(String taskId,Opinion opinion){
+
+
+        ResearchApplication researchApplication= (ResearchApplication) taskService.createTaskQuery().includeProcessVariables().taskId(taskId).singleResult().getProcessVariables().get("researchApplication");
+
+        researchApplication.setArmyOpinion(opinion);
+
+
+
+       Map<String,Object> variables= taskService.createTaskQuery().taskId(taskId).includeProcessVariables().singleResult().getProcessVariables();
+
+       variables.put("researchApplication",researchApplicationService.update(researchApplication.getId(),researchApplication));
+
+
+       taskService.complete(taskId,variables);
+
+    }
 
 }

@@ -8,7 +8,7 @@ import org.koritsas.vinnslu.main.models.topo.StandardTechnicalCommitments;
 import javax.persistence.*;
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
