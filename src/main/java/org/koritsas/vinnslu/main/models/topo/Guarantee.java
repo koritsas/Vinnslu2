@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.koritsas.vinnslu.main.models.common.Authority;
@@ -58,6 +59,7 @@ public class Guarantee implements Serializable {
     @Lazy
     @ManyToOne
     @JoinColumn(name = "document_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "GUARANTY_DOC_ID"))
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private Document document;
 
 

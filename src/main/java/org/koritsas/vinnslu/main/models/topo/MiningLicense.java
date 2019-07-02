@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Parameter;
@@ -63,10 +64,12 @@ public class MiningLicense implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "environmental_guarantee_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "MINING_LICENSE_ENVIRONMENTAL_GUARANTEE_ID"))
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private Guarantee environmentalGuarantee;
 
     @ManyToOne
     @JoinColumn(name = "lease_guarantee_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "MINING_LICENSE_LEASE_GUARANTEE_ID"))
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private Guarantee leaseGuarantee;
 
 
