@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public abstract class AbstractCRUDService<R extends JpaRepository, E extends Serializable, PK extends Serializable> {
 
-    //private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
 
     protected R repo;
 

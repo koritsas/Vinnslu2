@@ -92,13 +92,15 @@ public class ProcessController {
 
         StandardEnvironmentalCommitmentsApplication secApplication = mapper.map(dto,StandardEnvironmentalCommitmentsApplication.class);
 
+        System.out.println(secApplication.toString());
+
         processService.completeStandardEnvironmentalCommitmentsOpinionsTask(taskId,secApplication);
 
         return ResponseEntity.ok("Completed Standard Environmental Commitmens Opinions task by updating to "+ secApplication.toString());
     }
 
 
-    @PostMapping("/process/tasks/standardTechnicalCommitments/application/{taskId")
+    @PostMapping("/process/tasks/standardTechnicalCommitments/application/{taskId}")
     public ResponseEntity<String> completeStandardTechnicalCommitmentsApplicationTask(@PathVariable String taskId, @RequestBody StandardTechnicalCommitmentsApplicationDto dto){
 
 

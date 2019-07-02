@@ -101,11 +101,19 @@ public class ProcessService {
     @Transactional
     public void completeStandardEnvironmentalCommitmentsOpinionsTask(String taskId,StandardEnvironmentalCommitmentsApplication secApplication){
 
-        Map<String,Object> variables = taskService.createTaskQuery().taskId(taskId).includeProcessVariables().singleResult().getProcessVariables();
+        System.out.println(secApplication.getId());
 
-        variables.put("standardEnvironmentalCommitmentsApplication",secService.update(secApplication.getId(),secApplication));
+
+        StandardEnvironmentalCommitmentsApplication application =secService.update(secApplication.getId(),secApplication);
+
+
+        Map<String,Object> variables= taskService.createTaskQuery().taskId(taskId).includeProcessVariables().singleResult().getProcessVariables();
+
+        variables.put("standardEnvironmentalCommitmentsApplication",application);
+
 
         taskService.complete(taskId,variables);
+
 
     }
 

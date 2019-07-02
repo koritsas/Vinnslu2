@@ -8,7 +8,7 @@ import org.koritsas.vinnslu.main.models.common.Company;
 import org.koritsas.vinnslu.main.models.common.Document;
 import org.koritsas.vinnslu.main.models.common.Opinion;
 import org.koritsas.vinnslu.main.models.topo.ResearchLicense;
-import org.koritsas.vinnslu.main.models.topo.StandardEnvironmentalCommitments;
+import org.koritsas.vinnslu.main.models.topo.StandardTechnicalCommitments;
 import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
 import org.koritsas.vinnslu.main.ws.dto.AbstractDto;
@@ -16,10 +16,8 @@ import org.koritsas.vinnslu.main.ws.dto.AbstractDto;
 import javax.persistence.*;
 import java.util.Date;
 
-@Getter
-@Setter
-public class StandardEnvironmentalCommitmentsApplicationDto implements AbstractDto<Long> {
-
+@Getter @Setter
+public class StandardTechnicalCommitmentsApplicationDto implements AbstractDto<Long> {
     private Long id;
 
 
@@ -38,25 +36,16 @@ public class StandardEnvironmentalCommitmentsApplicationDto implements AbstractD
 
     private Document document;
 
-    private StandardEnvironmentalCommitments standardEnvironmentalCommitments;
+    private StandardTechnicalCommitments standardTechnicalCommitments;
 
 
-    private Opinion forestryOpinion;
-
-
-    private Opinion speleologyOpinion;
-
-
-    private Opinion archeologyOpinion;
-
-
-    private Opinion cityPlanningOpinion;
+    private Opinion mineOverseeingOpinion;
 
 
     private ResearchApplication researchApplication;
 
     @Override
     public Class getClaZZ() {
-        return StandardEnvironmentalCommitments.class;
+        return StandardTechnicalCommitments.class;
     }
 }
