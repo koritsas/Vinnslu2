@@ -2,17 +2,17 @@ package org.koritsas.vinnslu.main.ws.services.workflow;
 
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
-import org.flowable.engine.impl.persistence.entity.ExecutionEntity;
-import org.flowable.engine.runtime.Execution;
-import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
-import org.koritsas.vinnslu.main.models.common.Opinion;
+import org.koritsas.vinnslu.main.models.topo.StandardEnvironmentalCommitments;
+import org.koritsas.vinnslu.main.models.topo.StandardTechnicalCommitments;
 import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
 import org.koritsas.vinnslu.main.models.topo.applications.StandardEnvironmentalCommitmentsApplication;
 import org.koritsas.vinnslu.main.models.topo.applications.StandardTechnicalCommitmentsApplication;
 import org.koritsas.vinnslu.main.ws.services.applications.ResearchApplicationService;
 import org.koritsas.vinnslu.main.ws.services.applications.StandardEnvironmentalCommitmentsApplicationService;
 import org.koritsas.vinnslu.main.ws.services.applications.StandardTechnicalCommitmentsApplicationService;
+import org.koritsas.vinnslu.main.ws.services.crud.topo.StandardEnvironmentalCommitmentsService;
+import org.koritsas.vinnslu.main.ws.services.crud.topo.StandardTechnicalCommitmentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,18 +30,24 @@ public class ProcessService {
 
     private ResearchApplicationService researchApplicationService;
 
-    private StandardEnvironmentalCommitmentsApplicationService secService;
+    private StandardEnvironmentalCommitmentsApplicationService standardEnvironmentalCommitmentsApplicationService;
 
-    private StandardTechnicalCommitmentsApplicationService stcService;
+    private StandardTechnicalCommitmentsApplicationService standardTechnicalCommitmentsApplicationService;
+
+    private StandardTechnicalCommitmentsService standardTechnicalCommitmentsService;
+
+    private StandardEnvironmentalCommitmentsService standardEnvironmentalCommitmentsService;
 
 
     @Autowired
-    public ProcessService(RuntimeService runtimeService, TaskService taskService, ResearchApplicationService researchApplicationService,StandardEnvironmentalCommitmentsApplicationService secService,StandardTechnicalCommitmentsApplicationService stcService) {
+    public ProcessService(RuntimeService runtimeService, TaskService taskService, ResearchApplicationService researchApplicationService, StandardEnvironmentalCommitmentsApplicationService standardEnvironmentalCommitmentsApplicationService, StandardTechnicalCommitmentsApplicationService standardTechnicalCommitmentsApplicationService,StandardTechnicalCommitmentsService standardTechnicalCommitmentsService, StandardEnvironmentalCommitmentsService standardEnvironmentalCommitmentsService) {
         this.runtimeService = runtimeService;
         this.taskService = taskService;
         this.researchApplicationService = researchApplicationService;
-        this.secService = secService;
-        this.stcService = stcService;
+        this.standardEnvironmentalCommitmentsApplicationService = standardEnvironmentalCommitmentsApplicationService;
+        this.standardTechnicalCommitmentsApplicationService = standardTechnicalCommitmentsApplicationService;
+        this.standardTechnicalCommitmentsService = standardTechnicalCommitmentsService;
+        this.standardEnvironmentalCommitmentsService = standardEnvironmentalCommitmentsService;
     }
 
 
@@ -90,7 +96,7 @@ public class ProcessService {
 
         Map<String,Object> variables = new HashMap<>();
 
-        variables.put("standardEnvironmentalCommitmentsApplication",secService.create(secApplication));
+        variables.put("standardEnvironmentalCommitmentsApplication", standardEnvironmentalCommitmentsApplicationService.create(secApplication));
 
         taskService.complete(taskId,variables);
 
@@ -104,7 +110,7 @@ public class ProcessService {
         System.out.println(secApplication.getId());
 
 
-        StandardEnvironmentalCommitmentsApplication application =secService.update(secApplication.getId(),secApplication);
+        StandardEnvironmentalCommitmentsApplication application = standardEnvironmentalCommitmentsApplicationService.update(secApplication.getId(),secApplication);
 
 
         Map<String,Object> variables= taskService.createTaskQuery().taskId(taskId).includeProcessVariables().singleResult().getProcessVariables();
@@ -125,7 +131,7 @@ public class ProcessService {
 
         Map<String,Object> variables = new HashMap<>();
 
-        variables.put("standardTechnicalCommitmentsApplication",stcService.create(stcApplication));
+        variables.put("standardTechnicalCommitmentsApplication", standardTechnicalCommitmentsApplicationService.create(stcApplication));
 
         taskService.complete(taskId,variables);
 
@@ -137,10 +143,31 @@ public class ProcessService {
 
         Map<String,Object> variables = new HashMap<>();
 
-        variables.put("standardTechnicalCommitmentsApplication",stcService.update(stcApplication.getId(),stcApplication));
+        variables.put("standardTechnicalCommitmentsApplication", standardTechnicalCommitmentsApplicationService.update(stcApplication.getId(),stcApplication));
 
         taskService.complete(taskId,variables);
 
+    }
+
+    @Transactional
+    public void completeStandardTechnicalCommitmentsTask(String taskId, StandardTechnicalCommitments standardTechnicalCommitments){
+
+        Map<String,Object> variables = new HashMap<>();
+
+        variables.put("standardTechnicalCommitments",standardTechnicalCommitmentsService.create(standardTechnicalCommitments));
+
+        taskService.complete(taskId,variables);
+
+    }
+
+    @Transactional
+    public void completeStandardEnvironmentalCommitments(String taskId, StandardEnvironmentalCommitments standardEnvironmentalCommitments){
+
+        Map<String,Object> variables = new HashMap<>();
+
+        variables.put("standardEnvironmentalCommitments",variables);
+
+        taskService.complete(taskId,variables);
     }
 
 

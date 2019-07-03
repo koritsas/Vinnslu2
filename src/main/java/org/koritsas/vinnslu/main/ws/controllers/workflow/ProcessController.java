@@ -1,11 +1,14 @@
 package org.koritsas.vinnslu.main.ws.controllers.workflow;
 
 import org.flowable.task.api.Task;
+import org.koritsas.vinnslu.main.models.topo.StandardEnvironmentalCommitments;
+import org.koritsas.vinnslu.main.models.topo.StandardTechnicalCommitments;
 import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
 import org.koritsas.vinnslu.main.models.topo.applications.StandardEnvironmentalCommitmentsApplication;
 import org.koritsas.vinnslu.main.models.topo.applications.StandardTechnicalCommitmentsApplication;
 import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
 import org.koritsas.vinnslu.main.utils.TaskRepresentation;
+import org.koritsas.vinnslu.main.ws.dto.topo.StandardEnvironmentalCommitmentsDTO;
 import org.koritsas.vinnslu.main.ws.dto.topo.StandardTechnicalCommitmentsDTO;
 import org.koritsas.vinnslu.main.ws.dto.topo.applications.ResearchApplicationDto;
 import org.koritsas.vinnslu.main.ws.dto.topo.applications.StandardEnvironmentalCommitmentsApplicationDto;
@@ -76,7 +79,7 @@ public class ProcessController {
 
 
     //Completes Standard Environmental Commitments Application Task by POSTing
-    @PostMapping("process/tasks/standardEnvironmentalCommitments/application/{taskId}")
+    @PostMapping("process/tasks/standard-environmental-commitments/application/{taskId}")
     public ResponseEntity<String> completeStandardEnvironmentalCommitmentsTask(@PathVariable String taskId, @RequestBody StandardEnvironmentalCommitmentsApplicationDto dto){
 
         StandardEnvironmentalCommitmentsApplication stcApplication = mapper.map(dto,StandardEnvironmentalCommitmentsApplication.class);
@@ -87,7 +90,7 @@ public class ProcessController {
     }
 
     //Completes Standard Environmental Commitments Opinions Task by PUTing
-    @PutMapping("process/tasks/standardEnvironmentalCommitments/application/opinions/{taskId}")
+    @PutMapping("process/tasks/standard-environmental-commitments/application/opinions/{taskId}")
     public ResponseEntity<String> completeStandardEnvironmentalCommitmentsOpinionsTask(@PathVariable String taskId,@RequestBody StandardEnvironmentalCommitmentsApplicationDto dto){
 
         StandardEnvironmentalCommitmentsApplication secApplication = mapper.map(dto,StandardEnvironmentalCommitmentsApplication.class);
@@ -100,7 +103,7 @@ public class ProcessController {
     }
 
 
-    @PostMapping("/process/tasks/standardTechnicalCommitments/application/{taskId}")
+    @PostMapping("/process/tasks/standard-technical-commitments/application/{taskId}")
     public ResponseEntity<String> completeStandardTechnicalCommitmentsApplicationTask(@PathVariable String taskId, @RequestBody StandardTechnicalCommitmentsApplicationDto dto){
 
 
@@ -111,7 +114,7 @@ public class ProcessController {
         return ResponseEntity.ok("Completed Standard Technical Commitments Application task by posting " + stcApplication.toString());
     }
 
-    @PutMapping("/process/tasks/standardTechnicalCommitments/application/opinions/{taskId}")
+    @PutMapping("/process/tasks/standard-technical-commitments/application/opinions/{taskId}")
     public ResponseEntity<String> completeStandardTechnicalCommitmentsOpinionsTask(@PathVariable String taskId,@RequestBody StandardTechnicalCommitmentsApplicationDto dto){
 
         StandardTechnicalCommitmentsApplication stcApplication = mapper.map(dto,StandardTechnicalCommitmentsApplication.class);
@@ -119,6 +122,23 @@ public class ProcessController {
 
         return ResponseEntity.ok("Completed Standard Technical Commitments Opinions task by updating to " + stcApplication);
 
+    }
+
+    @PostMapping("/process/tasks/standard-technical-commitments/{taskId}")
+    public ResponseEntity<String> completeStandardTechnicalCommitmentsTask(@PathVariable String taskId,@RequestBody StandardTechnicalCommitmentsDTO dto){
+
+        StandardTechnicalCommitments standardTechnicalCommitments = mapper.map(dto,StandardTechnicalCommitments.class);
+
+        return ResponseEntity.ok("Completed task with "+standardTechnicalCommitments.toString());
+
+    }
+
+    @PostMapping("/process/tasks/standard-environmental-commitments/{taskId}")
+    public ResponseEntity<String> completedStandardEnvironmentalCommitmentsTask(@PathVariable String taskId, @RequestBody StandardEnvironmentalCommitmentsDTO dto){
+
+        StandardEnvironmentalCommitments standardEnvironmentalCommitments = mapper.map(dto,StandardEnvironmentalCommitments.class);
+
+        return ResponseEntity.ok("Completed task with "+standardEnvironmentalCommitments.toString());
     }
 }
 
