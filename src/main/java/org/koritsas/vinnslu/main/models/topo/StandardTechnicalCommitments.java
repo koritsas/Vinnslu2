@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.koritsas.vinnslu.main.models.common.Document;
 import org.koritsas.vinnslu.main.models.common.Opinion;
+import org.koritsas.vinnslu.main.models.topo.applications.StandardTechnicalCommitmentsApplication;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,19 +35,15 @@ public class StandardTechnicalCommitments implements Serializable {
     @GeneratedValue(generator = "stc_generator")
     private Long id;
 
-    private boolean active;
-
     private String protocol;
 
     private String ada;
 
-    @ManyToOne
-    @JoinColumn(name = "topo_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "PTD_TOPO_ID_FK"))
-    private Topo topo;
 
-    @ManyToOne
-    @JoinColumn(name = "opinions_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "PTD_OPINIONS_ID_FK"))
-    private Opinion miningInspectionOpinion;
+    @OneToOne
+    @JoinColumn(name = "standard_technical_commitments_application_id",referencedColumnName = "id",foreignKey = @ForeignKey(name="STC_STCAPP_FK"))
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE})
+    private StandardTechnicalCommitmentsApplication standardTechnicalCommitmentsApplication;
 
 
     @ManyToOne

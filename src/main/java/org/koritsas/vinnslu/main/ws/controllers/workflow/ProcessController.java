@@ -1,6 +1,7 @@
 package org.koritsas.vinnslu.main.ws.controllers.workflow;
 
 import org.flowable.task.api.Task;
+import org.koritsas.vinnslu.main.models.topo.ResearchLicense;
 import org.koritsas.vinnslu.main.models.topo.StandardEnvironmentalCommitments;
 import org.koritsas.vinnslu.main.models.topo.StandardTechnicalCommitments;
 import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
@@ -8,6 +9,7 @@ import org.koritsas.vinnslu.main.models.topo.applications.StandardEnvironmentalC
 import org.koritsas.vinnslu.main.models.topo.applications.StandardTechnicalCommitmentsApplication;
 import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
 import org.koritsas.vinnslu.main.utils.TaskRepresentation;
+import org.koritsas.vinnslu.main.ws.dto.topo.ResearchLicenseDTO;
 import org.koritsas.vinnslu.main.ws.dto.topo.StandardEnvironmentalCommitmentsDTO;
 import org.koritsas.vinnslu.main.ws.dto.topo.StandardTechnicalCommitmentsDTO;
 import org.koritsas.vinnslu.main.ws.dto.topo.applications.ResearchApplicationDto;
@@ -129,6 +131,8 @@ public class ProcessController {
 
         StandardTechnicalCommitments standardTechnicalCommitments = mapper.map(dto,StandardTechnicalCommitments.class);
 
+        processService.completeStandardTechnicalCommitmentsTask(taskId,standardTechnicalCommitments);
+
         return ResponseEntity.ok("Completed task with "+standardTechnicalCommitments.toString());
 
     }
@@ -138,7 +142,27 @@ public class ProcessController {
 
         StandardEnvironmentalCommitments standardEnvironmentalCommitments = mapper.map(dto,StandardEnvironmentalCommitments.class);
 
+        processService.completeStandardEnvironmentalCommitmentsTask(taskId,standardEnvironmentalCommitments);
+
         return ResponseEntity.ok("Completed task with "+standardEnvironmentalCommitments.toString());
+    }
+
+    @PostMapping("/process/tasks/reseasrch-license/{taskId}")
+    public ResponseEntity<String> createResearchLicenseTask(@PathVariable String taskId, @RequestBody ResearchLicenseDTO dto){
+
+        ResearchLicense researchLicense = mapper.map(dto,ResearchLicense.class);
+
+        processService.createResearchLicense(taskId,researchLicense);
+
+        return ResponseEntity.ok("Research License created " + researchLicense.toString());
+    }
+
+    @PostMapping("/process/tasks/reseasrch-license/{taskId}/complete")
+    public ResponseEntity<String> completeResearchLicenseTask(@PathVariable String taskId){
+
+        processService.completeResearchLicenseTask(taskId);
+
+        return ResponseEntity.ok("Research License ended. Proceed to leasing process?");
     }
 }
 

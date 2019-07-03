@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.koritsas.vinnslu.main.models.common.Document;
 import org.koritsas.vinnslu.main.models.common.Opinion;
+import org.koritsas.vinnslu.main.models.topo.applications.StandardEnvironmentalCommitmentsApplication;
 import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
@@ -40,25 +42,12 @@ public class StandardEnvironmentalCommitments implements Serializable {
 
     private String ada;
 
-    @ManyToOne
-    @JoinColumn(name = "city_planning_opinion_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "CP_PPD_OPINION_ID_FK"))
-    private Opinion cityPlanningOpinion;
 
-    @ManyToOne
-    @JoinColumn(name = "forestry_opinion_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FORESTRY_PPD_OPINION_ID_FK"))
-    private Opinion forestryOpinion;
+    @OneToOne
+    @JoinColumn(name = "standard_environmental_commitments_application_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "SEC_SECAPP_FK"))
+    @Cascade({org.hibernate.annotations.CascadeType.MERGE, org.hibernate.annotations.CascadeType.PERSIST})
+    private StandardEnvironmentalCommitmentsApplication standardEnvironmentalCommitmentsApplication;
 
-    @ManyToOne
-    @JoinColumn(name = "archeology_opinion_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "ARCHEOLOGY_PPD_OPINION_ID_FK"))
-    private Opinion archeologyOpinion;
-
-    @ManyToOne
-    @JoinColumn(name = "speleology_opinion_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "SPELEOLOGY_PPD_OPINION_ID_FK"))
-    private Opinion speleologyOpinion;
-
-    @ManyToOne
-    @JoinColumn(name = "topo_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "PPD_TOPO_ID_FK"))
-    private Topo topo;
 
     @Lazy
     @ManyToOne

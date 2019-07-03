@@ -3,6 +3,7 @@ package org.koritsas.vinnslu.main.ws.services.workflow;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
+import org.koritsas.vinnslu.main.models.topo.ResearchLicense;
 import org.koritsas.vinnslu.main.models.topo.StandardEnvironmentalCommitments;
 import org.koritsas.vinnslu.main.models.topo.StandardTechnicalCommitments;
 import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
@@ -11,6 +12,7 @@ import org.koritsas.vinnslu.main.models.topo.applications.StandardTechnicalCommi
 import org.koritsas.vinnslu.main.ws.services.applications.ResearchApplicationService;
 import org.koritsas.vinnslu.main.ws.services.applications.StandardEnvironmentalCommitmentsApplicationService;
 import org.koritsas.vinnslu.main.ws.services.applications.StandardTechnicalCommitmentsApplicationService;
+import org.koritsas.vinnslu.main.ws.services.crud.topo.ResearchLicenseService;
 import org.koritsas.vinnslu.main.ws.services.crud.topo.StandardEnvironmentalCommitmentsService;
 import org.koritsas.vinnslu.main.ws.services.crud.topo.StandardTechnicalCommitmentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +40,11 @@ public class ProcessService {
 
     private StandardEnvironmentalCommitmentsService standardEnvironmentalCommitmentsService;
 
+    private ResearchLicenseService researchLicenseService;
+
 
     @Autowired
-    public ProcessService(RuntimeService runtimeService, TaskService taskService, ResearchApplicationService researchApplicationService, StandardEnvironmentalCommitmentsApplicationService standardEnvironmentalCommitmentsApplicationService, StandardTechnicalCommitmentsApplicationService standardTechnicalCommitmentsApplicationService,StandardTechnicalCommitmentsService standardTechnicalCommitmentsService, StandardEnvironmentalCommitmentsService standardEnvironmentalCommitmentsService) {
+    public ProcessService(RuntimeService runtimeService, TaskService taskService, ResearchApplicationService researchApplicationService, StandardEnvironmentalCommitmentsApplicationService standardEnvironmentalCommitmentsApplicationService, StandardTechnicalCommitmentsApplicationService standardTechnicalCommitmentsApplicationService, StandardTechnicalCommitmentsService standardTechnicalCommitmentsService, StandardEnvironmentalCommitmentsService standardEnvironmentalCommitmentsService, ResearchLicenseService researchLicenseService) {
         this.runtimeService = runtimeService;
         this.taskService = taskService;
         this.researchApplicationService = researchApplicationService;
@@ -48,6 +52,7 @@ public class ProcessService {
         this.standardTechnicalCommitmentsApplicationService = standardTechnicalCommitmentsApplicationService;
         this.standardTechnicalCommitmentsService = standardTechnicalCommitmentsService;
         this.standardEnvironmentalCommitmentsService = standardEnvironmentalCommitmentsService;
+        this.researchLicenseService=researchLicenseService;
     }
 
 
@@ -161,13 +166,34 @@ public class ProcessService {
     }
 
     @Transactional
-    public void completeStandardEnvironmentalCommitments(String taskId, StandardEnvironmentalCommitments standardEnvironmentalCommitments){
+    public void completeStandardEnvironmentalCommitmentsTask(String taskId, StandardEnvironmentalCommitments standardEnvironmentalCommitments){
 
         Map<String,Object> variables = new HashMap<>();
 
-        variables.put("standardEnvironmentalCommitments",variables);
+        variables.put("standardEnvironmentalCommitments",standardEnvironmentalCommitmentsService.create(standardEnvironmentalCommitments));
 
         taskService.complete(taskId,variables);
+    }
+
+    @Transactional
+    public void createResearchLicense(String taskId, ResearchLicense researchLicense){
+
+        Map<String,Object> variables = new HashMap<>();
+
+        variables.put("researchLicense",researchLicenseService.create(researchLicense));
+
+
+
+        taskService.setVariables(taskId,variables);
+
+    }
+
+
+    @Transactional
+    public void completeResearchLicenseTask(String taskId){
+
+        taskService.complete(taskId);
+
     }
 
 

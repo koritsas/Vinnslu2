@@ -12,7 +12,5 @@ public interface StandardTechnicalCommitmentsRepository extends JpaRepository<St
 
     StandardEnvironmentalCommitments findByAda(String ada);
 
-    List<StandardEnvironmentalCommitments> findByActive(boolean active);
 
-    List<StandardEnvironmentalCommitments> findByTopoIdAndActive(Long topo_id, boolean active);
 }
