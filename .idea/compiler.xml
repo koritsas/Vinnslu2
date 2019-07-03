@@ -5,8 +5,11 @@
       <profile default="true" name="Default" enabled="true" />
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="org.koritsas.Vinnslu2.test" target="11" />
       <module name="Vinnslu2.main" target="11" />
       <module name="Vinnslu2.test" target="11" />
+      <module name="Vinnslu2.test.main" target="1.8" />
+      <module name="Vinnslu2.test.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
