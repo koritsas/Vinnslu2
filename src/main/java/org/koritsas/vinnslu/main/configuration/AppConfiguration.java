@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableAutoConfiguration
 @EnableTransactionManagement
-@Profile("production")
+@Profile({"production","dev"})
 public class AppConfiguration {
 
     @Bean
