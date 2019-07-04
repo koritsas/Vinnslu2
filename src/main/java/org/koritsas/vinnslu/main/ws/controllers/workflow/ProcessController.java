@@ -42,7 +42,7 @@ public class ProcessController {
 
         processService.startProcessWithResearchApplication(mapper.map(dto,ResearchApplication.class));
 
-        return ResponseEntity.status(201).body("Started new process instance");
+        return ResponseEntity.status(201).body("Started new licensing process instance with arguments " + dto.toString());
     }
 
 

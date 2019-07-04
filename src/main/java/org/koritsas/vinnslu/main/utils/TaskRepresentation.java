@@ -30,4 +30,5 @@ public class TaskRepresentation {
     private Date createTime;
 
     private Map<String,Object> processVariables;
+
 }

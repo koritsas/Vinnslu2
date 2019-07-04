@@ -4,6 +4,9 @@ import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.test.Deployment;
 import org.flowable.engine.test.FlowableRule;
+import org.flowable.task.api.Task;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,26 +16,27 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
-
+@ContextConfiguration("classpath:org/flowable/spring/test/junit4/springTypicalUsageTest-context.xml")
 public class ProcessControllerTest {
 
     @Autowired
-    RuntimeService runtimeService;
+    private RuntimeService runtimeService;
 
     @Autowired
-    TaskService taskService;
-
+    private TaskService taskService;
 
     @Autowired
     @Rule
     public FlowableRule flowableSpringRule;
 
-
     @Test
     @Deployment
-    public void testResearchLicenseSubprocess(){
+    public void simpleProcessTest() {
+        runtimeService.startProcessInstanceByKey("simpleProcess");
+        Task task = taskService.createTaskQuery().singleResult();
+        assertEquals("My Task", task.getName());
 
-        runtimeService.startProcessInstanceByKey("vinnslu_application");
+        taskService.complete(task.getId());
+        assertEquals(0, runtimeService.createProcessInstanceQuery().count());
     }
-
 }
