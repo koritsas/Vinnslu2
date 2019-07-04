@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -37,10 +38,12 @@ public class Document implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "sender_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "SENDER_ID_FK"))
+    @Cascade({org.hibernate.annotations.CascadeType.MERGE, org.hibernate.annotations.CascadeType.PERSIST})
     private Company sender;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "RECEIVER_ID_FK"))
+    @Cascade({org.hibernate.annotations.CascadeType.MERGE, org.hibernate.annotations.CascadeType.PERSIST})
     private Company receiver;
 
     @Temporal(TemporalType.DATE)
@@ -48,11 +51,14 @@ public class Document implements Serializable {
 
     private String protocol;
 
-    private String mimetype;
+    private String fileName;
+
+    private String fileType;
+
 
     @Lob
-    @Column(unique = true)
-    private File file;
+    @Column(unique = true,name = "data")
+    private byte[] data;
 
 
 }

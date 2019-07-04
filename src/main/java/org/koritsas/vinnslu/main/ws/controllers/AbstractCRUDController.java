@@ -12,13 +12,14 @@ import java.util.List;
 
 public class AbstractCRUDController<S extends AbstractCRUDService, E extends Serializable, PK extends Serializable, DTO extends AbstractDto<PK>> {
 
-    private S service;
+    protected S service;
+
+    protected GeometryModelMapper mapper;
 
     @Autowired
-    private GeometryModelMapper mapper;
-
-    public AbstractCRUDController(S service) {
+    public AbstractCRUDController(S service,GeometryModelMapper mapper) {
         this.service = service;
+        this.mapper=mapper;
     }
 
     @GetMapping()
@@ -34,9 +35,6 @@ public class AbstractCRUDController<S extends AbstractCRUDService, E extends Ser
 
     @PostMapping()
     public ResponseEntity<E> create(@RequestBody DTO dto) {
-
-        System.out.println("---------------Here's the DTO-----------");
-        System.out.println(dto.toString());
 
         return ResponseEntity.status(201).body((E) service.create(mapper.map(dto, (Class<E>) dto.getClaZZ())));
     }
