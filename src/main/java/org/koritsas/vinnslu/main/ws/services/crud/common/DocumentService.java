@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
+@Slf4j
 public class DocumentService extends AbstractCRUDService<DocumentRepository,Document,Long> {
 
     public DocumentService(DocumentRepository repo) {
@@ -56,6 +57,25 @@ public class DocumentService extends AbstractCRUDService<DocumentRepository,Docu
             return repo.save(doc);
 
     }
+
+    @Transactional(rollbackFor = {EntityNotFoundException.class, ConstraintViolationException.class})
+    public Document update(Long id, Document entity,MultipartFile file) {
+
+        if (!repo.existsById(id)) {
+            throw new EntityNotFoundException("Entity does not exist, therefore, cannot be updated");
+        }
+
+        try {
+            entity.setData(file.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        log.info("Updating entity "+ entity.toString());
+
+        return repo.save(entity);
+    }
+
 
 
 }

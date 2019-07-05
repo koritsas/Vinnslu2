@@ -16,10 +16,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/documents")
-public class DocumentController extends AbstractCRUDController<DocumentService,Document,Long,DocumentDto>{
+public class DocumentController{
 
+    private DocumentService service;
+
+    private GeometryModelMapper mapper;
+
+    @Autowired
     public DocumentController(DocumentService service, GeometryModelMapper mapper) {
-        super(service, mapper);
+
+        this.service=service;
+        this.mapper=mapper;
     }
 
 
@@ -30,7 +37,7 @@ public class DocumentController extends AbstractCRUDController<DocumentService,D
 
         return ResponseEntity.ok(service.create(document,file));
     }
-/*
+
     @GetMapping()
     public ResponseEntity<List<Document>> getAllDocuments(){
 
@@ -48,11 +55,11 @@ public class DocumentController extends AbstractCRUDController<DocumentService,D
     }
 
     @PutMapping()
-    public ResponseEntity<Document> update(@RequestBody Document dto) {
-        return ResponseEntity.status(200)
-                .body( service.update(dto.getId(), mapper.map(dto, Document.class)));
+    public ResponseEntity<Document> update(Document dto, MultipartFile file) {
+
+        return ResponseEntity.status(200).body( service.update(dto.getId(), mapper.map(dto, Document.class),file));
     }
-*/
+
 
 
 
