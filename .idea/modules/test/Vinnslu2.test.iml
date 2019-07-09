@@ -3,11 +3,6 @@
   <component name="ExternalSystem" linkedProjectPath="$MODULE_DIR$/../../.." rootProjectPath="$MODULE_DIR$/../../.." />
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../test">
-      <excludeFolder url="file://$MODULE_DIR$/../../../test/.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../test/build" />
-      <excludeFolder url="file://$MODULE_DIR$/../../../test/out" />
-    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
