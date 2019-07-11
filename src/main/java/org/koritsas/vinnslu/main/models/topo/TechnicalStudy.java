@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.koritsas.vinnslu.main.models.common.Document;
@@ -47,17 +48,20 @@ public class TechnicalStudy implements Serializable {
     @Lazy
     @ManyToOne
     @JoinColumn(name = "topo_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "TECHNICAL_STUDY_TOPO_FK"))
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private Topo topo;
 
     @Lazy
     @ManyToOne
     @JoinColumn(name = "environmental_impact_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "TECHNICAL_STUDY_ENV_FK"))
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private EnvironmentalImpactStudy environmentalImpactStudy;
 
 
     @Lazy
     @ManyToOne
     @JoinColumn(name = "document_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "TECHNICAL_STUDY_DOC_FK"))
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private Document document;
 
 

@@ -1,5 +1,6 @@
 package org.koritsas.vinnslu.main.ws.controllers.workflow;
 
+import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.koritsas.vinnslu.main.models.topo.ResearchLicense;
 import org.koritsas.vinnslu.main.models.topo.StandardEnvironmentalCommitments;
@@ -38,11 +39,11 @@ public class ProcessController {
     }
 
     @PostMapping("/process")
-    public ResponseEntity<String> startProcess(@RequestBody ResearchApplicationDto dto){
+    public ResponseEntity<ProcessInstance> startProcess(@RequestBody ResearchApplicationDto dto){
 
-        processService.startProcessWithResearchApplication(mapper.map(dto,ResearchApplication.class));
+        ProcessInstance processInstance =processService.startProcessWithResearchApplication(mapper.map(dto,ResearchApplication.class));
 
-        return ResponseEntity.status(201).body("Started new licensing process instance with arguments " + dto.toString());
+        return ResponseEntity.status(201).body(processInstance);
     }
 
 
@@ -157,7 +158,7 @@ public class ProcessController {
         return ResponseEntity.ok("Research License created " + researchLicense.toString());
     }
 
-    @PostMapping("/process/tasks/reseasrch-license/{taskId}/complete")
+    @PostMapping("/process/tasks/reseasrch-license/proceed-to-leasing/{taskId}")
     public ResponseEntity<String> completeResearchLicenseTask(@PathVariable String taskId){
 
         processService.completeResearchLicenseTask(taskId);

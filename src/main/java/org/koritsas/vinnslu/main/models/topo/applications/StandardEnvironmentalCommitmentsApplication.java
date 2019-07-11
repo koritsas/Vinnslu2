@@ -15,10 +15,6 @@ import javax.persistence.*;
 @Entity
 public class StandardEnvironmentalCommitmentsApplication extends Application {
 
-    @ManyToOne
-    @JoinColumn(name = "standard_environmental_commitments_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "SEC_APP_FK"))
-    private StandardEnvironmentalCommitments standardEnvironmentalCommitments;
-
 
     @ManyToOne
     @JoinColumn(name = "foresty_opinion_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "SEC_FO_FK"))
@@ -39,10 +35,6 @@ public class StandardEnvironmentalCommitmentsApplication extends Application {
     @JoinColumn(name = "city_planning_opinion_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "SEC_CP_FK"))
     @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE})
     private Opinion cityPlanningOpinion;
-
-    @OneToOne
-    @JoinColumn(name = "research_application_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "SECAPP_RAPP_FK"))
-    private ResearchApplication researchApplication;
 
 
 

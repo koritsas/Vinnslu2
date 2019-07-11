@@ -2,6 +2,7 @@ package org.koritsas.vinnslu.main.ws.services.workflow;
 
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
+import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.koritsas.vinnslu.main.models.topo.ResearchLicense;
 import org.koritsas.vinnslu.main.models.topo.StandardEnvironmentalCommitments;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ProcessService {
@@ -57,19 +59,22 @@ public class ProcessService {
 
 
     @Transactional
-    public void startProcessWithResearchApplication(ResearchApplication researchApplication){
+    public ProcessInstance startProcessWithResearchApplication(ResearchApplication researchApplication){
 
         Map<String,Object> variables = new HashMap<>();
 
         variables.put("researchApplication",researchApplicationService.create(researchApplication));
 
-        runtimeService.startProcessInstanceByKey("vinnslu_workflow",variables);
+        return  runtimeService.startProcessInstanceByKey("vinnslu_workflow",variables);
 
     }
 
 
     @Transactional
     public List<Task> getAllTasks(String processId,String taskId){
+
+
+        Optional<String> optional = Optional.ofNullable(taskId);
 
         if (taskId==null){
             return taskService.createTaskQuery().includeProcessVariables().processInstanceId(processId).list();
@@ -181,8 +186,6 @@ public class ProcessService {
         Map<String,Object> variables = new HashMap<>();
 
         variables.put("researchLicense",researchLicenseService.create(researchLicense));
-
-
 
         taskService.setVariables(taskId,variables);
 

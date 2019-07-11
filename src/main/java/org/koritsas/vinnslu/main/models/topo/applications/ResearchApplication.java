@@ -17,10 +17,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class ResearchApplication extends Application {
 
-    @ManyToOne(targetEntity = ResearchLicense.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "research_license_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "RESEARCH_APP_FK"))
-    private ResearchLicense researchLicense;
-
 
     @ManyToOne
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
