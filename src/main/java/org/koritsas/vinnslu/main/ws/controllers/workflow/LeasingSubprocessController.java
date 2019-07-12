@@ -91,6 +91,12 @@ public class LeasingSubprocessController {
         return ResponseEntity.ok("Minig License created");
     }
 
+    @PostMapping("/establishment_protocol/{taskId}")
+    public ResponseEntity<String> createEstablishmentProtocol(@PathVariable String taskId, @RequestBody EstablishmentProtocolDto dto){
 
+        leasingSubprocessService.createEstablishmentProtocol(taskId,mapper.map(dto,EstablishmentProtocol.class));
+
+        return ResponseEntity.ok("Establishment Protocol Created");
+    }
 
 }

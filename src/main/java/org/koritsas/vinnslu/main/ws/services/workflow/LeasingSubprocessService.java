@@ -3,6 +3,8 @@ package org.koritsas.vinnslu.main.ws.services.workflow;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.koritsas.vinnslu.main.models.topo.*;
+import org.koritsas.vinnslu.main.models.topo.applications.LeasingApplication;
+import org.koritsas.vinnslu.main.ws.services.applications.LeasingApplicationService;
 import org.koritsas.vinnslu.main.ws.services.crud.topo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +30,12 @@ public class LeasingSubprocessService {
 
     private MiningLicenseService miningLicenseService;
 
+    private LeasingApplicationService leasingApplicationService;
+
+    private EstablishmentProtocolService establishmentProtocolService;
+
     @Autowired
-    public LeasingSubprocessService(RuntimeService runtimeService,TaskService taskService,EnvironmentalImpactStudyService environmentalImpactStudyService,TechnicalStudyService technicalStudyService,GuaranteeService guaranteeService,LeasingResolutionService leasingResolutionService,MiningLicenseService miningLicenseService){
+    public LeasingSubprocessService(RuntimeService runtimeService,TaskService taskService,EnvironmentalImpactStudyService environmentalImpactStudyService,TechnicalStudyService technicalStudyService,GuaranteeService guaranteeService,LeasingResolutionService leasingResolutionService,MiningLicenseService miningLicenseService, LeasingApplicationService leasingApplicationService,EstablishmentProtocolService establishmentProtocolService){
         this.runtimeService=runtimeService;
         this.taskService=taskService;
         this.environmentalImpactStudyService=environmentalImpactStudyService;
@@ -37,6 +43,8 @@ public class LeasingSubprocessService {
         this.guaranteeService=guaranteeService;
         this.leasingResolutionService=leasingResolutionService;
         this.miningLicenseService=miningLicenseService;
+        this.leasingApplicationService=leasingApplicationService;
+        this.establishmentProtocolService=establishmentProtocolService;
     }
 
     @Transactional
@@ -125,8 +133,28 @@ public class LeasingSubprocessService {
         variables.put("miningLicense",miningLicenseService.create(miningLicense));
 
         taskService.complete(taskId,variables);
+    }
+
+    @Transactional
+    public void createLeasingApplication(String taskId, LeasingApplication leasingApplication){
+
+        Map<String,Object> variables = new HashMap<>();
+
+        variables.put("leasingApplication",leasingApplicationService.create(leasingApplication));
+
+        taskService.complete(taskId,variables);
 
     }
+
+    @Transactional
+    public void createEstablishmentProtocol(String taskId, EstablishmentProtocol establishmentProtocol){
+
+        Map<String,Object> variables = new HashMap<>();
+
+        variables.put("establishmentProtocol",establishmentProtocolService.create(establishmentProtocol));
+
+    }
+
 
 
 
