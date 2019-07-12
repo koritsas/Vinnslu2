@@ -1,11 +1,13 @@
 package org.koritsas.vinnslu.main.models.types;
 
+import lombok.Data;
 import org.koritsas.vinnslu.main.models.common.Person;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 @Embeddable
 public class Contract implements Serializable {
 
@@ -27,13 +29,4 @@ public class Contract implements Serializable {
         this.notary = notary;
     }
 
-    private Contract() {
-    }
-
-    public Contract(Long contractId, String contractProtocol, Date contractDate, Person notary) {
-        this.contractId = contractId;
-        this.contractProtocol = contractProtocol;
-        this.contractDate = contractDate;
-        this.notary = notary;
-    }
 }

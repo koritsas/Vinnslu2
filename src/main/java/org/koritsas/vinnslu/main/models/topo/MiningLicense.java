@@ -35,9 +35,6 @@ public class MiningLicense implements Serializable {
     @GeneratedValue(generator = "min_generator")
     private Long id;
 
-    @NaturalId
-    @JoinColumn(name = "topo_abl", referencedColumnName = "abl", foreignKey = @ForeignKey(name = "MINING_LICENSE_TOPO_ABL_ID"))
-    private Topo topo_abl;
 
     private boolean active;
 

@@ -33,7 +33,7 @@ import static org.junit.Assert.*;
 @ExtendWith(FlowableSpringExtension.class)
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(classes = AppConfiguration.class)
-public class ProcessControllerTest {
+public class ResearchSubprocessControllerTest {
 
 
     private ProcessEngine processEngine;
