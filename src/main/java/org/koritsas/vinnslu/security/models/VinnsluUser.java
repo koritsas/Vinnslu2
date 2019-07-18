@@ -18,6 +18,7 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class VinnsluUser implements Serializable {
 

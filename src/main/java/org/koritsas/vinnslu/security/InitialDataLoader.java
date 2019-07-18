@@ -5,7 +5,7 @@ import org.koritsas.vinnslu.security.models.Role;
 import org.koritsas.vinnslu.security.models.VinnsluUser;
 import org.koritsas.vinnslu.security.repos.PrivilegeRepository;
 import org.koritsas.vinnslu.security.repos.RoleRepository;
-import org.koritsas.vinnslu.security.repos.UserRepository;
+import org.koritsas.vinnslu.security.repos.VinnsluUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -22,7 +22,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
     private boolean alreadySetup=false;
 
-    private UserRepository userRepository;
+    private VinnsluUserRepository vinnsluUserRepository;
 
     private RoleRepository roleRepository;
 
@@ -31,8 +31,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public InitialDataLoader(UserRepository userRepository,RoleRepository roleRepository,PrivilegeRepository privilegeRepository,PasswordEncoder passwordEncoder){
-        this.userRepository=userRepository;
+    public InitialDataLoader(VinnsluUserRepository vinnsluUserRepository, RoleRepository roleRepository, PrivilegeRepository privilegeRepository, PasswordEncoder passwordEncoder){
+        this.vinnsluUserRepository = vinnsluUserRepository;
         this.roleRepository=roleRepository;
         this.privilegeRepository=privilegeRepository;
         this.passwordEncoder=passwordEncoder;
@@ -66,7 +66,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         admin.setPassword(passwordEncoder.encode("ilkor@4664"));
         admin.setRoles(Arrays.asList(adminRole));
 
-        userRepository.save(admin);
+        vinnsluUserRepository.save(admin);
 
         alreadySetup=true;
     }

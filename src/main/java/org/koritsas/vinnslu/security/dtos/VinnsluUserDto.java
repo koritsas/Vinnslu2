@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Getter @Setter
 @ToString
 @PasswordMatches
-public class UserDto {
+public class VinnsluUserDto {
 
     @NotNull
     @NotEmpty

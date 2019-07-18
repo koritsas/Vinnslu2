@@ -2,7 +2,7 @@ package org.koritsas.vinnslu.security.services;
 
 import org.koritsas.vinnslu.main.exceptions.UserExistsException;
 import org.koritsas.vinnslu.security.models.VinnsluUser;
-import org.koritsas.vinnslu.security.repos.UserRepository;
+import org.koritsas.vinnslu.security.repos.VinnsluUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    private UserRepository repository;
+    private VinnsluUserRepository repository;
 
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder){
+    public UserService(VinnsluUserRepository repository, PasswordEncoder passwordEncoder){
         this.repository=repository;
+        this.passwordEncoder=passwordEncoder;
     }
 
     public VinnsluUser registerNewUserAccount(VinnsluUser vinnsluUser){

@@ -3,7 +3,7 @@ package org.koritsas.vinnslu.security.validators;
 
 
 import org.koritsas.vinnslu.security.annotations.PasswordMatches;
-import org.koritsas.vinnslu.security.dtos.UserDto;
+import org.koritsas.vinnslu.security.dtos.VinnsluUserDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -16,8 +16,8 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
-        UserDto dto = (UserDto) value;
+        VinnsluUserDto dto = (VinnsluUserDto) value;
 
-        return dto.getPassword().equals(((UserDto) value).getMatchingPassword());
+        return dto.getPassword().equals(((VinnsluUserDto) value).getMatchingPassword());
     }
 }
