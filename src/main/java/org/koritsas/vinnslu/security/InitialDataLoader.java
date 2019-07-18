@@ -2,7 +2,7 @@ package org.koritsas.vinnslu.security;
 
 import org.koritsas.vinnslu.security.models.Privilege;
 import org.koritsas.vinnslu.security.models.Role;
-import org.koritsas.vinnslu.security.models.User;
+import org.koritsas.vinnslu.security.models.VinnsluUser;
 import org.koritsas.vinnslu.security.repos.PrivilegeRepository;
 import org.koritsas.vinnslu.security.repos.RoleRepository;
 import org.koritsas.vinnslu.security.repos.UserRepository;
@@ -58,7 +58,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
 
-        User admin = new User();
+        VinnsluUser admin = new VinnsluUser();
         admin.setEmail("admin@vinnslu.gr");
         admin.setEnabled(true);
         admin.setFirstName("Ilias");
@@ -66,7 +66,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         admin.setPassword(passwordEncoder.encode("ilkor@4664"));
         admin.setRoles(Arrays.asList(adminRole));
 
+        userRepository.save(admin);
 
+        alreadySetup=true;
     }
 
     @Transactional

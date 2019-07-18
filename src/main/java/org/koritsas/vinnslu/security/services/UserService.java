@@ -1,7 +1,7 @@
 package org.koritsas.vinnslu.security.services;
 
 import org.koritsas.vinnslu.main.exceptions.UserExistsException;
-import org.koritsas.vinnslu.security.models.User;
+import org.koritsas.vinnslu.security.models.VinnsluUser;
 import org.koritsas.vinnslu.security.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,20 +19,20 @@ public class UserService {
         this.repository=repository;
     }
 
-    public User registerNewUserAccount(User user){
+    public VinnsluUser registerNewUserAccount(VinnsluUser vinnsluUser){
 
-        if (repository.findByEmail(user.getEmail())!=null){
-             throw new UserExistsException(user);
+        if (repository.findByEmail(vinnsluUser.getEmail())!=null){
+             throw new UserExistsException(vinnsluUser);
         }
 
-        User newUser= new User();
+        VinnsluUser newVinnsluUser = new VinnsluUser();
 
-        newUser.setFirstName(user.getFirstName());
-        newUser.setLastName(user.getLastName());
-        newUser.setEmail(user.getEmail());
-        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        newVinnsluUser.setFirstName(vinnsluUser.getFirstName());
+        newVinnsluUser.setLastName(vinnsluUser.getLastName());
+        newVinnsluUser.setEmail(vinnsluUser.getEmail());
+        newVinnsluUser.setPassword(passwordEncoder.encode(vinnsluUser.getPassword()));
 
 
-        return repository.save(newUser);
+        return repository.save(newVinnsluUser);
     }
 }

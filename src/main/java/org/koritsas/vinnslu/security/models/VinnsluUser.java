@@ -15,12 +15,11 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
-@Entity
+
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class User implements Serializable {
+@Entity
+public class VinnsluUser implements Serializable {
 
     @Id
     @GenericGenerator(
@@ -64,9 +63,9 @@ public class User implements Serializable {
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"),
+                    name = "user_id", referencedColumnName = "id",foreignKey = @ForeignKey(name = "USR_ROLE_FK")),
             inverseJoinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"))
+                    name = "role_id", referencedColumnName = "id",foreignKey = @ForeignKey(name = "ROLE_USR_FK")))
     private Collection<Role> roles;
 
 

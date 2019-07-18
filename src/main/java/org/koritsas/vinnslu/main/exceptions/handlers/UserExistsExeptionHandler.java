@@ -1,6 +1,5 @@
 package org.koritsas.vinnslu.main.exceptions.handlers;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.koritsas.vinnslu.main.exceptions.UserExistsException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,7 @@ public class UserExistsExeptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UserExistsException.class)
     public ResponseEntity<Object> handleUserExistsException(UserExistsException ex, WebRequest request) {
 
-        String bodyOfResponse= " User with email "+ex.getUser().getEmail()+" already exists!";
+        String bodyOfResponse= " VinnsluUser with email "+ex.getVinnsluUser().getEmail()+" already exists!";
 
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);

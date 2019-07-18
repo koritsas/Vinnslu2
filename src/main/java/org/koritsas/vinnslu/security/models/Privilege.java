@@ -2,6 +2,7 @@ package org.koritsas.vinnslu.security.models;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Collection;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Privilege implements Serializable {
 
     @Id
@@ -27,6 +29,8 @@ public class Privilege implements Serializable {
 
     @Column(unique = true)
     private String name;
+
+
 
     @ManyToMany(mappedBy = "privileges")
     private Collection<Role> roles;

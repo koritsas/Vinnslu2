@@ -32,11 +32,11 @@ public class Role implements Serializable {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
+    private Collection<VinnsluUser> vinnsluUsers;
 
 
     @ManyToMany
-    @JoinTable(name = "role_privileges",
+    @JoinTable(name = "roles_privileges",
     joinColumns = @JoinColumn(name = "role_id",referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "privilege_id",referencedColumnName = "id")
     )

@@ -1,16 +1,16 @@
 package org.koritsas.vinnslu.main.exceptions;
 
-import org.koritsas.vinnslu.security.models.User;
+import org.koritsas.vinnslu.security.models.VinnsluUser;
 
 public class UserExistsException extends RuntimeException {
 
-    private User user;
+    private VinnsluUser vinnsluUser;
 
-    public UserExistsException(User user){
-            this.user=user;
+    public UserExistsException(VinnsluUser vinnsluUser){
+            this.vinnsluUser = vinnsluUser;
     }
 
-    public User getUser(){
-        return this.user;
+    public VinnsluUser getVinnsluUser(){
+        return this.vinnsluUser;
     }
 }
