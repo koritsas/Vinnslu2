@@ -28,15 +28,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.userDetailsService(service);
+        auth.userDetailsService(this.service);
 
 
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
+       /* http
+                .csrf().disable().userDetailsService(service)
                 .exceptionHandling()
                 .and()
                 .authorizeRequests()
@@ -44,7 +44,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/workflow/process/**").authenticated()
                 .antMatchers("/workflow/process/**").hasRole("ADMIN")
                 .antMatchers("/topo/**").permitAll()
+                .and().formLogin().defaultSuccessUrl("https://www.baeldung.com/securing-a-restful-web-service-with-spring-security").failureUrl("/login").and()
+                .logout();*/
+
+        http
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
                 .and()
-                .logout();
+                .httpBasic();
     }
 }

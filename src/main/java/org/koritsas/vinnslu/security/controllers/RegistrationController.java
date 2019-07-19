@@ -1,5 +1,6 @@
 package org.koritsas.vinnslu.security.controllers;
 
+import org.koritsas.vinnslu.security.annotations.ValidEmail;
 import org.koritsas.vinnslu.security.dtos.VinnsluUserDto;
 import org.koritsas.vinnslu.security.models.VinnsluUser;
 import org.koritsas.vinnslu.security.services.UserService;
@@ -10,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.validation.Valid;
 
 @Controller
 public class RegistrationController {
@@ -26,7 +29,7 @@ public class RegistrationController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody VinnsluUserDto dto){
+    public ResponseEntity<String> registerUser(@RequestBody @Valid VinnsluUserDto dto){
 
         VinnsluUser user = new VinnsluUser();
 

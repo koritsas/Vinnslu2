@@ -1,9 +1,6 @@
 package org.koritsas.vinnslu.security.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.koritsas.vinnslu.security.annotations.ValidEmail;
@@ -16,10 +13,12 @@ import java.util.Collection;
 import java.util.Date;
 
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Getter @Setter
+//@ToString(callSuper = true)
 public class VinnsluUser implements Serializable {
 
     @Id
@@ -70,4 +69,19 @@ public class VinnsluUser implements Serializable {
     private Collection<Role> roles;
 
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("VinnsluUser{");
+        sb.append("id=").append(id);
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", enabled=").append(enabled);
+        sb.append(", tokenExpired=").append(tokenExpired);
+        sb.append(", registrationDate=").append(registrationDate);
+        sb.append(", roles=").append(roles);
+        sb.append('}');
+        return sb.toString();
+    }
 }

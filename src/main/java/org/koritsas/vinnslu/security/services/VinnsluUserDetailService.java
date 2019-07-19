@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,16 +22,18 @@ public class VinnsluUserDetailService implements UserDetailsService {
 
     private VinnsluUserRepository vinnsluUserRepository;
 
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
-    public VinnsluUserDetailService(VinnsluUserRepository vinnsluUserRepository){
+    public VinnsluUserDetailService(VinnsluUserRepository vinnsluUserRepository, PasswordEncoder passwordEncoder){
         this.vinnsluUserRepository = vinnsluUserRepository;
+        this.passwordEncoder=passwordEncoder;
     }
-
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         VinnsluUser user = vinnsluUserRepository.findByEmail(email);
+
 
         if (user == null){
             throw new UsernameNotFoundException("No user found with email " + email);

@@ -6,13 +6,18 @@ import org.koritsas.vinnslu.security.models.VinnsluUser;
 import org.koritsas.vinnslu.security.services.VinnsluUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-//@Controller
-//@RequestMapping("/login")
+import javax.validation.Valid;
+
+@Controller
+@RequestMapping("/login")
 public class LoginController {
 
     private VinnsluUserDetailService service;
@@ -23,7 +28,7 @@ public class LoginController {
     }
 
     @PostMapping
-    public ResponseEntity<String> loginUser(@RequestBody VinnsluUserDto dto){
+    public ResponseEntity<String> loginUser(@RequestBody @Valid VinnsluUserDto dto){
 
         VinnsluUser user= new VinnsluUser();
         user.setEmail(dto.getEmail());
@@ -32,7 +37,14 @@ public class LoginController {
 
         service.loadUserByUsername(dto.getEmail());
 
-        return ResponseEntity.ok("User authorized");
+        String currentUserName="No User";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            currentUserName = authentication.getName();
+
+        }
+
+        return ResponseEntity.ok("User "+currentUserName+" authorized");
 
     }
 }
