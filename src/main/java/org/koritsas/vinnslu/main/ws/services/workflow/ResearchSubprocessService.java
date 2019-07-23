@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class ProcessService {
+public class ResearchSubprocessService {
 
     private TaskService taskService;
 
@@ -46,7 +46,7 @@ public class ProcessService {
 
 
     @Autowired
-    public ProcessService(RuntimeService runtimeService, TaskService taskService, ResearchApplicationService researchApplicationService, StandardEnvironmentalCommitmentsApplicationService standardEnvironmentalCommitmentsApplicationService, StandardTechnicalCommitmentsApplicationService standardTechnicalCommitmentsApplicationService, StandardTechnicalCommitmentsService standardTechnicalCommitmentsService, StandardEnvironmentalCommitmentsService standardEnvironmentalCommitmentsService, ResearchLicenseService researchLicenseService) {
+    public ResearchSubprocessService(RuntimeService runtimeService, TaskService taskService, ResearchApplicationService researchApplicationService, StandardEnvironmentalCommitmentsApplicationService standardEnvironmentalCommitmentsApplicationService, StandardTechnicalCommitmentsApplicationService standardTechnicalCommitmentsApplicationService, StandardTechnicalCommitmentsService standardTechnicalCommitmentsService, StandardEnvironmentalCommitmentsService standardEnvironmentalCommitmentsService, ResearchLicenseService researchLicenseService) {
         this.runtimeService = runtimeService;
         this.taskService = taskService;
         this.researchApplicationService = researchApplicationService;

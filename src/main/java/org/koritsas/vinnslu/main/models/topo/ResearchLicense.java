@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.koritsas.vinnslu.main.models.common.Document;
+import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
 import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -56,6 +56,11 @@ public class ResearchLicense implements Serializable {
     @ManyToOne
     @JoinColumn(name = "stc_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "RESEARCH_STC_ID"))
     private StandardTechnicalCommitments standardTechnicalCommitments;
+
+    @Lazy
+    @OneToOne
+    @JoinColumn(name = "research_application_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "RAPP_RL_FK"))
+    private ResearchApplication researchApplication;
 
 
     @Lazy

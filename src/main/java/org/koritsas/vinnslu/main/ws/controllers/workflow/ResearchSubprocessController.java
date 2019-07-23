@@ -16,7 +16,7 @@ import org.koritsas.vinnslu.main.ws.dto.topo.StandardTechnicalCommitmentsDTO;
 import org.koritsas.vinnslu.main.ws.dto.topo.applications.ResearchApplicationDto;
 import org.koritsas.vinnslu.main.ws.dto.topo.applications.StandardEnvironmentalCommitmentsApplicationDto;
 import org.koritsas.vinnslu.main.ws.dto.topo.applications.StandardTechnicalCommitmentsApplicationDto;
-import org.koritsas.vinnslu.main.ws.services.workflow.ProcessService;
+import org.koritsas.vinnslu.main.ws.services.workflow.ResearchSubprocessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,23 +25,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/workflow")
-public class ProcessController {
+@RequestMapping("/vinnslu/workflow/research")
+public class ResearchSubprocessController {
 
     private GeometryModelMapper mapper;
 
-    private ProcessService processService;
+    private ResearchSubprocessService researchSubprocessService;
 
     @Autowired
-    public ProcessController(ProcessService processService, GeometryModelMapper mapper) {
-        this.processService = processService;
+    public ResearchSubprocessController(ResearchSubprocessService researchSubprocessService, GeometryModelMapper mapper) {
+        this.researchSubprocessService = researchSubprocessService;
         this.mapper = mapper;
     }
 
     @PostMapping("/process")
     public ResponseEntity<ProcessInstance> startProcess(@RequestBody ResearchApplicationDto dto){
 
-        ProcessInstance processInstance =processService.startProcessWithResearchApplication(mapper.map(dto,ResearchApplication.class));
+        ProcessInstance processInstance = researchSubprocessService.startProcessWithResearchApplication(mapper.map(dto,ResearchApplication.class));
 
         return ResponseEntity.status(201).body(processInstance);
     }
@@ -50,7 +50,7 @@ public class ProcessController {
     @GetMapping("/process/tasks")
     public List<TaskRepresentation> getAllTasks(@RequestParam(required = false) String processId,@RequestParam(required = false) String taskId){
 
-       List<Task> tasks = processService.getAllTasks(processId,taskId);
+       List<Task> tasks = researchSubprocessService.getAllTasks(processId,taskId);
 
        List<TaskRepresentation> taskRepresentations = new ArrayList<>();
 
@@ -72,96 +72,96 @@ public class ProcessController {
 
     //Completes Research Application Opinions Task
 
-    @PutMapping("/process/tasks/research/application/{taskId}")
+    @PutMapping("/research_application/opinions/{taskId}")
     public ResponseEntity<String> completeResearchApplicationOpinionsTask(@PathVariable String taskId, @RequestBody ResearchApplicationDto dto){
 
-        processService.completeResearchApplicationOpinionsTask(taskId,mapper.map(dto,ResearchApplication.class));
+        researchSubprocessService.completeResearchApplicationOpinionsTask(taskId,mapper.map(dto,ResearchApplication.class));
 
         return ResponseEntity.ok("Research application opinions stage completed");
     }
 
 
     //Completes Standard Environmental Commitments Application Task by POSTing
-    @PostMapping("process/tasks/standard-environmental-commitments/application/{taskId}")
+    @PostMapping("/standard_environmental_commitments_application/{taskId}")
     public ResponseEntity<String> completeStandardEnvironmentalCommitmentsTask(@PathVariable String taskId, @RequestBody StandardEnvironmentalCommitmentsApplicationDto dto){
 
         StandardEnvironmentalCommitmentsApplication stcApplication = mapper.map(dto,StandardEnvironmentalCommitmentsApplication.class);
 
-        processService.completeStandardEnvironmentalCommitmentsApplicationTask(taskId,stcApplication);
+        researchSubprocessService.completeStandardEnvironmentalCommitmentsApplicationTask(taskId,stcApplication);
 
         return ResponseEntity.ok("Standard environmental commitments task completed by posting " + stcApplication.toString());
     }
 
     //Completes Standard Environmental Commitments Opinions Task by PUTing
-    @PutMapping("process/tasks/standard-environmental-commitments/application/opinions/{taskId}")
+    @PutMapping("process/tasks/standard_environmental_commitments_application/opinions/{taskId}")
     public ResponseEntity<String> completeStandardEnvironmentalCommitmentsOpinionsTask(@PathVariable String taskId,@RequestBody StandardEnvironmentalCommitmentsApplicationDto dto){
 
         StandardEnvironmentalCommitmentsApplication secApplication = mapper.map(dto,StandardEnvironmentalCommitmentsApplication.class);
 
         System.out.println(secApplication.toString());
 
-        processService.completeStandardEnvironmentalCommitmentsOpinionsTask(taskId,secApplication);
+        researchSubprocessService.completeStandardEnvironmentalCommitmentsOpinionsTask(taskId,secApplication);
 
         return ResponseEntity.ok("Completed Standard Environmental Commitmens Opinions task by updating to "+ secApplication.toString());
     }
 
 
-    @PostMapping("/process/tasks/standard-technical-commitments/application/{taskId}")
+    @PostMapping("/process/tasks/standard_technical_commitments/application/{taskId}")
     public ResponseEntity<String> completeStandardTechnicalCommitmentsApplicationTask(@PathVariable String taskId, @RequestBody StandardTechnicalCommitmentsApplicationDto dto){
 
 
         StandardTechnicalCommitmentsApplication stcApplication = mapper.map(dto,StandardTechnicalCommitmentsApplication.class);
 
-        processService.completeStandardTechnicalCommitmentsApplicationTask(taskId,stcApplication);
+        researchSubprocessService.completeStandardTechnicalCommitmentsApplicationTask(taskId,stcApplication);
 
         return ResponseEntity.ok("Completed Standard Technical Commitments Application task by posting " + stcApplication.toString());
     }
 
-    @PutMapping("/process/tasks/standard-technical-commitments/application/opinions/{taskId}")
+    @PutMapping("/standard_technical_commitments_application/opinions/{taskId}")
     public ResponseEntity<String> completeStandardTechnicalCommitmentsOpinionsTask(@PathVariable String taskId,@RequestBody StandardTechnicalCommitmentsApplicationDto dto){
 
         StandardTechnicalCommitmentsApplication stcApplication = mapper.map(dto,StandardTechnicalCommitmentsApplication.class);
-        processService.completeStandardTechnicalCommitmentsOpinionsTask(taskId,stcApplication);
+        researchSubprocessService.completeStandardTechnicalCommitmentsOpinionsTask(taskId,stcApplication);
 
         return ResponseEntity.ok("Completed Standard Technical Commitments Opinions task by updating to " + stcApplication);
 
     }
 
-    @PostMapping("/process/tasks/standard-technical-commitments/{taskId}")
+    @PostMapping("/standard_technical_commitments/{taskId}")
     public ResponseEntity<String> completeStandardTechnicalCommitmentsTask(@PathVariable String taskId,@RequestBody StandardTechnicalCommitmentsDTO dto){
 
         StandardTechnicalCommitments standardTechnicalCommitments = mapper.map(dto,StandardTechnicalCommitments.class);
 
-        processService.completeStandardTechnicalCommitmentsTask(taskId,standardTechnicalCommitments);
+        researchSubprocessService.completeStandardTechnicalCommitmentsTask(taskId,standardTechnicalCommitments);
 
         return ResponseEntity.ok("Completed task with "+standardTechnicalCommitments.toString());
 
     }
 
-    @PostMapping("/process/tasks/standard-environmental-commitments/{taskId}")
+    @PostMapping("/standard_environmental_commitments/{taskId}")
     public ResponseEntity<String> completedStandardEnvironmentalCommitmentsTask(@PathVariable String taskId, @RequestBody StandardEnvironmentalCommitmentsDTO dto){
 
         StandardEnvironmentalCommitments standardEnvironmentalCommitments = mapper.map(dto,StandardEnvironmentalCommitments.class);
 
-        processService.completeStandardEnvironmentalCommitmentsTask(taskId,standardEnvironmentalCommitments);
+        researchSubprocessService.completeStandardEnvironmentalCommitmentsTask(taskId,standardEnvironmentalCommitments);
 
         return ResponseEntity.ok("Completed task with "+standardEnvironmentalCommitments.toString());
     }
 
-    @PostMapping("/process/tasks/reseasrch-license/{taskId}")
+    @PostMapping("/reseasrch_license/{taskId}")
     public ResponseEntity<String> createResearchLicenseTask(@PathVariable String taskId, @RequestBody ResearchLicenseDTO dto){
 
         ResearchLicense researchLicense = mapper.map(dto,ResearchLicense.class);
 
-        processService.createResearchLicense(taskId,researchLicense);
+        researchSubprocessService.createResearchLicense(taskId,researchLicense);
 
         return ResponseEntity.ok("Research License created " + researchLicense.toString());
     }
 
-    @PostMapping("/process/tasks/reseasrch-license/proceed-to-leasing/{taskId}")
+    @PostMapping("/process/tasks/reseasrch_license/proceed_to_leasing/{taskId}")
     public ResponseEntity<String> completeResearchLicenseTask(@PathVariable String taskId){
 
-        processService.completeResearchLicenseTask(taskId);
+        researchSubprocessService.completeResearchLicenseTask(taskId);
 
         return ResponseEntity.ok("Research License ended. Proceed to leasing process?");
     }
