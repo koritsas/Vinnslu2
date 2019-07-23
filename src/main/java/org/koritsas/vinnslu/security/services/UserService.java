@@ -22,9 +22,13 @@ public class UserService {
 
     public VinnsluUser registerNewUserAccount(VinnsluUser vinnsluUser){
 
+
+
         if (repository.findByEmail(vinnsluUser.getEmail())!=null){
              throw new UserExistsException(vinnsluUser);
         }
+
+
 
         VinnsluUser newVinnsluUser = new VinnsluUser();
 

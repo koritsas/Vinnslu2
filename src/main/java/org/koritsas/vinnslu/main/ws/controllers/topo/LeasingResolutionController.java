@@ -7,7 +7,7 @@ import org.koritsas.vinnslu.main.ws.dto.topo.LeasingResolutionDto;
 import org.koritsas.vinnslu.main.ws.services.crud.topo.LeasingResolutionService;
 import org.springframework.stereotype.Controller;
 
-@Controller("/leasing_resolution")
+@Controller("/data/leasing_resolution")
 public class LeasingResolutionController extends AbstractCRUDController<LeasingResolutionService, LeasingResolution,Long, LeasingResolutionDto> {
     public LeasingResolutionController(LeasingResolutionService service, GeometryModelMapper mapper) {
         super(service, mapper);

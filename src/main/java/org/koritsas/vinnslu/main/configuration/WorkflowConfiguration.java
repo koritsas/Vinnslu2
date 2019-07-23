@@ -8,9 +8,6 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class WorkflowConfiguration {
 
-    @Bean
-    public Flowable flowable(){
-        return new Flowable();
-    }
+
 
 }

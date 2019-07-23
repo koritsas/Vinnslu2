@@ -32,7 +32,7 @@ public class Privilege implements Serializable {
 
 
 
-    @ManyToMany(mappedBy = "privileges")
+    @ManyToMany(mappedBy = "privileges",fetch = FetchType.EAGER)
     private Collection<Role> roles;
 
 

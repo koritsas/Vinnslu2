@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/technical_studies")
+@RequestMapping("/data/technical_studies")
 public class TechnicalStudiesController extends AbstractCRUDController<TechnicalStudyService, TechnicalStudy, Long, TechnicalStudyDTO> {
 
     public TechnicalStudiesController(TechnicalStudyService service, GeometryModelMapper mapper) {

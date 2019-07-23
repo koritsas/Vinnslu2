@@ -35,17 +35,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       /* http
+        http
                 .csrf().disable().userDetailsService(service)
                 .exceptionHandling()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/register").permitAll()
                 .antMatchers("/workflow/process/**").authenticated()
-                .antMatchers("/workflow/process/**").hasRole("ADMIN")
-                .antMatchers("/topo/**").permitAll()
-                .and().formLogin().defaultSuccessUrl("https://www.baeldung.com/securing-a-restful-web-service-with-spring-security").failureUrl("/login").and()
-                .logout();*/
+                .antMatchers("/workflow/process/**").hasAnyRole("ADMIN","TOPO_ADMIN")
+                .antMatchers("/data/**").hasAnyRole("ADMIN","TOPO_ADMIN")
+                .antMatchers("/assets/**").authenticated()
+                .antMatchers("/assets/**").hasRole("ASSETS_ADMIN")
+                .and()
+                .formLogin().defaultSuccessUrl("/data/topo")
+                .and()
+
+                .logout();
 
         http
                 .authorizeRequests()

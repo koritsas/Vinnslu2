@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/mining_licenses")
+@RequestMapping("/data/mining_licenses")
 public class MiningLicenseController extends AbstractCRUDController<MiningLicenseService, MiningLicense, Long, MiningLicenseDTO> {
 
     public MiningLicenseController(MiningLicenseService service, GeometryModelMapper mapper) {
