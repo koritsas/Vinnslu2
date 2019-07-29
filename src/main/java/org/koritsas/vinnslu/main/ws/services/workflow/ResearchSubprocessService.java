@@ -63,7 +63,10 @@ public class ResearchSubprocessService {
 
         Map<String,Object> variables = new HashMap<>();
 
-        variables.put("researchApplication",researchApplicationService.create(researchApplication));
+        ResearchApplication researchApp = researchApplicationService.create(researchApplication);
+        variables.put("researchApplication", researchApp);
+
+        variables.put("topo", researchApp.getTopo());
 
         return  runtimeService.startProcessInstanceByKey("vinnslu_workflow",variables);
 

@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://bpmn.io/schema/bpmn">
+    <process id="vinnslu_workflow" name="Vinnslu Workflow" isExecutable="true">
+        <subProcess id="researchLicenseSubprocess" name="Research License Subprocess">
+            <parallelGateway id="ExclusiveGateway_0pytqyh"></parallelGateway>
+            <parallelGateway id="ExclusiveGateway_0ffqm9s"></parallelGateway>
+            <userTask id="standardEnvironmentalCommitmentsTask" name="Standard Environmental Commitments"></userTask>
+            <userTask id="standardTechnicalCommitmentsTask" name="Standard Technical Commitments"></userTask>
+            <endEvent id="standardEnvironmentalCommitmentsErrorEvent">
+                <errorEventDefinition></errorEventDefinition>
+            </endEvent>
+            <startEvent id="startResearchSubprocess" name="Start Research License Subprocess"></startEvent>
+            <endEvent id="endResearchLicenseSubprocessEvent" name="End Research License Subprocess"></endEvent>
+            <userTask id="researchLicenseTask" name="Research License"></userTask>
+            <userTask id="opinions" name="Opinions"></userTask>
+            <userTask id="standardEnvironmentalCommitmentsApplication"
+                      name="Standard Environmental Commitments Application"></userTask>
+            <userTask id="secOpinions" name="Standard Environmental Commitments Opinions"></userTask>
+            <userTask id="standardTechnicalCommitmentsApplication"
+                      name="Standard Technical Commitments Application"></userTask>
+            <userTask id="stcOpinions" name="Standard Technical Commitments Opinions"></userTask>
+            <exclusiveGateway id="sid-6DD7F963-AF33-44B6-AC92-FD1136449FB5"></exclusiveGateway>
+            <exclusiveGateway id="sid-5BAB97FE-E42B-4CD2-8D47-DC56AE37DE48"></exclusiveGateway>
+            <serviceTask id="synchronizeResearchDataService" name="Synchrinize Research Data Service"
+                         flowable:class="org.koritsas.vinnslu.main.utils.workflow.SynchronizeResearchLicenseSubprocessDataService"></serviceTask>
+            <userTask id="continueToLeaseTask" name="Continue to Lease"></userTask>
+            <sequenceFlow id="SequenceFlow_17tv105" sourceRef="ExclusiveGateway_0ffqm9s"
+                          targetRef="researchLicenseTask"></sequenceFlow>
+            <sequenceFlow id="SequenceFlow_1s2e7qi" name="Αποστολή απο Τμ.Φυσικών Πόρων"
+                          sourceRef="startResearchSubprocess" targetRef="opinions"></sequenceFlow>
+            <sequenceFlow id="SequenceFlow_0greu8i" sourceRef="ExclusiveGateway_0pytqyh"
+                          targetRef="standardEnvironmentalCommitmentsApplication"></sequenceFlow>
+            <sequenceFlow id="SequenceFlow_1ufzvu0" sourceRef="ExclusiveGateway_0pytqyh"
+                          targetRef="standardTechnicalCommitmentsApplication"></sequenceFlow>
+            <sequenceFlow id="sid-50CD1E6F-D994-4429-AE16-B746ABE3110B"
+                          sourceRef="standardEnvironmentalCommitmentsApplication"
+                          targetRef="secOpinions"></sequenceFlow>
+            <sequenceFlow id="SequenceFlow_0ue6iv2" sourceRef="standardEnvironmentalCommitmentsTask"
+                          targetRef="ExclusiveGateway_0ffqm9s"></sequenceFlow>
+            <sequenceFlow id="sid-9C3E7C68-BC4A-42EF-A82C-D7D9ED413077"
+                          sourceRef="standardTechnicalCommitmentsApplication" targetRef="stcOpinions"></sequenceFlow>
+            <sequenceFlow id="sid-97F4865D-582A-4443-B999-B2517E663374" sourceRef="secOpinions"
+                          targetRef="sid-6DD7F963-AF33-44B6-AC92-FD1136449FB5"></sequenceFlow>
+            <sequenceFlow id="sid-5239AD5A-08D1-4A9A-BCB4-7D7A68740748" sourceRef="stcOpinions"
+                          targetRef="sid-5BAB97FE-E42B-4CD2-8D47-DC56AE37DE48"></sequenceFlow>
+            <sequenceFlow id="sid-B9F4F802-86EE-4E44-8F0E-A73DF50FCBDC"
+                          sourceRef="sid-5BAB97FE-E42B-4CD2-8D47-DC56AE37DE48"
+                          targetRef="standardTechnicalCommitmentsTask">
+                <conditionExpression xsi:type="tFormalExpression">
+                    <![CDATA[${standardTechnicalCommitmentsApplication.mineOverseeingOpinion.positive == true}]]></conditionExpression>
+            </sequenceFlow>
+            <sequenceFlow id="sid-5E0BB504-9B12-4BCF-BD4E-4E94F53488B1"
+                          sourceRef="sid-6DD7F963-AF33-44B6-AC92-FD1136449FB5"
+                          targetRef="standardEnvironmentalCommitmentsTask">
+                <conditionExpression xsi:type="tFormalExpression">
+                    <![CDATA[${standardEnvironmentalCommitmentsApplication.forestryOpinion.positive==true && standardEnvironmentalCommitmentsApplication.speleologyOpinion.positive==true && standardEnvironmentalCommitmentsApplication.archeologyOpinion.positive==true && standardEnvironmentalCommitmentsApplication.cityPlanningOpinion.positive == true}]]></conditionExpression>
+            </sequenceFlow>
+            <sequenceFlow id="sid-ABD91CD4-2EB8-4A80-8436-1B5D6DD7308C"
+                          sourceRef="sid-6DD7F963-AF33-44B6-AC92-FD1136449FB5"
+                          targetRef="standardEnvironmentalCommitmentsErrorEvent">
+                <conditionExpression xsi:type="tFormalExpression">
+                    <![CDATA[${standardEnvironmentalCommitmentsApplication.forestryOpinion.positive==false || standardEnvironmentalCommitmentsApplication.speleologyOpinion.positive==false || standardEnvironmentalCommitmentsApplication.archeologyOpinion.positive==false || standardEnvironmentalCommitmentsApplication.cityPlanningOpinion.positive == false}]]></conditionExpression>
+            </sequenceFlow>
+            <sequenceFlow id="sid-DF129ECA-3578-405B-8EB8-C4AA9AB6B11A"
+                          sourceRef="sid-5BAB97FE-E42B-4CD2-8D47-DC56AE37DE48"
+                          targetRef="standardEnvironmentalCommitmentsErrorEvent">
+                <conditionExpression xsi:type="tFormalExpression">
+                    <![CDATA[${standardTechnicalCommitmentsApplication.mineOverseeingOpinion.positive == false}]]></conditionExpression>
+            </sequenceFlow>
+            <sequenceFlow id="SequenceFlow_0it658o" name="Opinions positive" sourceRef="opinions"
+                          targetRef="ExclusiveGateway_0pytqyh">
+                <conditionExpression xsi:type="tFormalExpression">
+                    <![CDATA[${researchApplication.armyOpinion.positive == true && researchApplication.geologicalInstituteOpinion.positive == true && researchApplication.topographicalAuthorityOpinion.positive == true}]]></conditionExpression>
+            </sequenceFlow>
+            <sequenceFlow id="sid-7240AFC4-90B7-4656-98E6-990881E7F546" sourceRef="standardTechnicalCommitmentsTask"
+                          targetRef="ExclusiveGateway_0ffqm9s"></sequenceFlow>
+            <sequenceFlow id="SequenceFlow_117k3j7" sourceRef="researchLicenseTask"
+                          targetRef="synchronizeResearchDataService"></sequenceFlow>
+            <sequenceFlow id="sid-553673EA-7F02-4427-9F7F-97EDD13E5524" sourceRef="synchronizeResearchDataService"
+                          targetRef="continueToLeaseTask"></sequenceFlow>
+            <sequenceFlow id="SequenceFlow_1ghe2fv" sourceRef="continueToLeaseTask"
+                          targetRef="endResearchLicenseSubprocessEvent"></sequenceFlow>
+            <textAnnotation id="TextAnnotation_01o7ilg">
+                <text>Αποστολή σε Τμ. Φυσικών Πόρων στην Καβάλα</text>
+            </textAnnotation>
+            <textAnnotation id="TextAnnotation_0tscyn8">
+                <text>Γνωμοδοτήσεις απο: Τμ. Τοπογραφίας ΙΓΜΕ Στρατό</text>
+            </textAnnotation>
+            <textAnnotation id="TextAnnotation_1hvaim9">
+                <text>Επίθ. Μεταλλείων</text>
+            </textAnnotation>
+            <textAnnotation id="TextAnnotation_0fyuhms">
+                <text>Για 2 χρόνια βγαίνει απο Καβάλα</text>
+            </textAnnotation>
+        </subProcess>
+        <startEvent id="startProcess" name="Start Process"></startEvent>
+        <sequenceFlow id="SequenceFlow_10k5y6x" sourceRef="miningLicenseSubprocess"
+                      targetRef="establishmentProtocolTask"></sequenceFlow>
+        <sequenceFlow id="SequenceFlow_0k4fex0" sourceRef="establishmentProtocolTask"
+                      targetRef="engineerAssignmentTask"></sequenceFlow>
+        <endEvent id="EndEvent_1wc1n9b"></endEvent>
+        <sequenceFlow id="SequenceFlow_125bbsu" sourceRef="cancelResearchLicenseSubprocessBoundaryErrorEvent"
+                      targetRef="EndEvent_1wc1n9b"></sequenceFlow>
+        <endEvent id="endMiningLicenseProcess"></endEvent>
+        <sequenceFlow id="SequenceFlow_0bc90e3" sourceRef="engineerAssignmentTask"
+                      targetRef="endMiningLicenseProcess"></sequenceFlow>
+        <subProcess id="miningLicenseSubprocess" name="Mining License Subprocess">
+            <parallelGateway id="ExclusiveGateway_0sn4dwh"></parallelGateway>
+            <manualTask id="technicalStudyTask" name="Technical Study"></manualTask>
+            <userTask id="environmentalImpactStudyTask" name="Environmental Impact Study"></userTask>
+            <userTask id="guaranteeLettersTask" name="Guarantee Letters Task"></userTask>
+            <startEvent id="startMiningLicenseSubprocess"></startEvent>
+            <userTask id="Task_0wbs9oc" name="Leasing"></userTask>
+            <userTask id="leasingContractTask" name="Leasing Contract Task"></userTask>
+            <userTask id="leasingApplicationTask" name="Leasing Application"></userTask>
+            <sequenceFlow id="SequenceFlow_1q1ho1a" sourceRef="technicalStudyTask"
+                          targetRef="guaranteeLettersTask"></sequenceFlow>
+            <sequenceFlow id="SequenceFlow_025o9rz" sourceRef="guaranteeLettersTask"
+                          targetRef="Task_0wbs9oc"></sequenceFlow>
+            <sequenceFlow id="SequenceFlow_00s96k3" name="Μέσα σε 30 μέρες" sourceRef="Task_0wbs9oc"
+                          targetRef="leasingContractTask"></sequenceFlow>
+            <sequenceFlow id="SequenceFlow_0kqx77m" sourceRef="ExclusiveGateway_0sn4dwh"
+                          targetRef="leasingApplicationTask"></sequenceFlow>
+            <sequenceFlow id="SequenceFlow_0elvu9f" sourceRef="ExclusiveGateway_0sn4dwh"
+                          targetRef="environmentalImpactStudyTask"></sequenceFlow>
+            <sequenceFlow id="SequenceFlow_0wr9rz7" sourceRef="startMiningLicenseSubprocess"
+                          targetRef="ExclusiveGateway_0sn4dwh"></sequenceFlow>
+            <sequenceFlow id="SequenceFlow_0z3jib6" sourceRef="environmentalImpactStudyTask"
+                          targetRef="technicalStudyTask"></sequenceFlow>
+            <textAnnotation id="TextAnnotation_1uap1g8">
+                <text>Στέλνουμε Αρ.Πρωτ. της ΜΠΕ και αποτελέσματα ΙΓΜΕ</text>
+            </textAnnotation>
+            <textAnnotation id="TextAnnotation_0mkx36e">
+                <text>Μισθωσης αναπροσαρμογή ανα 5ετια</text>
+            </textAnnotation>
+            <textAnnotation id="TextAnnotation_0x6xblr">
+                <text>Περιβάλλοντος εξαρτάται απο ΜΠΕ</text>
+            </textAnnotation>
+        </subProcess>
+        <sequenceFlow id="SequenceFlow_0cgat8m" sourceRef="startProcess"
+                      targetRef="researchLicenseSubprocess"></sequenceFlow>
+        <sequenceFlow id="SequenceFlow_0q31kqo" sourceRef="researchLicenseSubprocess"
+                      targetRef="miningLicenseSubprocess"></sequenceFlow>
+        <boundaryEvent id="cancelResearchLicenseSubprocessBoundaryErrorEvent" attachedToRef="researchLicenseSubprocess">
+            <errorEventDefinition></errorEventDefinition>
+        </boundaryEvent>
+        <userTask id="establishmentProtocolTask" name="Establishment Protocol"></userTask>
+        <userTask id="engineerAssignmentTask" name="Engineers Assignment"></userTask>
+        <association id="Association_0qbhtbx" sourceRef="opinions" targetRef="TextAnnotation_0tscyn8"
+                     associationDirection="None"></association>
+        <association id="Association_1383jni" sourceRef="standardTechnicalCommitmentsTask"
+                     targetRef="TextAnnotation_1hvaim9" associationDirection="None"></association>
+        <association id="Association_12zi58x" sourceRef="researchLicenseTask" targetRef="TextAnnotation_0fyuhms"
+                     associationDirection="None"></association>
+        <association id="Association_195lvsz" sourceRef="standardEnvironmentalCommitmentsTask"
+                     targetRef="TextAnnotation_1h9ar42" associationDirection="None"></association>
+        <textAnnotation id="TextAnnotation_1dhke8a">
+            <text>Επιβλέποντος Μηχανικού, Τεχνικού Ασφαλείας, Εναρξης Εργασιών</text>
+        </textAnnotation>
+        <association id="Association_1jci0zf" sourceRef="engineerAssignmentTask" targetRef="TextAnnotation_1dhke8a"
+                     associationDirection="None"></association>
+        <association id="Association_0qs0zxq" sourceRef="leasingApplicationTask" targetRef="TextAnnotation_1uap1g8"
+                     associationDirection="None"></association>
+        <association id="Association_0dtguh2" sourceRef="guaranteeLettersTask" targetRef="TextAnnotation_0x6xblr"
+                     associationDirection="None"></association>
+        <association id="Association_1fe3q02" sourceRef="guaranteeLettersTask" targetRef="TextAnnotation_0mkx36e"
+                     associationDirection="None"></association>
+        <association id="Association_0fa94k1" sourceRef="opinions" targetRef="TextAnnotation_01o7ilg"
+                     associationDirection="None"></association>
+        <association id="sid-FA8F62BC-4C4C-46BA-9C66-1346D23A1D54" sourceRef="startProcess"
+                     targetRef="sid-C05A47DC-A2EF-4B96-8489-006FCF6EC191" associationDirection="None"></association>
+        <textAnnotation id="sid-C05A47DC-A2EF-4B96-8489-006FCF6EC191">
+            <text>Start Process instance by posting Research Application with topo</text>
+        </textAnnotation>
+        <textAnnotation id="TextAnnotation_1h9ar42">
+            <text>Γνωμοδοτησεις απο Δασαρχείο, Σπηλαιολογία,Αρχαιολογία, Πολεοδομία</text>
+        </textAnnotation>
+    </process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_vinnslu_workflow">
+        <bpmndi:BPMNPlane bpmnElement="vinnslu_workflow" id="BPMNPlane_vinnslu_workflow">
+            <bpmndi:BPMNShape bpmnElement="researchLicenseSubprocess" id="BPMNShape_researchLicenseSubprocess">
+                <omgdc:Bounds height="793.0" width="1755.0" x="182.0" y="105.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="ExclusiveGateway_0pytqyh" id="BPMNShape_ExclusiveGateway_0pytqyh">
+                <omgdc:Bounds height="40.0" width="40.0" x="765.0" y="300.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="ExclusiveGateway_0ffqm9s" id="BPMNShape_ExclusiveGateway_0ffqm9s">
+                <omgdc:Bounds height="40.0" width="40.0" x="1440.0" y="300.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="standardEnvironmentalCommitmentsTask"
+                              id="BPMNShape_standardEnvironmentalCommitmentsTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="1215.0" y="134.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="standardTechnicalCommitmentsTask"
+                              id="BPMNShape_standardTechnicalCommitmentsTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="1215.0" y="570.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="standardEnvironmentalCommitmentsErrorEvent"
+                              id="BPMNShape_standardEnvironmentalCommitmentsErrorEvent">
+                <omgdc:Bounds height="28.0" width="28.0" x="1129.0" y="390.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="startResearchSubprocess" id="BPMNShape_startResearchSubprocess">
+                <omgdc:Bounds height="30.0" width="30.0" x="197.0" y="305.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endResearchLicenseSubprocessEvent"
+                              id="BPMNShape_endResearchLicenseSubprocessEvent">
+                <omgdc:Bounds height="28.0" width="28.0" x="1875.0" y="306.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="researchLicenseTask" id="BPMNShape_researchLicenseTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="1525.5" y="280.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="opinions" id="BPMNShape_opinions">
+                <omgdc:Bounds height="80.0" width="100.0" x="542.0" y="280.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="standardEnvironmentalCommitmentsApplication"
+                              id="BPMNShape_standardEnvironmentalCommitmentsApplication">
+                <omgdc:Bounds height="80.0" width="100.0" x="810.0" y="134.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="secOpinions" id="BPMNShape_secOpinions">
+                <omgdc:Bounds height="80.0" width="100.0" x="975.0" y="134.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="standardTechnicalCommitmentsApplication"
+                              id="BPMNShape_standardTechnicalCommitmentsApplication">
+                <omgdc:Bounds height="80.0" width="100.0" x="825.0" y="570.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="stcOpinions" id="BPMNShape_stcOpinions">
+                <omgdc:Bounds height="80.0" width="100.0" x="975.0" y="570.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-6DD7F963-AF33-44B6-AC92-FD1136449FB5"
+                              id="BPMNShape_sid-6DD7F963-AF33-44B6-AC92-FD1136449FB5">
+                <omgdc:Bounds height="40.0" width="40.0" x="1123.0" y="154.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-5BAB97FE-E42B-4CD2-8D47-DC56AE37DE48"
+                              id="BPMNShape_sid-5BAB97FE-E42B-4CD2-8D47-DC56AE37DE48">
+                <omgdc:Bounds height="40.0" width="40.0" x="1123.0" y="590.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="TextAnnotation_01o7ilg" id="BPMNShape_TextAnnotation_01o7ilg">
+                <omgdc:Bounds height="55.0" width="100.0" x="389.5" y="146.5"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="TextAnnotation_0tscyn8" id="BPMNShape_TextAnnotation_0tscyn8">
+                <omgdc:Bounds height="70.0" width="100.0" x="651.0" y="139.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="TextAnnotation_1hvaim9" id="BPMNShape_TextAnnotation_1hvaim9">
+                <omgdc:Bounds height="41.0" width="100.0" x="1215.0" y="765.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="TextAnnotation_0fyuhms" id="BPMNShape_TextAnnotation_0fyuhms">
+                <omgdc:Bounds height="55.0" width="100.0" x="1530.0" y="165.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="synchronizeResearchDataService"
+                              id="BPMNShape_synchronizeResearchDataService">
+                <omgdc:Bounds height="80.0" width="100.0" x="1678.39067127796" y="280.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="continueToLeaseTask" id="BPMNShape_continueToLeaseTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="1755.0" y="405.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="startProcess" id="BPMNShape_startProcess">
+                <omgdc:Bounds height="30.0" width="30.0" x="45.0" y="561.5"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="EndEvent_1wc1n9b" id="BPMNShape_EndEvent_1wc1n9b">
+                <omgdc:Bounds height="28.0" width="28.0" x="1729.39067127796" y="15.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endMiningLicenseProcess" id="BPMNShape_endMiningLicenseProcess">
+                <omgdc:Bounds height="28.0" width="28.0" x="1129.0" y="2059.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="miningLicenseSubprocess" id="BPMNShape_miningLicenseSubprocess">
+                <omgdc:Bounds height="526.0" width="1487.0" x="399.5" y="1029.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="ExclusiveGateway_0sn4dwh" id="BPMNShape_ExclusiveGateway_0sn4dwh">
+                <omgdc:Bounds height="40.0" width="40.0" x="535.5" y="1258.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="technicalStudyTask" id="BPMNShape_technicalStudyTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="899.5" y="1130.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="environmentalImpactStudyTask" id="BPMNShape_environmentalImpactStudyTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="692.5" y="1130.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="guaranteeLettersTask" id="BPMNShape_guaranteeLettersTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="1106.5" y="1130.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="startMiningLicenseSubprocess" id="BPMNShape_startMiningLicenseSubprocess">
+                <omgdc:Bounds height="30.0" width="30.0" x="422.5" y="1265.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Task_0wbs9oc" id="BPMNShape_Task_0wbs9oc">
+                <omgdc:Bounds height="80.0" width="100.0" x="1304.5" y="1130.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="leasingContractTask" id="BPMNShape_leasingContractTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="1525.5" y="1130.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="leasingApplicationTask" id="BPMNShape_leasingApplicationTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="692.5" y="1322.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="TextAnnotation_1uap1g8" id="BPMNShape_TextAnnotation_1uap1g8">
+                <omgdc:Bounds height="84.0" width="100.0" x="692.5" y="1446.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="TextAnnotation_0mkx36e" id="BPMNShape_TextAnnotation_0mkx36e">
+                <omgdc:Bounds height="55.0" width="100.0" x="1106.5" y="1290.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="TextAnnotation_0x6xblr" id="BPMNShape_TextAnnotation_0x6xblr">
+                <omgdc:Bounds height="55.0" width="100.0" x="1106.5" y="1049.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="cancelResearchLicenseSubprocessBoundaryErrorEvent"
+                              id="BPMNShape_cancelResearchLicenseSubprocessBoundaryErrorEvent">
+                <omgdc:Bounds height="30.0" width="30.0" x="1713.39067127796" y="74.96009912029078"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="establishmentProtocolTask" id="BPMNShape_establishmentProtocolTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="1093.0" y="1695.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="engineerAssignmentTask" id="BPMNShape_engineerAssignmentTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="1093.0" y="1859.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Association_0qbhtbx" id="BPMNShape_Association_0qbhtbx">
+                <omgdc:Bounds height="105.15096799315785" width="42.492514462988424" x="608.5074855370116"
+                              y="174.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Association_1383jni" id="BPMNShape_Association_1383jni">
+                <omgdc:Bounds height="114.0390625" width="0.0" x="1265.0" y="650.9609375"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Association_12zi58x" id="BPMNShape_Association_12zi58x">
+                <omgdc:Bounds height="59.938510964855936" width="2.697232993418538" x="1577.3027670065815"
+                              y="220.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Association_195lvsz" id="BPMNShape_Association_195lvsz">
+                <omgdc:Bounds height="174.0" width="104.0" x="1265.0" y="0.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="TextAnnotation_1dhke8a" id="BPMNShape_TextAnnotation_1dhke8a">
+                <omgdc:Bounds height="98.0" width="100.0" x="871.0" y="1850.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Association_1jci0zf" id="BPMNShape_Association_1jci0zf">
+                <omgdc:Bounds height="0.0" width="121.28125" x="971.0" y="1899.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Association_0qs0zxq" id="BPMNShape_Association_0qs0zxq">
+                <omgdc:Bounds height="43.625" width="0.0" x="742.5" y="1402.375"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Association_0dtguh2" id="BPMNShape_Association_0dtguh2">
+                <omgdc:Bounds height="25.8125" width="0.0" x="1156.5" y="1104.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Association_1fe3q02" id="BPMNShape_Association_1fe3q02">
+                <omgdc:Bounds height="79.625" width="0.0" x="1156.5" y="1210.375"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Association_0fa94k1" id="BPMNShape_Association_0fa94k1">
+                <omgdc:Bounds height="79.46649604533667" width="102.26700967859779" x="439.5" y="201.5"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-FA8F62BC-4C4C-46BA-9C66-1346D23A1D54"
+                              id="BPMNShape_sid-FA8F62BC-4C4C-46BA-9C66-1346D23A1D54">
+                <omgdc:Bounds height="91.37264883852583" width="17.15918288047434" x="62.84081711952566"
+                              y="470.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-C05A47DC-A2EF-4B96-8489-006FCF6EC191"
+                              id="BPMNShape_sid-C05A47DC-A2EF-4B96-8489-006FCF6EC191">
+                <omgdc:Bounds height="50.0" width="100.0" x="30.0" y="420.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="TextAnnotation_1h9ar42" id="BPMNShape_TextAnnotation_1h9ar42">
+                <omgdc:Bounds height="123.0" width="98.0" x="1320.0" y="0.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0greu8i" id="BPMNEdge_SequenceFlow_0greu8i">
+                <omgdi:waypoint x="785.0" y="300.0"></omgdi:waypoint>
+                <omgdi:waypoint x="785.0" y="174.0"></omgdi:waypoint>
+                <omgdi:waypoint x="809.9999999999848" y="174.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_10k5y6x" id="BPMNEdge_SequenceFlow_10k5y6x">
+                <omgdi:waypoint x="1143.0" y="1554.9499999999998"></omgdi:waypoint>
+                <omgdi:waypoint x="1143.0" y="1695.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_125bbsu" id="BPMNEdge_SequenceFlow_125bbsu">
+                <omgdi:waypoint x="1731.9635902518917" y="75.39116964474604"></omgdi:waypoint>
+                <omgdi:waypoint x="1740.044793584577" y="42.54910595190751"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-7240AFC4-90B7-4656-98E6-990881E7F546"
+                             id="BPMNEdge_sid-7240AFC4-90B7-4656-98E6-990881E7F546">
+                <omgdi:waypoint x="1314.95" y="610.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1460.0" y="610.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1460.0" y="339.90342359434294"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Association_0qbhtbx" id="BPMNEdge_Association_0qbhtbx">
+                <omgdi:waypoint x="608.1441780821917" y="280.0"></omgdi:waypoint>
+                <omgdi:waypoint x="651.0" y="174.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-9C3E7C68-BC4A-42EF-A82C-D7D9ED413077"
+                             id="BPMNEdge_sid-9C3E7C68-BC4A-42EF-A82C-D7D9ED413077">
+                <omgdi:waypoint x="924.9499999997589" y="610.0"></omgdi:waypoint>
+                <omgdi:waypoint x="975.0" y="610.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Association_1fe3q02" id="BPMNEdge_Association_1fe3q02">
+                <omgdi:waypoint x="1156.5" y="1209.95"></omgdi:waypoint>
+                <omgdi:waypoint x="1156.5" y="1290.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-50CD1E6F-D994-4429-AE16-B746ABE3110B"
+                             id="BPMNEdge_sid-50CD1E6F-D994-4429-AE16-B746ABE3110B">
+                <omgdi:waypoint x="909.9499999998898" y="174.0"></omgdi:waypoint>
+                <omgdi:waypoint x="974.9999999999847" y="174.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1q1ho1a" id="BPMNEdge_SequenceFlow_1q1ho1a">
+                <omgdi:waypoint x="999.4499999996272" y="1170.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1106.4999999999627" y="1170.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-553673EA-7F02-4427-9F7F-97EDD13E5524"
+                             id="BPMNEdge_sid-553673EA-7F02-4427-9F7F-97EDD13E5524">
+                <omgdi:waypoint x="1735.9938300065749" y="359.95000000000005"></omgdi:waypoint>
+                <omgdi:waypoint x="1740.0" y="381.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1755.0" y="422.16822429906557"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_117k3j7" id="BPMNEdge_SequenceFlow_117k3j7">
+                <omgdi:waypoint x="1625.4499999999157" y="320.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1678.39067127796" y="320.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1s2e7qi" id="BPMNEdge_SequenceFlow_1s2e7qi">
+                <omgdi:waypoint x="226.94999987338258" y="320.0"></omgdi:waypoint>
+                <omgdi:waypoint x="541.9999999998743" y="320.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-97F4865D-582A-4443-B999-B2517E663374"
+                             id="BPMNEdge_sid-97F4865D-582A-4443-B999-B2517E663374">
+                <omgdi:waypoint x="1074.95" y="174.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1123.0" y="174.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0z3jib6" id="BPMNEdge_SequenceFlow_0z3jib6">
+                <omgdi:waypoint x="792.4499999996272" y="1170.0"></omgdi:waypoint>
+                <omgdi:waypoint x="899.4999999999627" y="1170.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0cgat8m" id="BPMNEdge_SequenceFlow_0cgat8m">
+                <omgdi:waypoint x="74.90877385787633" y="575.3775410721994"></omgdi:waypoint>
+                <omgdi:waypoint x="181.99999999999943" y="567.3416708354177"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0q31kqo" id="BPMNEdge_SequenceFlow_0q31kqo">
+                <omgdi:waypoint x="1101.3767552182162" y="897.9499999999999"></omgdi:waypoint>
+                <omgdi:waypoint x="1115.2194813409235" y="1029.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Association_0dtguh2" id="BPMNEdge_Association_0dtguh2">
+                <omgdi:waypoint x="1156.5" y="1130.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1156.5" y="1104.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0k4fex0" id="BPMNEdge_SequenceFlow_0k4fex0">
+                <omgdi:waypoint x="1143.0" y="1774.95"></omgdi:waypoint>
+                <omgdi:waypoint x="1143.0" y="1859.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Association_0fa94k1" id="BPMNEdge_Association_0fa94k1">
+                <omgdi:waypoint x="542.0" y="281.1475409836066"></omgdi:waypoint>
+                <omgdi:waypoint x="439.5" y="201.5"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-ABD91CD4-2EB8-4A80-8436-1B5D6DD7308C"
+                             id="BPMNEdge_sid-ABD91CD4-2EB8-4A80-8436-1B5D6DD7308C">
+                <omgdi:waypoint x="1143.0" y="193.94566492829205"></omgdi:waypoint>
+                <omgdi:waypoint x="1143.0" y="390.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0bc90e3" id="BPMNEdge_SequenceFlow_0bc90e3">
+                <omgdi:waypoint x="1143.0" y="1938.95"></omgdi:waypoint>
+                <omgdi:waypoint x="1143.0" y="2059.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0ue6iv2" id="BPMNEdge_SequenceFlow_0ue6iv2">
+                <omgdi:waypoint x="1314.9499999999803" y="174.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1460.0" y="174.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1460.0" y="300.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-5239AD5A-08D1-4A9A-BCB4-7D7A68740748"
+                             id="BPMNEdge_sid-5239AD5A-08D1-4A9A-BCB4-7D7A68740748">
+                <omgdi:waypoint x="1074.95" y="610.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1123.0" y="610.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0it658o" id="BPMNEdge_SequenceFlow_0it658o">
+                <omgdi:waypoint x="641.9499999999999" y="320.0"></omgdi:waypoint>
+                <omgdi:waypoint x="765.0" y="320.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Association_1jci0zf" id="BPMNEdge_Association_1jci0zf">
+                <omgdi:waypoint x="1092.9999999999995" y="1899.0"></omgdi:waypoint>
+                <omgdi:waypoint x="971.0" y="1899.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1ufzvu0" id="BPMNEdge_SequenceFlow_1ufzvu0">
+                <omgdi:waypoint x="785.0" y="339.9464889123547"></omgdi:waypoint>
+                <omgdi:waypoint x="785.0" y="604.0"></omgdi:waypoint>
+                <omgdi:waypoint x="825.0" y="606.6666666666667"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-5E0BB504-9B12-4BCF-BD4E-4E94F53488B1"
+                             id="BPMNEdge_sid-5E0BB504-9B12-4BCF-BD4E-4E94F53488B1">
+                <omgdi:waypoint x="1162.941830466763" y="174.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1215.0" y="174.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Association_0qs0zxq" id="BPMNEdge_Association_0qs0zxq">
+                <omgdi:waypoint x="742.5" y="1401.95"></omgdi:waypoint>
+                <omgdi:waypoint x="742.5" y="1446.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0kqx77m" id="BPMNEdge_SequenceFlow_0kqx77m">
+                <omgdi:waypoint x="555.3816568047337" y="1297.831952662722"></omgdi:waypoint>
+                <omgdi:waypoint x="555.0" y="1362.0"></omgdi:waypoint>
+                <omgdi:waypoint x="692.5" y="1362.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_00s96k3" id="BPMNEdge_SequenceFlow_00s96k3">
+                <omgdi:waypoint x="1404.45" y="1170.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1525.5" y="1170.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0elvu9f" id="BPMNEdge_SequenceFlow_0elvu9f">
+                <omgdi:waypoint x="555.4078341013825" y="1258.0830258302585"></omgdi:waypoint>
+                <omgdi:waypoint x="555.0" y="1170.0"></omgdi:waypoint>
+                <omgdi:waypoint x="692.5" y="1170.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-DF129ECA-3578-405B-8EB8-C4AA9AB6B11A"
+                             id="BPMNEdge_sid-DF129ECA-3578-405B-8EB8-C4AA9AB6B11A">
+                <omgdi:waypoint x="1143.0" y="590.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1143.0" y="417.9499237337677"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Association_12zi58x" id="BPMNEdge_Association_12zi58x">
+                <omgdi:waypoint x="1577.29775" y="280.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1580.0" y="220.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_025o9rz" id="BPMNEdge_SequenceFlow_025o9rz">
+                <omgdi:waypoint x="1206.45" y="1170.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1304.5" y="1170.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_17tv105" id="BPMNEdge_SequenceFlow_17tv105">
+                <omgdi:waypoint x="1479.94137110724" y="320.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1525.5" y="320.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-FA8F62BC-4C4C-46BA-9C66-1346D23A1D54"
+                             id="BPMNEdge_sid-FA8F62BC-4C4C-46BA-9C66-1346D23A1D54">
+                <omgdi:waypoint x="62.75977287177551" y="561.7550582320272"></omgdi:waypoint>
+                <omgdi:waypoint x="80.0" y="470.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0wr9rz7" id="BPMNEdge_SequenceFlow_0wr9rz7">
+                <omgdi:waypoint x="452.44789648197775" y="1279.74579848395"></omgdi:waypoint>
+                <omgdi:waypoint x="535.8333333333333" y="1278.3325"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Association_1383jni" id="BPMNEdge_Association_1383jni">
+                <omgdi:waypoint x="1265.0" y="649.9499999999999"></omgdi:waypoint>
+                <omgdi:waypoint x="1265.0" y="765.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1ghe2fv" id="BPMNEdge_SequenceFlow_1ghe2fv">
+                <omgdi:waypoint x="1854.95" y="422.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1884.5716101938576" y="333.23772238499225"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-B9F4F802-86EE-4E44-8F0E-A73DF50FCBDC"
+                             id="BPMNEdge_sid-B9F4F802-86EE-4E44-8F0E-A73DF50FCBDC">
+                <omgdi:waypoint x="1162.941830466508" y="610.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1215.0" y="610.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="Association_195lvsz" id="BPMNEdge_Association_195lvsz">
+                <omgdi:waypoint x="1288.8781609195403" y="134.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1320.0" y="0.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</definitions>

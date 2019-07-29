@@ -53,11 +53,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .logout();
 
-        http
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
+
     }
 }
