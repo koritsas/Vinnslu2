@@ -18,7 +18,6 @@ public class LeasingResolutionDto implements AbstractDto<Long> {
 
     private Long id;
 
-
     private String ada;
 
     private String protocol;

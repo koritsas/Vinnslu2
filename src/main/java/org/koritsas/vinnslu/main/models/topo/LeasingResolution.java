@@ -18,7 +18,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
 @Entity
 public class LeasingResolution implements Serializable {
 
@@ -39,6 +38,7 @@ public class LeasingResolution implements Serializable {
     private String ada;
 
     private String protocol;
+
 
     @ManyToOne
     @JoinColumn(name = "sender_id",referencedColumnName = "id",foreignKey = @ForeignKey(name="LR_S_FK"))
