@@ -7,7 +7,7 @@ import org.koritsas.vinnslu.main.ws.dto.topo.ExplosivesMemoDTO;
 import org.koritsas.vinnslu.main.ws.services.crud.topo.ExplosivesMemoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/explosives_memos")
+@RequestMapping("/data/explosives_memos")
 public class ExplosivesMemoController extends AbstractCRUDController<ExplosivesMemoService, ExplosivesMemo, Long, ExplosivesMemoDTO> {
 
     public ExplosivesMemoController(ExplosivesMemoService service, GeometryModelMapper mapper) {

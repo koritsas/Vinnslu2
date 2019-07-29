@@ -1,4 +1,4 @@
-package org.koritsas.vinnslu.main.ws.controllers.workflow;
+package org.koritsas.vinnslu.main.ws.services.workflow;
 
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
@@ -13,11 +13,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
-
+import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(FlowableSpringExtension.class)
 @ExtendWith(SpringExtension.class)
-public class ResearchSubprocessControllerTest {
+class LeasingSubprocessServiceTest {
+
 
     @Autowired
     private RuntimeService runtimeService;
@@ -26,8 +26,8 @@ public class ResearchSubprocessControllerTest {
     private TaskService taskService;
 
     @Test
-    @Deployment(resources = { "processes/vinnslu-workflow.bpmn20.xml" })
-    public void articleApprovalTest() {
+    @Deployment(resources = { "processes/article-workflow.bpmn20.xml" })
+    void articleApprovalTest() {
         Map<String, Object> variables = new HashMap<>();
         variables.put("author", "test@baeldung.com");
         variables.put("url", "http://baeldung.com/dummy");
@@ -42,4 +42,5 @@ public class ResearchSubprocessControllerTest {
 
         assertEquals(0, runtimeService.createProcessInstanceQuery().count());
     }
+
 }

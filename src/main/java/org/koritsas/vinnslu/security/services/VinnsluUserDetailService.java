@@ -39,6 +39,8 @@ public class VinnsluUserDetailService implements UserDetailsService {
             throw new UsernameNotFoundException("No user found with email " + email);
         }
 
+
+
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
         for (Role role : user.getRoles()) {

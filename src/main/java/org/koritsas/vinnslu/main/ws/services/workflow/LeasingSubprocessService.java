@@ -76,6 +76,7 @@ public class LeasingSubprocessService {
 
         variables.put("technicalStudy",technicalStudyService.create(technicalStudy));
 
+
         taskService.complete(taskId,variables);
 
     }

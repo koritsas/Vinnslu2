@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/guarantees")
+@RequestMapping("/data/guarantees")
 public class GuaranteeController extends AbstractCRUDController<GuaranteeService, Guarantee, Long, GuaranteeDTO> {
 
     public GuaranteeController(GuaranteeService service, GeometryModelMapper mapper) {
