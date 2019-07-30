@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/vinnslu/workflow/research")
+@RequestMapping("/vinnslu/workflow/process")
 public class ResearchSubprocessController {
 
     private GeometryModelMapper mapper;
@@ -45,20 +45,20 @@ public class ResearchSubprocessController {
     }
 
     @PostMapping("/process")
-    public ResponseEntity<ProcessInstance> startProcess(@RequestBody ResearchApplicationDto dto){
+    public ResponseEntity<String> startProcess(@RequestBody ResearchApplicationDto dto) {
 
         ProcessInstance processInstance = researchSubprocessService.startProcessWithResearchApplication(mapper.map(dto,ResearchApplication.class));
 
-        return ResponseEntity.status(201).body(processInstance);
+        return ResponseEntity.status(201).body(processInstance.getId());
     }
 
 
     @PostMapping("/process/topo")
-    public ResponseEntity<ProcessInstance> getProcessByTopo(@RequestBody TopoDTO dto) {
+    public ResponseEntity<String> getProcessByTopo(@RequestBody TopoDTO dto) {
 
         ProcessInstance processInstance = workflowService.getProcessInstanceByTopo(mapper.map(dto, Topo.class));
 
-        return ResponseEntity.ok(processInstance);
+        return ResponseEntity.status(200).body(processInstance.getId());
     }
 
     @GetMapping("/process/tasks")

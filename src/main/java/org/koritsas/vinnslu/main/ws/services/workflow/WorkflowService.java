@@ -6,9 +6,6 @@ import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.function.Predicate;
-
 @Service
 public class WorkflowService {
 
@@ -21,18 +18,12 @@ public class WorkflowService {
 
     public ProcessInstance getProcessInstanceByTopo(Topo topo) {
 
-        List<ProcessInstance> list = runtimeService.createProcessInstanceQuery().active().list();
 
-        list.removeIf(new Predicate<ProcessInstance>() {
-            @Override
-            public boolean test(ProcessInstance processInstance) {
+        ProcessInstance processInstance = this.runtimeService.createProcessInstanceQuery().variableValueEquals("topo", topo).singleResult();
 
+        System.out.println(processInstance.getId());
 
-                return !processInstance.getProcessVariables().containsValue(topo);
-            }
-        });
-
-        return this.runtimeService.createProcessInstanceQuery().active().variableValueEquals("topo", topo).singleResult();
+        return processInstance;
     }
 
 }

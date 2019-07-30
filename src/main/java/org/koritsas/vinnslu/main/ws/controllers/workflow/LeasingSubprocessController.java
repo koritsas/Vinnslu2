@@ -1,18 +1,15 @@
 package org.koritsas.vinnslu.main.ws.controllers.workflow;
 
-import lombok.AllArgsConstructor;
-import org.flowable.task.api.Task;
 import org.koritsas.vinnslu.main.models.topo.*;
 import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
 import org.koritsas.vinnslu.main.ws.dto.topo.*;
 import org.koritsas.vinnslu.main.ws.services.workflow.LeasingSubprocessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/vinnslu/workflow/leasing")
+@RequestMapping("/vinnslu/workflow/process")
 public class LeasingSubprocessController {
 
     private LeasingSubprocessService leasingSubprocessService;

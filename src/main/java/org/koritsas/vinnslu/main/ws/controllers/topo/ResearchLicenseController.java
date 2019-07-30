@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/data/research_licenses")
+@RequestMapping("/vinnslu/data/research_licenses")
 public class ResearchLicenseController extends AbstractCRUDController<ResearchLicenseService, ResearchLicense, Long, ResearchLicenseDTO> {
 
     public ResearchLicenseController(ResearchLicenseService service, GeometryModelMapper mapper) {

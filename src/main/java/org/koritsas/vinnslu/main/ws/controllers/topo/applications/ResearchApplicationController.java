@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/applications/researchLicense")
+@RequestMapping("/vinnslu/applications/research-license")
 public class ResearchApplicationController extends AbstractCRUDController<ResearchApplicationService, ResearchApplication, Long, ResearchApplicationDto> {
 
     public ResearchApplicationController(ResearchApplicationService service, GeometryModelMapper mapper) {

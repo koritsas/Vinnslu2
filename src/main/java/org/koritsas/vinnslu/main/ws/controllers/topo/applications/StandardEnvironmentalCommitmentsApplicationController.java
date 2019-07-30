@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/applications/standardEnvironmentalCommitments")
+@RequestMapping("/vinnslu/applications/standard-environmental-commitments")
 public class StandardEnvironmentalCommitmentsApplicationController extends AbstractCRUDController<StandardEnvironmentalCommitmentsApplicationService, StandardTechnicalCommitmentsApplication, Long, StandardEnvironmentalCommitmentsApplicationDto> {
 
     public StandardEnvironmentalCommitmentsApplicationController(StandardEnvironmentalCommitmentsApplicationService service, GeometryModelMapper mapper) {

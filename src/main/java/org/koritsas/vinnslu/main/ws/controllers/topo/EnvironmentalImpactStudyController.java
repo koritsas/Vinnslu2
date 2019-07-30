@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/data/environmental_impact_studies")
+@RequestMapping("/vinnslu/data/environmental_impact_studies")
 public class EnvironmentalImpactStudyController extends AbstractCRUDController<EnvironmentalImpactStudyService, EnvironmentalImpactStudy, Long, EnvironmentalImpactStudyDTO> {
 
     public EnvironmentalImpactStudyController(EnvironmentalImpactStudyService service, GeometryModelMapper mapper) {
