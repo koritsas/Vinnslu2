@@ -7,6 +7,7 @@ import org.flowable.task.api.Task;
 import org.koritsas.vinnslu.main.models.topo.ResearchLicense;
 import org.koritsas.vinnslu.main.models.topo.StandardEnvironmentalCommitments;
 import org.koritsas.vinnslu.main.models.topo.StandardTechnicalCommitments;
+import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
 import org.koritsas.vinnslu.main.models.topo.applications.StandardEnvironmentalCommitmentsApplication;
 import org.koritsas.vinnslu.main.models.topo.applications.StandardTechnicalCommitmentsApplication;
@@ -63,9 +64,27 @@ public class ResearchSubprocessService {
 
         Map<String,Object> variables = new HashMap<>();
 
+        variables.put("topo",researchApplication.getTopo());
         variables.put("researchApplication",researchApplicationService.create(researchApplication));
 
         return  runtimeService.startProcessInstanceByKey("vinnslu_workflow",variables);
+
+    }
+
+    @javax.transaction.Transactional
+    public ProcessInstance getProcessInstanceByTopo(Topo topo){
+
+
+
+
+
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
+
+
+        System.out.println(processInstance.toString());
+
+
+        return  processInstance;
 
     }
 

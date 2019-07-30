@@ -5,18 +5,22 @@ import org.flowable.task.api.Task;
 import org.koritsas.vinnslu.main.models.topo.ResearchLicense;
 import org.koritsas.vinnslu.main.models.topo.StandardEnvironmentalCommitments;
 import org.koritsas.vinnslu.main.models.topo.StandardTechnicalCommitments;
+import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
 import org.koritsas.vinnslu.main.models.topo.applications.StandardEnvironmentalCommitmentsApplication;
 import org.koritsas.vinnslu.main.models.topo.applications.StandardTechnicalCommitmentsApplication;
 import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
+import org.koritsas.vinnslu.main.utils.ProcessInstanceRepresentation;
 import org.koritsas.vinnslu.main.utils.TaskRepresentation;
 import org.koritsas.vinnslu.main.ws.dto.topo.ResearchLicenseDTO;
 import org.koritsas.vinnslu.main.ws.dto.topo.StandardEnvironmentalCommitmentsDTO;
 import org.koritsas.vinnslu.main.ws.dto.topo.StandardTechnicalCommitmentsDTO;
+import org.koritsas.vinnslu.main.ws.dto.topo.TopoDTO;
 import org.koritsas.vinnslu.main.ws.dto.topo.applications.ResearchApplicationDto;
 import org.koritsas.vinnslu.main.ws.dto.topo.applications.StandardEnvironmentalCommitmentsApplicationDto;
 import org.koritsas.vinnslu.main.ws.dto.topo.applications.StandardTechnicalCommitmentsApplicationDto;
 import org.koritsas.vinnslu.main.ws.services.workflow.ResearchSubprocessService;
+import org.koritsas.vinnslu.main.ws.services.workflow.WorkflowProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,18 +36,32 @@ public class ResearchSubprocessController {
 
     private ResearchSubprocessService researchSubprocessService;
 
+    private WorkflowProcessService workflowService;
+
     @Autowired
-    public ResearchSubprocessController(ResearchSubprocessService researchSubprocessService, GeometryModelMapper mapper) {
+    public ResearchSubprocessController(ResearchSubprocessService researchSubprocessService,WorkflowProcessService workflowProcessService, GeometryModelMapper mapper) {
         this.researchSubprocessService = researchSubprocessService;
+        this.workflowService = workflowProcessService;
         this.mapper = mapper;
     }
 
     @PostMapping("/process")
-    public ResponseEntity<ProcessInstance> startProcess(@RequestBody ResearchApplicationDto dto){
+    public ResponseEntity<ProcessInstanceRepresentation> startProcess(@RequestBody ResearchApplicationDto dto){
 
         ProcessInstance processInstance = researchSubprocessService.startProcessWithResearchApplication(mapper.map(dto,ResearchApplication.class));
 
-        return ResponseEntity.status(201).body(processInstance);
+        ProcessInstanceRepresentation processInstanceRepresentation = new ProcessInstanceRepresentation(processInstance);
+        return ResponseEntity.status(201).body(processInstanceRepresentation);
+    }
+
+    @PostMapping("/process/topo")
+    public ResponseEntity<ProcessInstanceRepresentation> getProcessInstanceByTopo(@RequestBody TopoDTO dto){
+
+        ProcessInstance processInstance = researchSubprocessService.getProcessInstanceByTopo(mapper.map(dto, Topo.class));
+
+        ProcessInstanceRepresentation processInstanceRepresentation = new ProcessInstanceRepresentation(processInstance);
+
+        return ResponseEntity.ok(processInstanceRepresentation);
     }
 
 
