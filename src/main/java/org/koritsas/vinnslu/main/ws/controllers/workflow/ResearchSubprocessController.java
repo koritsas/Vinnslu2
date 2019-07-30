@@ -8,6 +8,7 @@ import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
 import org.koritsas.vinnslu.main.models.topo.applications.StandardEnvironmentalCommitmentsApplication;
 import org.koritsas.vinnslu.main.models.topo.applications.StandardTechnicalCommitmentsApplication;
 import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
+import org.koritsas.vinnslu.main.utils.ProcessInstanceRepresentation;
 import org.koritsas.vinnslu.main.ws.dto.topo.ResearchLicenseDTO;
 import org.koritsas.vinnslu.main.ws.dto.topo.StandardEnvironmentalCommitmentsDTO;
 import org.koritsas.vinnslu.main.ws.dto.topo.StandardTechnicalCommitmentsDTO;
@@ -35,11 +36,11 @@ public class ResearchSubprocessController {
     }
 
     @PostMapping("/research-application")
-    public ResponseEntity<String> startProcess(@RequestBody ResearchApplicationDto dto) {
+    public ResponseEntity<ProcessInstanceRepresentation> startProcess(@RequestBody ResearchApplicationDto dto) {
 
         ProcessInstance processInstance = researchSubprocessService.startProcessWithResearchApplication(mapper.map(dto,ResearchApplication.class));
 
-        return ResponseEntity.status(201).body(processInstance.getId());
+        return ResponseEntity.ok(new ProcessInstanceRepresentation(processInstance));
     }
 
 

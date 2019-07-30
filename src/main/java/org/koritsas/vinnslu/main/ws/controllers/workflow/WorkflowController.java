@@ -4,6 +4,7 @@ import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
+import org.koritsas.vinnslu.main.utils.ProcessInstanceRepresentation;
 import org.koritsas.vinnslu.main.utils.TaskRepresentation;
 import org.koritsas.vinnslu.main.ws.dto.topo.TopoDTO;
 import org.koritsas.vinnslu.main.ws.services.workflow.WorkflowService;
@@ -30,11 +31,12 @@ public class WorkflowController {
 
 
     @PostMapping("/topo")
-    public ResponseEntity<String> getProcessByTopo(@RequestBody TopoDTO dto) {
+    public ResponseEntity<ProcessInstanceRepresentation> getProcessByTopo(@RequestBody TopoDTO dto) {
 
         ProcessInstance processInstance = workflowService.getProcessInstanceByTopo(mapper.map(dto, Topo.class));
 
-        return ResponseEntity.status(200).body(processInstance.getId());
+
+        return ResponseEntity.ok(new ProcessInstanceRepresentation(processInstance));
     }
 
     @GetMapping("/tasks")
