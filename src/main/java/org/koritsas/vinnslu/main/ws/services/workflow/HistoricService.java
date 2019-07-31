@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class HistoricService {
@@ -41,19 +43,24 @@ public class HistoricService {
     }
 
     @Transactional
-    public List<HistoricTaskInstance> getAllTasksFromProcess(String processInstanceId){
+    public Map<String,List<HistoricTaskInstance>> getAllTasksFromProcess(String processInstanceId){
 
-       List<HistoricTaskInstance> tasks =this.historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstanceId).includeProcessVariables()
-               .orderByHistoricTaskInstanceEndTime().asc()
+       List<HistoricTaskInstance> finishedTasks =this.historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstanceId).includeProcessVariables()
+               .finished()
                .list();
 
-        HistoricTaskInstance taskInstance;
+        List<HistoricTaskInstance> unfinishedTasks =this.historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstanceId).includeProcessVariables()
+                .finished()
+                .list();
+
+        HashMap<String,List<HistoricTaskInstance>> map = new HashMap<>();
 
 
+        map.put("finished",finishedTasks);
+        map.put("unfinished",unfinishedTasks);
 
 
-
-      return tasks;
+      return map;
     }
 
 

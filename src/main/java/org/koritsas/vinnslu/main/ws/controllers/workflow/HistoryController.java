@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/vinnslu/workflow/process/history")
@@ -48,15 +49,15 @@ public class HistoryController {
     }
 
     @GetMapping("/{processId}/tasks")
-    public ResponseEntity<List<TaskRepresentation>> getHistoricTasksFromProcessWithId(@PathVariable String processId){
+    public ResponseEntity<Map<String,List<HistoricTaskInstance>>> getHistoricTasksFromProcessWithId(@PathVariable String processId){
 
         List<TaskRepresentation> taskRepresentations = new ArrayList<>();
 
-        List<HistoricTaskInstance> taskInstances =this.historicService.getAllTasksFromProcess(processId);
+        Map<String,List<HistoricTaskInstance>> taskInstances =this.historicService.getAllTasksFromProcess(processId);
 
-        taskInstances.stream().forEach(historicTaskInstance -> taskRepresentations.add(new TaskRepresentation(historicTaskInstance)));
+       // taskInstances.stream().forEach(historicTaskInstance -> taskRepresentations.add(new TaskRepresentation(historicTaskInstance)));
 
-        return ResponseEntity.ok(taskRepresentations);
+        return ResponseEntity.ok(taskInstances);
 
     }
 }
