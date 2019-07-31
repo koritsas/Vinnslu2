@@ -46,18 +46,7 @@ public class WorkflowController {
 
         List<TaskRepresentation> taskRepresentations = new ArrayList<>();
 
-        tasks.forEach(task -> {
-            TaskRepresentation taskRepresentation = new TaskRepresentation();
-            taskRepresentation.setId(task.getId());
-            taskRepresentation.setCreateTime(task.getCreateTime());
-            taskRepresentation.setCategory(task.getCategory());
-            taskRepresentation.setName(task.getName());
-            taskRepresentation.setProcessInstanceId(task.getProcessInstanceId());
-            taskRepresentation.setScopeId(task.getScopeId());
-            taskRepresentation.setProcessVariables(task.getProcessVariables());
-
-            taskRepresentations.add(taskRepresentation);
-        });
+        tasks.stream().forEach(task -> taskRepresentations.add(new TaskRepresentation(task)));
 
         return taskRepresentations;
     }

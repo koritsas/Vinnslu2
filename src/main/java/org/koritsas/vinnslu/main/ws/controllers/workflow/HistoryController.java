@@ -1,19 +1,25 @@
 package org.koritsas.vinnslu.main.ws.controllers.workflow;
 
 import org.flowable.engine.history.HistoricProcessInstance;
+import org.flowable.task.api.history.HistoricTaskInstance;
 import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
+import org.koritsas.vinnslu.main.utils.TaskRepresentation;
 import org.koritsas.vinnslu.main.ws.dto.topo.TopoDTO;
 import org.koritsas.vinnslu.main.ws.services.workflow.HistoricService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
-@RequestMapping("/vinnslu/history")
+@RequestMapping("/vinnslu/workflow/process/history")
 public class HistoryController {
 
     private HistoricService historicService;
+
 
     private GeometryModelMapper mapper;
 
@@ -24,7 +30,7 @@ public class HistoryController {
     }
 
 
-    @GetMapping("/process/{processId}")
+    @GetMapping("/{processId}")
     public ResponseEntity<String> getHistoricProcessInstanceInstance(@PathVariable String processId){
 
         HistoricProcessInstance processInstance = historicService.getHistoricProcessInstanceById(processId);
@@ -33,11 +39,24 @@ public class HistoryController {
         return ResponseEntity.ok(processInstance.getId());
     }
 
-    @PostMapping("/process")
+    @PostMapping("/topo")
     public ResponseEntity<String> getHistoricProcessInstanceByTopo(@RequestBody TopoDTO dto){
 
         HistoricProcessInstance processInstance = historicService.getHistoriceProcessInstanceByTopo(mapper.map(dto, Topo.class));
 
         return ResponseEntity.ok(processInstance.getId());
+    }
+
+    @GetMapping("/{processId}/tasks")
+    public ResponseEntity<List<TaskRepresentation>> getHistoricTasksFromProcessWithId(@PathVariable String processId){
+
+        List<TaskRepresentation> taskRepresentations = new ArrayList<>();
+
+        List<HistoricTaskInstance> taskInstances =this.historicService.getAllTasksFromProcess(processId);
+
+        taskInstances.stream().forEach(historicTaskInstance -> taskRepresentations.add(new TaskRepresentation(historicTaskInstance)));
+
+        return ResponseEntity.ok(taskRepresentations);
+
     }
 }

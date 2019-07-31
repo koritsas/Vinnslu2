@@ -1,10 +1,12 @@
 package org.koritsas.vinnslu.main.utils;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.flowable.engine.runtime.ProcessInstance;
 
 import java.util.Date;
 import java.util.Map;
-
+@Getter @Setter
 public class ProcessInstanceRepresentation {
 
 

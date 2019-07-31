@@ -40,7 +40,11 @@ public class ResearchSubprocessController {
 
         ProcessInstance processInstance = researchSubprocessService.startProcessWithResearchApplication(mapper.map(dto,ResearchApplication.class));
 
-        return ResponseEntity.ok(new ProcessInstanceRepresentation(processInstance));
+        ProcessInstanceRepresentation processInstanceRepresentation = new ProcessInstanceRepresentation(processInstance);
+
+
+
+        return ResponseEntity.ok(processInstanceRepresentation);
     }
 
 

@@ -1,18 +1,13 @@
 package org.koritsas.vinnslu.main.utils;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.flowable.task.api.Task;
+import org.flowable.task.api.history.HistoricTaskInstance;
 
 import java.util.Date;
 import java.util.Map;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Getter @Setter
 public class TaskRepresentation {
 
     private String id;
@@ -30,5 +25,31 @@ public class TaskRepresentation {
     private Date createTime;
 
     private Map<String,Object> processVariables;
+
+
+    public TaskRepresentation(Task task){
+        this.id = task.getId();
+        this.name = task.getName();
+        this.processInstanceId = task.getProcessInstanceId();
+        this.scopeId = task.getScopeId();
+        this.category = task.getCategory();
+        this.owner = task.getOwner();
+        this.createTime = task.getCreateTime();
+        this.processVariables = task.getProcessVariables();
+    }
+
+    public TaskRepresentation(HistoricTaskInstance task){
+        this.id = task.getId();
+        this.name = task.getName();
+        this.processInstanceId = task.getProcessInstanceId();
+        this.scopeId = task.getScopeId();
+        this.category = task.getCategory();
+        this.owner = task.getOwner();
+        this.createTime = task.getCreateTime();
+        this.processVariables = task.getProcessVariables();
+
+    }
+
+
 
 }
