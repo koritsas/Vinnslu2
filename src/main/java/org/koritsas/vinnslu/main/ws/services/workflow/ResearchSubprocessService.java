@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +56,7 @@ public class ResearchSubprocessService {
     }
 
 
-    @Transactional
+    @Transactional(rollbackFor = ConstraintViolationException.class)
     public ProcessInstance startProcessWithResearchApplication(ResearchApplication researchApplication){
 
         Map<String,Object> variables = new HashMap<>();

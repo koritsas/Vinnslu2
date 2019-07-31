@@ -26,6 +26,9 @@ public class TaskRepresentation {
 
     private Map<String,Object> processVariables;
 
+    private void helper(){
+        Task task;
+    }
 
     public TaskRepresentation(Task task){
         this.id = task.getId();

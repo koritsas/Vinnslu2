@@ -62,7 +62,7 @@ public class ResearchSubprocessController {
 
 
     //Completes Standard Environmental Commitments Application Task by POSTing
-    @PostMapping("/standard_environmental_commitments_application/{taskId}")
+    @PostMapping("/standard-environmental-commitments-application/{taskId}")
     public ResponseEntity<String> completeStandardEnvironmentalCommitmentsTask(@PathVariable String taskId, @RequestBody StandardEnvironmentalCommitmentsApplicationDto dto){
 
         StandardEnvironmentalCommitmentsApplication stcApplication = mapper.map(dto,StandardEnvironmentalCommitmentsApplication.class);
@@ -73,7 +73,7 @@ public class ResearchSubprocessController {
     }
 
     //Completes Standard Environmental Commitments Opinions Task by PUTing
-    @PutMapping("process/tasks/standard_environmental_commitments_application/opinions/{taskId}")
+    @PutMapping("/standard-environmental-commitments-application/opinions/{taskId}")
     public ResponseEntity<String> completeStandardEnvironmentalCommitmentsOpinionsTask(@PathVariable String taskId,@RequestBody StandardEnvironmentalCommitmentsApplicationDto dto){
 
         StandardEnvironmentalCommitmentsApplication secApplication = mapper.map(dto,StandardEnvironmentalCommitmentsApplication.class);
@@ -86,7 +86,7 @@ public class ResearchSubprocessController {
     }
 
 
-    @PostMapping("/process/tasks/standard_technical_commitments/application/{taskId}")
+    @PostMapping("/standard-technical-commitments-application/{taskId}")
     public ResponseEntity<String> completeStandardTechnicalCommitmentsApplicationTask(@PathVariable String taskId, @RequestBody StandardTechnicalCommitmentsApplicationDto dto){
 
 
@@ -97,7 +97,7 @@ public class ResearchSubprocessController {
         return ResponseEntity.ok("Completed Standard Technical Commitments Application task by posting " + stcApplication.toString());
     }
 
-    @PutMapping("/standard_technical_commitments_application/opinions/{taskId}")
+    @PutMapping("/standard-technical-commitments-application/opinions/{taskId}")
     public ResponseEntity<String> completeStandardTechnicalCommitmentsOpinionsTask(@PathVariable String taskId,@RequestBody StandardTechnicalCommitmentsApplicationDto dto){
 
         StandardTechnicalCommitmentsApplication stcApplication = mapper.map(dto,StandardTechnicalCommitmentsApplication.class);
@@ -107,7 +107,7 @@ public class ResearchSubprocessController {
 
     }
 
-    @PostMapping("/standard_technical_commitments/{taskId}")
+    @PostMapping("/standard-technical-commitments/{taskId}")
     public ResponseEntity<String> completeStandardTechnicalCommitmentsTask(@PathVariable String taskId,@RequestBody StandardTechnicalCommitmentsDTO dto){
 
         StandardTechnicalCommitments standardTechnicalCommitments = mapper.map(dto,StandardTechnicalCommitments.class);
@@ -118,7 +118,7 @@ public class ResearchSubprocessController {
 
     }
 
-    @PostMapping("/standard_environmental_commitments/{taskId}")
+    @PostMapping("/standard-environmental-commitments/{taskId}")
     public ResponseEntity<String> completedStandardEnvironmentalCommitmentsTask(@PathVariable String taskId, @RequestBody StandardEnvironmentalCommitmentsDTO dto){
 
         StandardEnvironmentalCommitments standardEnvironmentalCommitments = mapper.map(dto,StandardEnvironmentalCommitments.class);
@@ -128,7 +128,7 @@ public class ResearchSubprocessController {
         return ResponseEntity.ok("Completed task with "+standardEnvironmentalCommitments.toString());
     }
 
-    @PostMapping("/reseasrch_license/{taskId}")
+    @PostMapping("/reseasrch-license/{taskId}")
     public ResponseEntity<String> createResearchLicenseTask(@PathVariable String taskId, @RequestBody ResearchLicenseDTO dto){
 
         ResearchLicense researchLicense = mapper.map(dto,ResearchLicense.class);
@@ -138,7 +138,7 @@ public class ResearchSubprocessController {
         return ResponseEntity.ok("Research License created " + researchLicense.toString());
     }
 
-    @PostMapping("/process/tasks/reseasrch_license/proceed_to_leasing/{taskId}")
+    @PostMapping("/reseasrch-license/proceed-to-leasing/{taskId}")
     public ResponseEntity<String> completeResearchLicenseTask(@PathVariable String taskId){
 
         researchSubprocessService.completeResearchLicenseTask(taskId);
