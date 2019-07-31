@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/data/explosives")
+@RequestMapping("/vinnslu/data/explosives")
 public class ExplosivesLicenseController extends AbstractCRUDController<ExplosivesLicenseService, ExplosivesLicense, Long, EXplosivesLicenseDTO> {
 
     public ExplosivesLicenseController(ExplosivesLicenseService service, GeometryModelMapper mapper) {

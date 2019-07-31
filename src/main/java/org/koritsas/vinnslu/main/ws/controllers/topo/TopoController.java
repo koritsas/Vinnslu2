@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/data/topos")
+@RequestMapping("/vinnslu/data/topos")
 public class TopoController extends AbstractCRUDController<TopoService, Topo, Long, TopoDTO> {
 
 

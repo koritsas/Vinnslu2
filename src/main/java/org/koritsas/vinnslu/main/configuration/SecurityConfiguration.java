@@ -35,6 +35,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+   /*     http
+                .csrf().disable().userDetailsService(service)
+                .exceptionHandling()
+                .and()
+
+                .authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/vinnslu/workflow/process/**").authenticated()
+                .antMatchers("/vinnslu/workflow/process/**").hasAnyRole("ADMIN", "TOPO_ADMIN")
+                .antMatchers("/vinnslu/data/**").authenticated()
+                .antMatchers("/vinnslu/data/**").hasAnyRole("ADMIN", "TOPO_ADMIN")
+                .antMatchers("/vinnslu/assets/**").authenticated()
+                .antMatchers("/vinnslu/assets/**").hasRole("ASSETS_ADMIN")
+                .and()
+                .formLogin()
+                .and()
+
+
+                .logout();
+*/
         http
                 .csrf().disable().userDetailsService(service)
                 .exceptionHandling()
@@ -43,8 +64,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/workflow/process/**").authenticated()
-                .antMatchers("/workflow/process/**").hasAnyRole("ADMIN","TOPO_ADMIN")
-                .antMatchers("/data/**").hasAnyRole("ADMIN","TOPO_ADMIN")
+                .antMatchers("/workflow/process/**").hasAnyRole("ADMIN", "TOPO_ADMIN")
+                .antMatchers("/data/**").hasAnyRole("ADMIN", "TOPO_ADMIN")
                 .antMatchers("/assets/**").authenticated()
                 .antMatchers("/assets/**").hasRole("ASSETS_ADMIN")
                 .and()
@@ -53,11 +74,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .logout();
 
-        http
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
     }
 }

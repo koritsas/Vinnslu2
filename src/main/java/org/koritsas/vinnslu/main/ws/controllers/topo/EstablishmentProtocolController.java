@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/data/establisment_protocol")
+@RequestMapping("/vinnslu/data/establisment_protocol")
 public class EstablishmentProtocolController extends AbstractCRUDController<EstablishmentProtocolService, EstablishmentProtocol,Long, EstablishmentProtocolDto> {
     public EstablishmentProtocolController(EstablishmentProtocolService service, GeometryModelMapper mapper) {
         super(service, mapper);

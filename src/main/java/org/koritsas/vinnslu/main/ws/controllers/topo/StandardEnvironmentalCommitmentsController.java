@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/data/standard_environmental_commitments")
+@RequestMapping("/vinnslu/data/standard_environmental_commitments")
 public class StandardEnvironmentalCommitmentsController extends AbstractCRUDController<StandardEnvironmentalCommitmentsService, StandardEnvironmentalCommitments, Long, StandardEnvironmentalCommitmentsDTO> {
 
     public StandardEnvironmentalCommitmentsController(StandardEnvironmentalCommitmentsService service, GeometryModelMapper mapper) {

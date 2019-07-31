@@ -3,11 +3,9 @@ package org.koritsas.vinnslu.main.ws.services.workflow;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.runtime.ProcessInstance;
-import org.flowable.task.api.Task;
 import org.koritsas.vinnslu.main.models.topo.ResearchLicense;
 import org.koritsas.vinnslu.main.models.topo.StandardEnvironmentalCommitments;
 import org.koritsas.vinnslu.main.models.topo.StandardTechnicalCommitments;
-import org.koritsas.vinnslu.main.models.topo.Topo;
 import org.koritsas.vinnslu.main.models.topo.applications.ResearchApplication;
 import org.koritsas.vinnslu.main.models.topo.applications.StandardEnvironmentalCommitmentsApplication;
 import org.koritsas.vinnslu.main.models.topo.applications.StandardTechnicalCommitmentsApplication;
@@ -22,9 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class ResearchSubprocessService {
@@ -64,44 +60,16 @@ public class ResearchSubprocessService {
 
         Map<String,Object> variables = new HashMap<>();
 
-        variables.put("topo",researchApplication.getTopo());
-        variables.put("researchApplication",researchApplicationService.create(researchApplication));
+        ResearchApplication researchApp = researchApplicationService.create(researchApplication);
+        variables.put("researchApplication", researchApp);
+
+        variables.put("topo", researchApp.getTopo());
 
         return  runtimeService.startProcessInstanceByKey("vinnslu_workflow",variables);
 
     }
 
-    @javax.transaction.Transactional
-    public ProcessInstance getProcessInstanceByTopo(Topo topo){
 
-
-
-
-
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-
-
-        System.out.println(processInstance.toString());
-
-
-        return  processInstance;
-
-    }
-
-
-    @Transactional
-    public List<Task> getAllTasks(String processId,String taskId){
-
-
-        Optional<String> optional = Optional.ofNullable(taskId);
-
-        if (taskId==null){
-            return taskService.createTaskQuery().includeProcessVariables().processInstanceId(processId).list();
-        }else{
-            return taskService.createTaskQuery().includeProcessVariables().processInstanceId(processId).taskId(taskId).list();
-        }
-
-    }
 
 
     @Transactional

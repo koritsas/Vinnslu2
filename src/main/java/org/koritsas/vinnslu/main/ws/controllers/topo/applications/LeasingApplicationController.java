@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/applications/leasing_application")
+@RequestMapping("/vinnslu/applications/leasing_application")
 public class LeasingApplicationController extends AbstractCRUDController<LeasingApplicationService,LeasingApplication,Long, LeasingApplicationDto> {
     public LeasingApplicationController(LeasingApplicationService service, GeometryModelMapper mapper) {
         super(service, mapper);
