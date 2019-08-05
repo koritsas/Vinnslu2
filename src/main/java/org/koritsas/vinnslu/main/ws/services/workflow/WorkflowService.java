@@ -26,6 +26,11 @@ public class WorkflowService {
     }
 
 
+    /**
+     * @param processId
+     * @param taskId
+     * @return A lists with all current tasks of the process
+     */
     @Transactional
     public List<Task> getAllTasks(String processId, String taskId) {
 
@@ -40,10 +45,15 @@ public class WorkflowService {
 
     }
 
+    /**
+     *
+     * @param topo
+     * @return Returns a process instance that has topo variable
+     */
     public ProcessInstance getProcessInstanceByTopo(Topo topo) {
 
 
-        ProcessInstance processInstance = this.runtimeService.createProcessInstanceQuery().variableValueEquals("topo", topo).singleResult();
+        ProcessInstance processInstance = this.runtimeService.createProcessInstanceQuery().includeProcessVariables().variableValueEquals("topo", topo).singleResult();
 
         System.out.println(processInstance.getId());
 

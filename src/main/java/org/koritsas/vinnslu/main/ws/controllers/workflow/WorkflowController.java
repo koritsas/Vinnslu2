@@ -21,14 +21,20 @@ public class WorkflowController {
 
     private WorkflowService workflowService;
 
+
     private GeometryModelMapper mapper;
 
     @Autowired
     public WorkflowController(WorkflowService workflowService, GeometryModelMapper mapper) {
         this.workflowService = workflowService;
+
         this.mapper = mapper;
     }
 
+    /**
+     * @param dto
+     * @return A response entity with a ProcessInstanceRepresentation with variable topo
+     */
 
     @PostMapping("/topo")
     public ResponseEntity<ProcessInstanceRepresentation> getProcessByTopo(@RequestBody TopoDTO dto) {
@@ -39,6 +45,12 @@ public class WorkflowController {
         return ResponseEntity.ok(new ProcessInstanceRepresentation(processInstance));
     }
 
+    /**
+     *
+     * @param processId
+     * @param taskId
+     * @return A list of tasks of a process with processId or a single task
+     */
     @GetMapping("/tasks")
     public List<TaskRepresentation> getAllTasks(@RequestParam(required = false) String processId, @RequestParam(required = false) String taskId) {
 
@@ -50,4 +62,6 @@ public class WorkflowController {
 
         return taskRepresentations;
     }
+
+
 }

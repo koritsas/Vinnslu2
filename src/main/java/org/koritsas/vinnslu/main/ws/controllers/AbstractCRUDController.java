@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
 
+@CrossOrigin(value = "http://localhost:4200")
 public class AbstractCRUDController<S extends AbstractCRUDService, E extends Serializable, PK extends Serializable, DTO extends AbstractDto<PK>> {
 
     protected S service;

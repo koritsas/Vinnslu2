@@ -2,6 +2,7 @@ package org.koritsas.vinnslu.main.utils;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
 
 import java.util.Date;
@@ -40,4 +41,15 @@ public class ProcessInstanceRepresentation {
         this.processVariables = processInstance.getProcessVariables();
     }
 
+    public ProcessInstanceRepresentation(HistoricProcessInstance processInstance) {
+        this.id = processInstance.getId();
+        this.processInstanceId = processInstance.getSuperProcessInstanceId();
+        this.name = processInstance.getName();
+        this.defiditionId = processInstance.getProcessDefinitionId();
+        this.definitionName = processInstance.getProcessDefinitionName();
+        this.definitionKey = processInstance.getProcessDefinitionKey();
+        this.definitionVersion = processInstance.getProcessDefinitionVersion();
+        this.startTime = processInstance.getStartTime();
+        this.processVariables = processInstance.getProcessVariables();
+    }
 }

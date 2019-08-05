@@ -2,30 +2,26 @@ package org.koritsas.vinnslu.main.ws.services.workflow;
 
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.history.HistoricProcessInstance;
-import org.flowable.task.api.Task;
 import org.flowable.task.api.history.HistoricTaskInstance;
-import org.flowable.task.service.HistoricTaskService;
-import org.flowable.task.service.impl.HistoricTaskInstanceQueryImpl;
 import org.koritsas.vinnslu.main.models.topo.Topo;
-import org.koritsas.vinnslu.main.utils.ProcessInstanceRepresentation;
+import org.koritsas.vinnslu.main.ws.services.crud.topo.TopoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class HistoricService {
 
-    HistoryService historyService;
+    private HistoryService historyService;
 
-    HistoricTaskService historicTaskService;
+    private TopoService topoService;
 
     @Autowired
-    public HistoricService(HistoryService historyService){
+    public HistoricService(HistoryService historyService, TopoService topoService) {
         this.historyService = historyService;
+        this.topoService = topoService;
 
     }
 
@@ -43,24 +39,34 @@ public class HistoricService {
     }
 
     @Transactional
-    public Map<String,List<HistoricTaskInstance>> getAllTasksFromProcess(String processInstanceId){
+    public List<HistoricTaskInstance> getAllFinishedTasksFromProcess(String processInstanceId) {
 
        List<HistoricTaskInstance> finishedTasks =this.historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstanceId).includeProcessVariables()
                .finished()
                .list();
 
-        List<HistoricTaskInstance> unfinishedTasks =this.historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstanceId).includeProcessVariables()
-                .finished()
-                .list();
 
-        HashMap<String,List<HistoricTaskInstance>> map = new HashMap<>();
+        return finishedTasks;
+    }
 
 
-        map.put("finished",finishedTasks);
-        map.put("unfinished",unfinishedTasks);
+    @Transactional
+    public List<HistoricTaskInstance> getHistoricTasksWithTopo(Topo topo) {
 
+        String historicProcessId = getHistoriceProcessInstanceByTopo(topo).getId();
 
-      return map;
+        List<HistoricTaskInstance> historicTaskInstances = historyService.createHistoricTaskInstanceQuery().processInstanceId(historicProcessId).finished().list();
+
+        return historicTaskInstances;
+    }
+
+    @Transactional
+    public List<HistoricTaskInstance> getHistoricTaskFromProcessWithTopoId(Long id) {
+
+        Topo topo = topoService.find(id);
+
+        return historyService.createHistoricTaskInstanceQuery().includeProcessVariables().processVariableValueEquals("topo", topo).list();
+
     }
 
 
