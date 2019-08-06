@@ -6,6 +6,7 @@ import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 @Getter @Setter
 public class ProcessInstanceRepresentation {
@@ -29,6 +30,9 @@ public class ProcessInstanceRepresentation {
 
     private Map<String, Object> processVariables;
 
+    private List<TaskRepresentation> finishedTasks;
+
+    private List<TaskRepresentation> activeTasks;
 
 
     public ProcessInstanceRepresentation(ProcessInstance processInstance) {
@@ -53,5 +57,6 @@ public class ProcessInstanceRepresentation {
         this.definitionVersion = processInstance.getProcessDefinitionVersion();
         this.startTime = processInstance.getStartTime();
         this.processVariables = processInstance.getProcessVariables();
+
     }
 }

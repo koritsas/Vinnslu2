@@ -4,11 +4,14 @@ import org.flowable.engine.HistoryService;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.task.api.history.HistoricTaskInstance;
 import org.koritsas.vinnslu.main.models.topo.Topo;
+import org.koritsas.vinnslu.main.utils.ProcessInstanceRepresentation;
+import org.koritsas.vinnslu.main.utils.TaskRepresentation;
 import org.koritsas.vinnslu.main.ws.services.crud.topo.TopoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -69,6 +72,36 @@ public class HistoricService {
 
         return historyService.createHistoricTaskInstanceQuery().includeProcessVariables().finished().processVariableValueEquals("topo", topo).list();
 
+    }
+
+    @Transactional
+    public ProcessInstanceRepresentation getHistoricProcessWithTopoId(Long id) {
+
+        Topo topo = topoService.find(id);
+
+        List<HistoricTaskInstance> finishedTasks = historyService.createHistoricTaskInstanceQuery().finished().processVariableValueEquals("topo", topo).list();
+
+        List<HistoricTaskInstance> activeTasks = historyService.createHistoricTaskInstanceQuery().unfinished().processVariableValueEquals("topo", topo).list();
+
+        HistoricProcessInstance historicProcess = historyService.createHistoricProcessInstanceQuery().includeProcessVariables().variableValueEquals("topo", topo).singleResult();
+
+
+        List<TaskRepresentation> finishedTasksRepresentation = new ArrayList<>();
+
+        finishedTasks.forEach(f -> finishedTasksRepresentation.add(new TaskRepresentation(f)));
+
+
+        List<TaskRepresentation> activeTasksRepresentation = new ArrayList<>();
+
+        activeTasks.forEach(a -> activeTasksRepresentation.add(new TaskRepresentation(a)));
+
+        ProcessInstanceRepresentation processInstanceRepresentation = new ProcessInstanceRepresentation(historicProcess);
+
+        processInstanceRepresentation.setActiveTasks(activeTasksRepresentation);
+
+        processInstanceRepresentation.setFinishedTasks(finishedTasksRepresentation);
+
+        return processInstanceRepresentation;
     }
 
 

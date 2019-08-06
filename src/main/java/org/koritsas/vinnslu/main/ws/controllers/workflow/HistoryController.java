@@ -111,4 +111,13 @@ public class HistoryController {
         return ResponseEntity.ok(taskRepresentations);
 
     }
+
+    @GetMapping("/tasks/all/topo/{id}")
+    public ResponseEntity<ProcessInstanceRepresentation> getProcessAndTasksByTopoId(@PathVariable Long id) {
+
+        ProcessInstanceRepresentation processInstanceRepresentation = this.historicService.getHistoricProcessWithTopoId(id);
+
+        return ResponseEntity.ok(processInstanceRepresentation);
+    }
+
 }
