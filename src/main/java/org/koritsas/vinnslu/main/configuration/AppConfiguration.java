@@ -2,12 +2,15 @@ package org.koritsas.vinnslu.main.configuration;
 
 import com.bedatadriven.jackson.datatype.jts.JtsModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import org.koritsas.vinnslu.main.utils.GeometryModelMapper;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import java.text.SimpleDateFormat;
 
 
 @Configuration
@@ -32,6 +35,10 @@ public class AppConfiguration {
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(jtsModule());
+
+
+        objectMapper.setDateFormat(new StdDateFormat());
+
         return objectMapper;
     }
 

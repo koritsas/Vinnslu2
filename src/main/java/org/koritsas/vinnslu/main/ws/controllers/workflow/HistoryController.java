@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/vinnslu/workflow/process/history")
+@CrossOrigin(value = "*")
 public class HistoryController {
 
     private HistoricService historicService;
