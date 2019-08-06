@@ -29,6 +29,8 @@ public class ProcessInstanceRepresentation {
 
     private Map<String, Object> processVariables;
 
+
+
     public ProcessInstanceRepresentation(ProcessInstance processInstance) {
         this.id = processInstance.getId();
         this.processInstanceId = processInstance.getProcessInstanceId();

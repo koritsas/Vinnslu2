@@ -65,6 +65,8 @@ public class HistoricService {
 
         Topo topo = topoService.find(id);
 
+
+
         return historyService.createHistoricTaskInstanceQuery().includeProcessVariables().finished().processVariableValueEquals("topo", topo).list();
 
     }
